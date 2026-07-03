@@ -77,7 +77,7 @@ def generate_dashboard(
     repositories: list[dict],
 ) -> str:
     if not repositories:
-        return "> Repository Dashboard: _No repositories available_"
+        return "> _Repository Dashboard : No repositories available_"
 
     lines = []
     lines.append(" | Repository | ⭐ Stars | 🍴 Forks | 👀 Views | 📥 Clones |")
@@ -121,7 +121,7 @@ def generate_traffic(
     Generate repository traffic report.
     """
     if not repositories:
-        return "> Traffic Analytics : _No repositories available._"
+        return "> _Traffic Analytics : No repositories available._"
 
     lines = []
     lines.append("| Repository | 👀 Views | 👤 Unique | 📥 Clones | 👤 Unique |")
@@ -174,7 +174,7 @@ def generate_growth(
     """
     history = sorted(HISTORY_DIR.glob("*.csv"))
     if not history:
-        return "> Growth Analytics : _No history available._"
+        return "> _Growth Analytics : No history available._"
 
     latest = history[-1]
     repository_rows = {}
@@ -226,7 +226,7 @@ def generate_growth(
 
     lines.append("")
     lines.append(
-        f"> Monthly History : **{latest.name}**"
+        f"> _Monthly History : **{latest.name}**_"
     )
     return "\n".join(lines)
 

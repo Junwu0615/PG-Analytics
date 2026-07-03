@@ -45,7 +45,7 @@ def csv_file() -> Path:
     """
     Current monthly history file.
     """
-    return HISTORY_DIR / f"{current_month()}.csv"
+    return HISTORY_DIR / f"{current_month()}-history.csv"
 
 
 def write_header(path: Path) -> None:
