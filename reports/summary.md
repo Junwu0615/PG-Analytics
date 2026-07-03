@@ -1,1 +1,15 @@
-{'repository_count': 11, 'stars': 12, 'forks': 0, 'views': 411, 'unique_views': 32, 'clones': 1595, 'unique_clones': 598, 'generated_at': '2026-07-03T20:54:32.069436'}
+# 📊 Repository Summary Report
+
+    | Metric | Value |
+    | :--- | :--- |
+    | **Total Repositories** | 11 |
+    | **Total Stars** | 12 |
+    | **Total Forks** | 0 |
+    | **Total Views** | 411 |
+    | **Unique Visitors** | 32 |
+    | **Total Clones** | 1595 |
+    | **Unique Clones** | 598 |
+    
+    > _Note : Metrics are aggregated across all tracked repositories._
+    > _Generated at : 2026-07-03T21:04:30.463223_
+    
