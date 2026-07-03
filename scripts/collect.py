@@ -150,7 +150,6 @@ def main():
             repository["name"]
         )
 
-        collect_traffic(repo, metrics)
         output = LATEST_DIR / f"{name}.json"
         save_json(output,metrics)
         LOGGER.info("Saved %s", output.name)
