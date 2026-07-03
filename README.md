@@ -103,10 +103,10 @@ README.md
  | PG-Edge-Container | 1 | 0 | 5 | 60 |
  | PG-Airflow-DAGs | 1 | 0 | 8 | 29 |
 - ### *Summary*
- - *Repository : 11*
- - *Stars : 12*
- - *Views ( 14 days ) : 411*
- - *Clones ( 14 days ) : 1595*
+  - *Repository : 11*
+  - *Stars : 12*
+  - *Views ( 14 days ) : 411*
+  - *Clones ( 14 days ) : 1595*
 <!-- dashboard:end -->
 
 <br>
@@ -128,10 +128,10 @@ README.md
 | PG-Edge-Container | 5 | 1 | 60 | 27 |
 | PG-Airflow-DAGs | 8 | 3 | 29 | 14 |
 - ### *Summary*
- - *Views ( 14 Days ) : 411*
- - *Clones ( 14 Days ) : 1595*
- - *Unique Visitors : 32*
- - *Unique Cloners : 598*
+  - *Views ( 14 Days ) : 411*
+  - *Clones ( 14 Days ) : 1595*
+  - *Unique Visitors : 32*
+  - *Unique Cloners : 598*
 <!-- traffic:end -->
 
 <br>
@@ -154,6 +154,7 @@ README.md
 | Platform-Genesis | +0 | +0 | +0 |
 
 > _Monthly History : **2026-07-history.csv**_
+> _Initial startup time data ( March – June 2026 ) was not captured due to the absence of a record-keeping script._
 <!-- growth:end -->
 
 

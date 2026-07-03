@@ -12,7 +12,7 @@
  | PG-Edge-Container | 1 | 0 | 5 | 60 |
  | PG-Airflow-DAGs | 1 | 0 | 8 | 29 |
 - ### *Summary*
- - *Repository : 11*
- - *Stars : 12*
- - *Views ( 14 days ) : 411*
- - *Clones ( 14 days ) : 1595*
+  - *Repository : 11*
+  - *Stars : 12*
+  - *Views ( 14 days ) : 411*
+  - *Clones ( 14 days ) : 1595*
