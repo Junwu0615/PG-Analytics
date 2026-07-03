@@ -253,7 +253,9 @@ def generate_growth(repositories: list[dict]) -> str:
             f"*{clone_growth:+d}* |"
         )
 
-    lines.append(f"> _Monthly History : **{history[0].stem}** → **{history[-1].stem}**_")
+    lines.append(f"> _Statistical Scope : "
+                 f"**{'-'.join(history[0].stem.split('-')[:1])}** → "
+                 f"**{'-'.join(history[-1].stem.split('-')[:1])}**_")
     lines.append(">")
     lines.append(f"> _Initial startup time data ( March – June 2026 ) was not captured "
                  f"due to the absence of a record-keeping script._")
