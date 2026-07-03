@@ -11,6 +11,6 @@
 | *PG-Shared-Lib* | *+4* | *+2* | *+5* |
 | *PG-Edge-Container* | *+979* | *+2* | *+10* |
 | *PG-Airflow-DAGs* | *+9* | *+3* | *+4* |
-> _Monthly History : **2026-06-history** → **2026-08-history**_
+> _Statistical Scope : **2026** → **2026**_
 >
 > _Initial startup time data ( March – June 2026 ) was not captured due to the absence of a record-keeping script._
