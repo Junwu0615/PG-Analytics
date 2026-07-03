@@ -28,8 +28,7 @@ from utils import (
 
 
 def load_repositories() -> list[dict]:
-    repositories = list[dict] = []
-    check_list = [f.name for f in LATEST_DIR.glob("*.json")]
+    repositories = []
     target_list = [
         'Platform-Genesis',
         'PG-Core',
