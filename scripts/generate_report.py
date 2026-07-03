@@ -101,6 +101,8 @@ def generate_dashboard(repositories: list[dict]) -> str:
     lines.append(f"  - *🍴 Forks : {total_forks}*")
     lines.append(f"  - *👀 Views ( 14 days ) : {total_views}*")
     lines.append(f"  - *📥 Clones ( 14 days ) : {total_clones}*")
+    lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
+
     return "\n".join(lines)
 
 
@@ -150,6 +152,7 @@ def generate_traffic(repositories: list[dict]) -> str:
     lines.append(f"  - *👤 Unique Visitors : {total_unique_views}*")
     lines.append(f"  - *📥 Clones ( 14 Days ) : {total_clones}*")
     lines.append(f"  - *👤 Unique Cloners : {total_unique_clones}*")
+    lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
@@ -163,7 +166,6 @@ def generate_summary(repositories: list[dict]) -> dict:
         "unique_views": 0,
         "clones": 0,
         "unique_clones": 0,
-        "generated_at": str(utc_now().isoformat())[:19],
     }
     for repo in repositories:
         metrics = repo.get("repository_metrics", {})
@@ -190,7 +192,7 @@ def generate_summary(repositories: list[dict]) -> dict:
     lines.append(f"| *Unique Clones* | *{summary.get('unique_clones', 0)}* |")
     lines.append(f"> _Note : Metrics are aggregated across all tracked repositories._")
     lines.append(f">")
-    lines.append(f"> _Generated at [ UTC+0 ] : {summary.get('generated_at', 'N/A')}_")
+    lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
@@ -254,11 +256,14 @@ def generate_growth(repositories: list[dict]) -> str:
         )
 
     lines.append(f"> _Statistical Scope : "
-                 f"**{'-'.join(history[0].stem.split('-')[:1])}** → "
-                 f"**{'-'.join(history[-1].stem.split('-')[:1])}**_")
+                 f"**{'-'.join(history[0].stem.split('-')[:2])}** → "
+                 f"**{'-'.join(history[-1].stem.split('-')[:2])}**_")
     lines.append(">")
     lines.append(f"> _Initial startup time data ( March – June 2026 ) was not captured "
                  f"due to the absence of a record-keeping script._")
+    lines.append(f">")
+    lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
+
     return "\n".join(lines)
 
 

@@ -58,18 +58,6 @@ def write_header(path: Path) -> None:
             writer.writerow(CSV_HEADER)
 
 
-def safe_get(data: dict, path: list, default=None):
-    """
-    Safe nested dict access (contract layer)
-    """
-
-    for key in path:
-        if not isinstance(data, dict):
-            return default
-        data = data.get(key, {})
-    return data or default
-
-
 def build_row(data: dict) -> list:
     """
     Build one history row from repository metrics.
@@ -111,11 +99,13 @@ def load_history(path: Path) -> dict:
     ) as fp:
         reader = csv.DictReader(fp)
         for row in reader:
-            key = (
-                row["date"],
-                row["repository"],
-            )
-            records[key] = row
+            date = row.get("date")
+            repo = row.get("repository")
+
+            if not date or not repo:
+                continue
+
+            records[(date, repo)] = row
 
     return records
 
@@ -130,27 +120,43 @@ def merge_history(records: dict, metrics: dict) -> None:
     """
     row = build_row(metrics)
     key = (row[0], row[1])
-    records[key] = dict(zip(CSV_HEADER, row))
+    record = dict(zip(CSV_HEADER, row))
+    records[key] = record
 
 
 def rewrite_history(path: Path, records: dict) -> None:
     """
-    Rewrite monthly history CSV.
+    Rewrite monthly history CSV atomically.
+
+    Validation:
+        - Record count must not decrease unexpectedly.
     """
-    with path.open(
-        "w",
-        newline="",
-        encoding="utf-8",
-    ) as fp:
-        writer = csv.DictWriter(
-            fp,
-            fieldnames=CSV_HEADER,
-        )
+    # Existing record count
+    previous_count = 0
+    if path.exists():
+        with path.open("r", newline="", encoding="utf-8") as fp:
+            previous_count = max(sum(1 for _ in csv.DictReader(fp)), 0)
+
+    # Write temporary file
+    tmp_path = path.with_suffix(".tmp")
+
+    with tmp_path.open("w", newline="", encoding="utf-8") as fp:
+        writer = csv.DictWriter(fp, fieldnames=CSV_HEADER)
         writer.writeheader()
-        for key in sorted(records):
-            writer.writerow(
-                records[key]
-            )
+        for _, row in sorted(records.items()):
+            writer.writerow(row)
+
+    # Validate
+    current_count = len(records)
+    if current_count < previous_count:
+        raise RuntimeError(
+            f"History corruption detected "
+            f"(before={previous_count}, after={current_count})"
+        )
+
+    # Atomic replace
+    tmp_path.replace(path)
+    LOGGER.warning("History Updated (%d records)", current_count)
 
 
 def main():
