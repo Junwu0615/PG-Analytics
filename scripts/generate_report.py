@@ -45,8 +45,8 @@ def load_repositories() -> list[dict]:
     ]
 
     for file in target_list:
-        if file not in check_list:
-            LOGGER.warning("Skip missing file: %s", file)
+        if f'{file}.json' not in check_list:
+            LOGGER.warning("Skip missing file: %s", f'{file}.json')
             continue
 
         if file.stat().st_size == 0:
