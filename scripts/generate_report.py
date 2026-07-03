@@ -162,7 +162,7 @@ def generate_summary(repositories: list[dict]) -> dict:
         "unique_views": 0,
         "clones": 0,
         "unique_clones": 0,
-        "generated_at": utc_now().isoformat(),
+        "generated_at": str(utc_now().isoformat())[:19],
     }
     for repo in repositories:
         metrics = repo.get("repository_metrics", {})
@@ -189,7 +189,7 @@ def generate_summary(repositories: list[dict]) -> dict:
     lines.append(f"| **Unique Clones** | {summary.get('unique_clones', 0)} |")
     lines.append(f"> _Note : Metrics are aggregated across all tracked repositories._")
     lines.append(f">")
-    lines.append(f"> _Generated at : {summary.get('generated_at', 'N/A')}_")
+    lines.append(f"> _Generated at [UTC+0] : {summary.get('generated_at', 'N/A')}_")
 
     return "\n".join(lines)
 
