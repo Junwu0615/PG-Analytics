@@ -33,9 +33,9 @@ def github_client() -> Github:
     """
     Create GitHub client.
     """
-    token = os.getenv("GH_TOKEN")
+    token = os.getenv("PG_TOKEN")
     if not token:
-        raise RuntimeError("GH_TOKEN is not defined.")
+        raise RuntimeError("PG_TOKEN is not defined.")
 
     return Github(token)
 
