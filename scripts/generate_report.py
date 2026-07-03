@@ -175,6 +175,7 @@ def generate_summary(repositories: list[dict]) -> dict:
 
 
     # 建立 Markdown 表格結構
+    lines = []
     lines.append("| Metric | Value |")
     lines.append("|:--|:--|")
     lines.append(f"| **Total Repositories** | {summary.get('repository_count', 0)} |")
