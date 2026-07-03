@@ -142,10 +142,7 @@ def write_markdown(path: Path, content: str) -> None:
     """
     Save Markdown report.
     """
-    with path.open(
-        "w",
-        encoding="utf-8",
-    ) as fp:
+    with path.open("w", encoding="utf-8") as fp:
         fp.write(content)
 
 

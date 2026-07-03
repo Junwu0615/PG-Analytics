@@ -106,10 +106,10 @@ def generate_dashboard(repositories: list[dict]) -> str:
         lines.append(f" | {repo_name} | {stars} | {forks} | {view_count} | {clone_count} |")
 
     lines.append("- ### *Summary*")
-    lines.append(f" - *Repository : {len(repositories)}*")
-    lines.append(f" - *Stars : {total_stars}*")
-    lines.append(f" - *Views ( 14 days ) : {total_views}*")
-    lines.append(f" - *Clones ( 14 days ) : {total_clones}*")
+    lines.append(f"  - *Repository : {len(repositories)}*")
+    lines.append(f"  - *Stars : {total_stars}*")
+    lines.append(f"  - *Views ( 14 days ) : {total_views}*")
+    lines.append(f"  - *Clones ( 14 days ) : {total_clones}*")
     return "\n".join(lines)
 
 
@@ -155,10 +155,10 @@ def generate_traffic(repositories: list[dict]) -> str:
         )
 
     lines.append("- ### *Summary*")
-    lines.append(f" - *Views ( 14 Days ) : {total_views}*")
-    lines.append(f" - *Clones ( 14 Days ) : {total_clones}*")
-    lines.append(f" - *Unique Visitors : {total_unique_views}*")
-    lines.append(f" - *Unique Cloners : {total_unique_clones}*")
+    lines.append(f"  - *Views ( 14 Days ) : {total_views}*")
+    lines.append(f"  - *Clones ( 14 Days ) : {total_clones}*")
+    lines.append(f"  - *Unique Visitors : {total_unique_views}*")
+    lines.append(f"  - *Unique Cloners : {total_unique_clones}*")
 
     return "\n".join(lines)
 
@@ -249,6 +249,8 @@ def generate_growth(repositories: list[dict]) -> str:
     lines.append("")
     lines.append(
         f"> _Monthly History : **{latest.name}**_"
+    )
+    lines.append(
         f"> _Initial startup time data ( March – June 2026 ) was not captured due to the absence of a record-keeping script._"
     )
     return "\n".join(lines)
