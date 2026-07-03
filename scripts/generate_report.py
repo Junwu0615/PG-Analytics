@@ -19,6 +19,7 @@ from utils import (
     LOGGER,
     LATEST_DIR,
     REPORT_DIR,
+    HISTORY_DIR,
     initialize_directories,
     load_json,
     write_markdown,
