@@ -236,9 +236,6 @@ def generate_growth(repositories: list[dict]) -> str:
     lines.append("|:--|--:|--:|--:|")
 
     for repo in SORTED_LIST:
-        rows = repository_rows[repository]
-        rows.sort(key=lambda r: datetime.strptime(r["date"], "%Y-%m-%d"))
-
         first = first_record[repo]
         last = last_record[repo]
         if first is None or last is None:
