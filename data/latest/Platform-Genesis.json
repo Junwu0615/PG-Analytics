@@ -1,0 +1,31 @@
+{
+    "repository": "Platform-Genesis",
+    "full_name": "Junwu0615/Platform-Genesis",
+    "description": "A Cloud-Native Platform Engineering Reference Implementation  Demonstrating Infrastructure as Code, GitOps Delivery, Kubernetes Resiliency, Observability, Secret Management, and Modern Data Platform Architecture.",
+    "private": false,
+    "repository_metrics": {
+        "stars": 2,
+        "forks": 0,
+        "watchers": 0,
+        "open_issues": 0,
+        "default_branch": "main",
+        "language": "Makefile",
+        "size_kb": 48041
+    },
+    "activity": {
+        "created_at": "2026-03-20T13:27:21+00:00",
+        "updated_at": "2026-07-03T17:49:50+00:00",
+        "pushed_at": "2026-07-03T17:49:46+00:00"
+    },
+    "traffic": {
+        "views": {
+            "count": 269,
+            "uniques": 19
+        },
+        "clones": {
+            "count": 737,
+            "uniques": 273
+        }
+    },
+    "generated_at": "2026-07-03T19:23:57.307675"
+}
