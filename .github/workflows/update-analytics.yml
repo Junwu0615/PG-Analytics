@@ -4,10 +4,13 @@ on:
   schedule:
     # Every day 00:10 (UTC+8)
     - cron: "10 16 * * *"
+  push:
+    branches:
+      - main
 
 permissions:
   contents: write
-  workflows: write
+#  workflows: write
 
 jobs:
   analytics:
