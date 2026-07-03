@@ -1,8 +1,18 @@
  | Repository | ⭐ Stars | 🍴 Forks | 👀 Views | 📥 Clones |
  |:--|--:|--:|--:|--:|
+ | PG-APP-Core | 1 | 0 | 12 | 122 |
+ | PG-Airflow-DAGs | 1 | 0 | 8 | 29 |
+ | PG-Analytics | 1 | 0 | 0 | 0 |
+ | PG-Core | 1 | 0 | 0 | 0 |
+ | PG-Cortex | 1 | 0 | 0 | 0 |
+ | PG-Edge-Container | 1 | 0 | 5 | 60 |
+ | PG-Infrastructure | 1 | 0 | 111 | 614 |
+ | PG-Sentinel | 1 | 0 | 0 | 0 |
+ | PG-Shared-Lib | 1 | 0 | 6 | 33 |
+ | PG-Synapse | 1 | 0 | 0 | 0 |
  | Platform-Genesis | 2 | 0 | 269 | 737 |
 - ### *Summary*
- - *Repository : 1*
- - *Stars : 2*
- - *Views (14 days) : 269*
- - *Clones (14 days) : 737*
+ - *Repository : 11*
+ - *Stars : 12*
+ - *Views ( 14 days ) : 411*
+ - *Clones ( 14 days ) : 1595*
