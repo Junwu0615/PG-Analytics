@@ -1,4 +1,4 @@
-| Repository | 👀 Views | 👤 Unique | 📥 Clones | 👤 Unique |
+| Repository | 👀 Views | 👤 Views Unique | 📥 Clones | 👤 Clones Unique |
 |:--|--:|--:|--:|--:|
 | Platform-Genesis | 269 | 19 | 737 | 273 |
 | PG-Core | 0 | 0 | 0 | 0 |

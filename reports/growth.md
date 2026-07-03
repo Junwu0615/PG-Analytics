@@ -1,4 +1,4 @@
-| Repository | ⭐ Growth | 👀 Views Δ | 📥 Clones Δ |
+| Repository | ⭐ Growth | 👀 Views ↑ | 📥 Clones ↑ |
 |:--|--:|--:|--:|
 | PG-APP-Core | +0 | +0 | +0 |
 | PG-Airflow-DAGs | +0 | +0 | +0 |

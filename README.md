@@ -114,7 +114,7 @@ README.md
 ### *📈　Traffic Analytics*
 
 <!-- traffic:start -->
-| Repository | 👀 Views | 👤 Unique | 📥 Clones | 👤 Unique |
+| Repository | 👀 Views | 👤 Views Unique | 📥 Clones | 👤 Clones Unique |
 |:--|--:|--:|--:|--:|
 | Platform-Genesis | 269 | 19 | 737 | 273 |
 | PG-Core | 0 | 0 | 0 | 0 |
@@ -139,7 +139,7 @@ README.md
 ### *📈　Growth Analytics*
 
 <!-- growth:start -->
-| Repository | ⭐ Growth | 👀 Views Δ | 📥 Clones Δ |
+| Repository | ⭐ Growth | 👀 Views ↑ | 📥 Clones ↑ |
 |:--|--:|--:|--:|
 | PG-APP-Core | +0 | +0 | +0 |
 | PG-Airflow-DAGs | +0 | +0 | +0 |
