@@ -6,42 +6,57 @@ history:
   retention_months: 24
 
 repositories:
-  - name: PG-Core
+  - name: Platform-Genesis
     group: Universe
     enabled: true
+#    enabled: false
+
+  - name: PG-Core
+    group: Universe
+#    enabled: true
+    enabled: false
 
   - name: PG-Synapse
     group: Universe
-    enabled: true
+#    enabled: true
+    enabled: false
 
   - name: PG-Cortex
     group: Universe
-    enabled: true
+#    enabled: true
+    enabled: false
 
   - name: PG-Sentinel
     group: Universe
-    enabled: true
+#    enabled: true
+    enabled: false
 
   - name: PG-Analytics
     group: Universe
-    enabled: true
+#    enabled: true
+    enabled: false
 
   - name: PG-Infrastructure
     group: Components
-    enabled: true
+#    enabled: true
+    enabled: false
 
   - name: PG-APP-Core
     group: Components
-    enabled: true
+#    enabled: true
+    enabled: false
 
   - name: PG-Shared-Lib
     group: Components
-    enabled: true
+#    enabled: true
+    enabled: false
 
   - name: PG-Edge-Container
     group: Components
-    enabled: true
+#    enabled: true
+    enabled: false
 
   - name: PG-Airflow-DAGs
     group: Components
-    enabled: true
+#    enabled: true
+    enabled: false
