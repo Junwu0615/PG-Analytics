@@ -13,6 +13,4 @@
 | *PG-Airflow-DAGs* | *+0* | *+0* | *+0* |
 > _Statistical Scope : **2026-07** → **2026-07**_
 >
-> _Initial startup time data ( March – June 2026 ) was not captured due to the absence of a record-keeping script._
->
-> _Generated at [ UTC+0 ] : 2026-07-03T23:15:56_
+> _Generated at [ UTC+0 ] : 2026-07-03T23:22:04_
