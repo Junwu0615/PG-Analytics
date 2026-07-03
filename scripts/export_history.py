@@ -104,7 +104,7 @@ def main():
     initialize_directories()
     history = csv_file()
     write_header(history)
-    LOGGER.info("Export History")
+    LOGGER.warning("Export History ...")
 
     for json_file in sorted(LATEST_DIR.glob("*.json")):
         LOGGER.info("Processing %s", json_file.name)
@@ -129,7 +129,7 @@ def main():
 
         append_repository(history, metrics)
 
-    LOGGER.info("History Updated")
+    LOGGER.warning("History Updated.")
 
 
 if __name__ == "__main__":

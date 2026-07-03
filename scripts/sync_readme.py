@@ -13,7 +13,11 @@ Author:
 License:
     MIT
 """
+from __future__ import annotations
 from pathlib import Path
+from utils import (
+    LOGGER,
+)
 
 REPORT_DIR = Path("reports")
 README = Path("README.md")
@@ -36,6 +40,8 @@ def inject_section(readme: str, marker: str, content: str) -> str:
 
 
 def main():
+    LOGGER.warning("Starting Sync README ...")
+
     readme = README.read_text(encoding="utf-8")
     dashboard = load_section(REPORT_DIR / "dashboard.md")
     traffic = load_section(REPORT_DIR / "traffic.md")
@@ -44,6 +50,8 @@ def main():
     readme = inject_section(readme, "traffic", traffic)
     readme = inject_section(readme, "growth", growth)
     README.write_text(readme, encoding="utf-8")
+
+    LOGGER.warning("Sync README Done.")
 
 
 if __name__ == "__main__":

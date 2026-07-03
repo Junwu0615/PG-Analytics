@@ -123,7 +123,7 @@ def main():
     initialize_directories()
     config = repositories_config()
     github = github_client()
-    LOGGER.info("Repository Collector Started")
+    LOGGER.warning("Repository Collector Started ...")
 
     for repository in config["repositories"]:
         if not repository["enabled"]:
@@ -142,7 +142,7 @@ def main():
         save_json(output, metrics)
         LOGGER.info("Saved %s", output.name)
 
-    LOGGER.warning("Repository Collector Completed")
+    LOGGER.warning("Repository Collector Completed.")
 
 
 if __name__ == "__main__":
