@@ -43,12 +43,16 @@ def main():
     LOGGER.warning("Starting Sync README ...")
 
     readme = README.read_text(encoding="utf-8")
+
     dashboard = load_section(REPORT_DIR / "dashboard.md")
-    traffic = load_section(REPORT_DIR / "traffic.md")
-    growth = load_section(REPORT_DIR / "growth.md")
     readme = inject_section(readme, "dashboard", dashboard)
+
+    traffic = load_section(REPORT_DIR / "traffic.md")
     readme = inject_section(readme, "traffic", traffic)
+
+    growth = load_section(REPORT_DIR / "growth.md")
     readme = inject_section(readme, "growth", growth)
+
     README.write_text(readme, encoding="utf-8")
 
     LOGGER.warning("Sync README Done.")

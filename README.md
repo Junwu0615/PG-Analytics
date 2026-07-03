@@ -56,27 +56,29 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 <ul>
 
 ```bash
+# STAGE 1.
 collect.py
-│
-├── latest/*.json
-└── summary.json
-        │
-        ▼
+   ↓
+data/latest/*.json           ( Raw Repository Metrics )
+
+# STAGE 2.
 export_history.py
-│
-└── history/*.csv
-        │
-        ▼
+   ↓
+history/YYYY-MM-history.csv  ( Historical Data )
+
+# STAGE 3.
 generate_report.py
-│
-├── dashboard.md
-├── traffic.md
-└── growth.md
-        │
-        ▼
-inject_readme.py
-│
-└── README.md
+   ↓
+summary.json                 ( Aggregated Dataset )
+   ↓
+dashboard.md
+traffic.md
+growth.md
+
+# STAGE 4.
+sync_readme.py
+   ↓
+README.md
 ```
 
 </ul>

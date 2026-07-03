@@ -166,6 +166,33 @@ def generate_traffic(
     return "\n".join(lines)
 
 
+def generate_summary(repositories: list[dict]) -> dict:
+    summary = {
+        "repository_count": len(repositories),
+        "stars": 0,
+        "forks": 0,
+        "views": 0,
+        "unique_views": 0,
+        "clones": 0,
+        "unique_clones": 0,
+        "generated_at": utc_now().isoformat(),
+    }
+
+    for repo in repositories:
+        metrics = repo.get("repository_metrics", {})
+        traffic = repo.get("traffic", {})
+        views = traffic.get("views", {})
+        clones = traffic.get("clones", {})
+        summary["stars"] += metrics.get("stars", 0)
+        summary["forks"] += metrics.get("forks", 0)
+        summary["views"] += views.get("count", 0)
+        summary["unique_views"] += views.get("uniques", 0)
+        summary["clones"] += clones.get("count", 0)
+        summary["unique_clones"] += clones.get("uniques", 0)
+
+    return summary
+
+
 def generate_growth(
     repositories: list[dict],
 ) -> str:
@@ -240,17 +267,11 @@ def main():
         "dashboard.md": generate_dashboard(repositories),
         "traffic.md": generate_traffic(repositories),
         "growth.md": generate_growth(repositories),
+        "summary.md": generate_summary(repositories),
     }
-
     for filename, content in reports.items():
-        write_markdown(
-            REPORT_DIR / filename,
-            content,
-        )
-        LOGGER.info(
-            "Updated %s",
-            filename,
-        )
+        write_markdown(REPORT_DIR / filename, content)
+        LOGGER.info("Updated %s", filename)
 
     LOGGER.warning("Reports All Updated [3].")
 
