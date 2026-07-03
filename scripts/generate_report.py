@@ -19,10 +19,12 @@ from pathlib import Path
 from datetime import datetime
 from utils import (
     utc_now,
+    save_json,
     load_json,
     write_markdown,
     initialize_directories,
     LOGGER,
+    DATA_DIR,
     LATEST_DIR,
     REPORT_DIR,
     HISTORY_DIR,
@@ -179,6 +181,7 @@ def generate_summary(repositories: list[dict]) -> dict:
         summary["clones"] += clones.get("count", 0)
         summary["unique_clones"] += clones.get("uniques", 0)
 
+    save_json(DATA_DIR / "summary.json", summary)
 
     # 建立 Markdown 表格結構
     lines = []
