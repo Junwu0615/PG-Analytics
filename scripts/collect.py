@@ -142,7 +142,7 @@ def main():
         save_json(output, metrics)
         LOGGER.info("Saved %s", output.name)
 
-    LOGGER.info("Repository Collector Completed")
+    LOGGER.warning("Repository Collector Completed")
 
 
 if __name__ == "__main__":

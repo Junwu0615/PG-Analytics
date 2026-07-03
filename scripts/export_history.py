@@ -50,43 +50,52 @@ def csv_file() -> Path:
 
 def write_header(path: Path) -> None:
     """
-    Create CSV header.
+    Ensure CSV header exists and is valid.
     """
-    if path.exists(): return
-    with path.open(
-        "w",
-        newline="",
-        encoding="utf-8",
-    ) as fp:
-        writer = csv.writer(fp)
-        writer.writerow(CSV_HEADER)
+    if not path.exists() or path.stat().st_size == 0:
+        with path.open("w", newline="", encoding="utf-8") as fp:
+            writer = csv.writer(fp)
+            writer.writerow(CSV_HEADER)
+
+
+def safe_get(data: dict, path: list, default=None):
+    """
+    Safe nested dict access (contract layer)
+    """
+
+    for key in path:
+        if not isinstance(data, dict):
+            return default
+        data = data.get(key, {})
+    return data or default
 
 
 def append_repository(path: Path, data: dict):
-    repo = data["repository"]
-    repository = data["repository_metrics"]
-    traffic = data.get("traffic", {})
-    views = traffic.get("views", {})
-    clones = traffic.get("clones", {})
+    """
+    Append one repository row to CSV safely.
+    """
+    repo = data.get("repository", "unknown")
+    repository = data.get("repository_metrics", {}) or {}
+    traffic = data.get("traffic", {}) or {}
+    views = traffic.get("views", {}) or {}
+    clones = traffic.get("clones", {}) or {}
 
     row = [
         today(),
         repo,
-        repository["stars"],
-        repository["forks"],
-        repository["watchers"],
-        repository["open_issues"],
-        repository["language"],
+        repository.get("stars", 0),
+        repository.get("forks", 0),
+        repository.get("watchers", 0),
+        repository.get("open_issues", 0),
+        repository.get("language", "unknown"),
         views.get("count", 0),
         views.get("uniques", 0),
         clones.get("count", 0),
         clones.get("uniques", 0),
     ]
-    with path.open(
-        "a",
-        newline="",
-        encoding="utf-8",
-    ) as fp:
+
+    # atomic append (reduce corruption risk)
+    with path.open("a", newline="", encoding="utf-8") as fp:
         writer = csv.writer(fp)
         writer.writerow(row)
 
@@ -100,9 +109,18 @@ def main():
     for json_file in sorted(LATEST_DIR.glob("*.json")):
         LOGGER.info("Processing %s", json_file.name)
         metrics = load_json(json_file)
-        append_repository(history,metrics)
 
-    LOGGER.info("History Updated")
+        if not isinstance(metrics, dict):
+            LOGGER.warning("Skip invalid JSON: %s", json_file.name)
+            continue
+
+        if "repository" not in metrics:
+            LOGGER.warning("Skip malformed JSON: %s", json_file.name)
+            continue
+
+        append_repository(history, metrics)
+
+    LOGGER.warning("History Updated")
 
 
 if __name__ == "__main__":
