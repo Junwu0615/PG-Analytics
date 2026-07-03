@@ -170,28 +170,17 @@ def main():
         LOGGER.info("Processing %s", json_file.name)
 
         if json_file.stat().st_size == 0:
-            LOGGER.warning(
-                "Skip empty %s",
-                json_file.name,
-            )
+            LOGGER.warning("Skip empty %s", json_file.name)
             continue
 
         try:
             metrics = load_json(json_file)
-
         except Exception as e:
-            LOGGER.warning(
-                "Skip %s (%s)",
-                json_file.name,
-                str(e),
-            )
+            LOGGER.warning("Skip %s (%s)", json_file.name, str(e))
             continue
 
         if not isinstance(metrics, dict) or "repository" not in metrics:
-            LOGGER.warning(
-                "Malformed %s",
-                json_file.name,
-            )
+            LOGGER.warning("Malformed %s", json_file.name)
             continue
 
         merge_history(records, metrics)

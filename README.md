@@ -63,21 +63,28 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 # STAGE. 1
 collect.py
    ↓
-data/latest/*.json           ( Raw Repository Metrics )
+data/latest/*.json
+( 最新快照 )
+
 
 # STAGE. 2
 export_history.py
    ↓
 history/YYYY-MM-history.csv  ( Historical Data )
+( 每日快照累積 )
+
 
 # STAGE. 3
 generate_report.py
    ↓
-summary.json                 ( Aggregated Dataset )
+summary.json
+( 所有 Repo 最新統計總覽 )
    ↓
 dashboard.md
 traffic.md
 growth.md
+summary.md
+
 
 # STAGE. 4
 sync_readme.py
