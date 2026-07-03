@@ -31,7 +31,19 @@ DATA_DIR = PROJECT_ROOT / "data"
 LATEST_DIR = DATA_DIR / "latest"
 REPORT_DIR = PROJECT_ROOT / "reports"
 HISTORY_DIR = PROJECT_ROOT / "history"
-
+SORTED_LIST = [
+    'Platform-Genesis',
+    'PG-Core',
+    'PG-Synapse',
+    'PG-Cortex',
+    'PG-Sentinel',
+    'PG-Analytics',
+    'PG-Infrastructure',
+    'PG-APP-Core',
+    'PG-Shared-Lib',
+    'PG-Edge-Container',
+    'PG-Airflow-DAGs',
+]
 
 # ==============================================================================
 # Logger

@@ -25,26 +25,13 @@ from utils import (
     LATEST_DIR,
     REPORT_DIR,
     HISTORY_DIR,
+    SORTED_LIST,
 )
 
 
 def load_repositories() -> list[dict]:
     repositories = []
-    target_list = [
-        'Platform-Genesis',
-        'PG-Core',
-        'PG-Synapse',
-        'PG-Cortex',
-        'PG-Sentinel',
-        'PG-Analytics',
-        'PG-Infrastructure',
-        'PG-APP-Core',
-        'PG-Shared-Lib',
-        'PG-Edge-Container',
-        'PG-Airflow-DAGs',
-    ]
-
-    for repository in target_list:
+    for repository in SORTED_LIST:
         json_file = LATEST_DIR / f"{repository}.json"
 
         if not json_file.exists():
@@ -121,7 +108,7 @@ def generate_traffic(repositories: list[dict]) -> str:
         return "> _Traffic Analytics : No repositories available._"
 
     lines = []
-    lines.append("| Repository | 👀 Views | 👤 Unique | 📥 Clones | 👤 Unique |")
+    lines.append("| Repository | 👀 Views | 👤 Views Unique | 📥 Clones | 👤 Clones Unique |")
     lines.append("|:--|--:|--:|--:|--:|")
 
     total_views = 0
@@ -200,6 +187,7 @@ def generate_summary(repositories: list[dict]) -> dict:
     | **Unique Clones** | {summary.get('unique_clones', 0)} |
     
     > _Note : Metrics are aggregated across all tracked repositories._
+    >
     > _Generated at : {summary.get('generated_at', 'N/A')}_
     """
     return report
@@ -214,22 +202,26 @@ def generate_growth(repositories: list[dict]) -> str:
         return "> _Growth Analytics : No history available._"
 
     latest = history[-1]
-    repository_rows = {}
+    repository_rows = {
+        repository: []
+        for repository in SORTED_LIST
+    }
 
-    with latest.open(
-        "r",
-        encoding="utf-8",
-        newline="",
-    ) as fp:
+    with latest.open("r",encoding="utf-8", newline="") as fp:
         reader = csv.DictReader(fp)
         for row in reader:
-            repository_rows.setdefault(
-                row["repository"],
-                [],
-            ).append(row)
+            repository = row.get("repository")
+            if repository not in repository_rows:
+                LOGGER.warning(
+                    "Unknown repository: %s",
+                    repository,
+                )
+                continue
+
+            repository_rows[repository].append(row)
 
     lines = []
-    lines.append("| Repository | ⭐ Growth | 👀 Views Δ | 📥 Clones Δ |")
+    lines.append("| Repository | ⭐ Growth | 👀 Views ↑ | 📥 Clones ↑ |")
     lines.append("|:--|--:|--:|--:|")
 
     for repo, rows in sorted(repository_rows.items()):
@@ -242,16 +234,13 @@ def generate_growth(repositories: list[dict]) -> str:
             first = rows[0]
             last = rows[-1]
             star_growth = (
-                int(last["stars"])
-                - int(first["stars"])
+                int(last["stars"])- int(first["stars"])
             )
             view_growth = (
-                int(last["views"])
-                - int(first["views"])
+                int(last["views"])- int(first["views"])
             )
             clone_growth = (
-                int(last["clones"])
-                - int(first["clones"])
+                int(last["clones"])- int(first["clones"])
             )
 
         lines.append(
