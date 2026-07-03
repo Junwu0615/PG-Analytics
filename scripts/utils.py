@@ -44,6 +44,33 @@ logging.basicConfig(
 
 
 # ==============================================================================
+# initialization
+# ==============================================================================
+def initialize_data_layer():
+    """
+    Ensure all expected JSON files exist.
+    """
+    initialize_directories()
+    config = repositories_config()
+    for repo in config["repositories"]:
+        if not repo["enabled"]:
+            continue
+
+        path = LATEST_DIR / f"{repo['name']}.json"
+        if not path.exists():
+            save_json(
+                path,
+                {
+                    "repository": repo["name"],
+                    "repository_metrics": {},
+                    "traffic": {},
+                    "activity": {},
+                    "generated_at": None,
+                },
+            )
+
+
+# ==============================================================================
 # Filesystem
 # ==============================================================================
 def ensure_directory(path: Path) -> None:
@@ -87,11 +114,14 @@ def load_json(path: Path) -> dict[str, Any]:
     """
     Load JSON file.
     """
-    with path.open(
-        "r",
-        encoding="utf-8",
-    ) as fp:
-        return json.load(fp)
+    if not path.exists():
+        raise FileNotFoundError(path)
+
+    if path.stat().st_size == 0:
+        raise ValueError(f"Corrupted empty JSON: {path}")
+
+    with path.open("r", encoding="utf-8") as f:
+        return json.load(f)
 
 
 def save_json(
@@ -101,17 +131,11 @@ def save_json(
     """
     Save JSON file.
     """
-    with path.open(
-        "w",
-        encoding="utf-8",
-    ) as fp:
-        json.dump(
-            data,
-            fp,
-            indent=4,
-            ensure_ascii=False,
-            sort_keys=False,
-        )
+    ensure_directory(path.parent)
+    tmp = path.with_suffix(".tmp")
+    with tmp.open("w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+    os.replace(tmp, path)
 
 
 # ==============================================================================
