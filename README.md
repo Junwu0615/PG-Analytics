@@ -56,6 +56,18 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ### *📊　Repository Dashboard*
 
 <!-- dashboard:start -->
+# Repository Dashboard
+
+| Repository | ⭐ Stars | 🍴 Forks | 👀 Views | 📥 Clones |
+|:--|--:|--:|--:|--:|
+| Platform-Genesis | 2 | 0 | 269 | 737 |
+
+## Summary
+
+- Repository : 1
+- Stars : 2
+- Views (14 days) : 269
+- Clones (14 days) : 737
 <!-- dashboard:end -->
 
 <br>
@@ -63,6 +75,7 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ### *📈　Traffic Analytics*
 
 <!-- traffic:start -->
+
 <!-- traffic:end -->
 
 <br>
@@ -70,6 +83,7 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ### *📈　Growth Analytics*
 
 <!-- growth:start -->
+
 <!-- growth:end -->
 
 
