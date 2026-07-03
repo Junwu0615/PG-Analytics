@@ -108,7 +108,16 @@ def main():
 
     for json_file in sorted(LATEST_DIR.glob("*.json")):
         LOGGER.info("Processing %s", json_file.name)
-        metrics = load_json(json_file)
+
+        if json_file.stat().st_size == 0:
+            LOGGER.warning("Skip empty file: %s", json_file.name)
+            continue
+
+        try:
+            metrics = load_json(json_file)
+        except ValueError as e:
+            LOGGER.warning("Skip corrupted JSON: %s (%s)", json_file.name, str(e))
+            continue
 
         if not isinstance(metrics, dict):
             LOGGER.warning("Skip invalid JSON: %s", json_file.name)
@@ -120,7 +129,7 @@ def main():
 
         append_repository(history, metrics)
 
-    LOGGER.warning("History Updated")
+    LOGGER.info("History Updated")
 
 
 if __name__ == "__main__":
