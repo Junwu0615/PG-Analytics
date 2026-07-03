@@ -87,7 +87,24 @@ inject_readme.py
 ### *📊　Repository Dashboard*
 
 <!-- dashboard:start -->
-> Repository Dashboard: _No repositories available_
+ | Repository | ⭐ Stars | 🍴 Forks | 👀 Views | 📥 Clones |
+ |:--|--:|--:|--:|--:|
+ | Platform-Genesis | 2 | 0 | 269 | 737 |
+ | PG-Core | 1 | 0 | 0 | 0 |
+ | PG-Synapse | 1 | 0 | 0 | 0 |
+ | PG-Cortex | 1 | 0 | 0 | 0 |
+ | PG-Sentinel | 1 | 0 | 0 | 0 |
+ | PG-Analytics | 1 | 0 | 0 | 0 |
+ | PG-Infrastructure | 1 | 0 | 111 | 614 |
+ | PG-APP-Core | 1 | 0 | 12 | 122 |
+ | PG-Shared-Lib | 1 | 0 | 6 | 33 |
+ | PG-Edge-Container | 1 | 0 | 5 | 60 |
+ | PG-Airflow-DAGs | 1 | 0 | 8 | 29 |
+- ### *Summary*
+ - *Repository : 11*
+ - *Stars : 12*
+ - *Views ( 14 days ) : 411*
+ - *Clones ( 14 days ) : 1595*
 <!-- dashboard:end -->
 
 <br>
@@ -95,7 +112,24 @@ inject_readme.py
 ### *📈　Traffic Analytics*
 
 <!-- traffic:start -->
-> Traffic Analytics : _No repositories available._
+| Repository | 👀 Views | 👤 Unique | 📥 Clones | 👤 Unique |
+|:--|--:|--:|--:|--:|
+| Platform-Genesis | 269 | 19 | 737 | 273 |
+| PG-Core | 0 | 0 | 0 | 0 |
+| PG-Synapse | 0 | 0 | 0 | 0 |
+| PG-Cortex | 0 | 0 | 0 | 0 |
+| PG-Sentinel | 0 | 0 | 0 | 0 |
+| PG-Analytics | 0 | 0 | 0 | 0 |
+| PG-Infrastructure | 111 | 4 | 614 | 243 |
+| PG-APP-Core | 12 | 3 | 122 | 24 |
+| PG-Shared-Lib | 6 | 2 | 33 | 17 |
+| PG-Edge-Container | 5 | 1 | 60 | 27 |
+| PG-Airflow-DAGs | 8 | 3 | 29 | 14 |
+- ### *Summary*
+ - *Views ( 14 Days ) : 411*
+ - *Clones ( 14 Days ) : 1595*
+ - *Unique Visitors : 32*
+ - *Unique Cloners : 598*
 <!-- traffic:end -->
 
 <br>
