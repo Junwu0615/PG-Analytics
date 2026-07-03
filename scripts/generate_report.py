@@ -90,8 +90,8 @@ def generate_dashboard(
     lines.append("- ### *Summary*")
     lines.append(f" - *Repository : {len(repositories)}*")
     lines.append(f" - *Stars : {total_stars}*")
-    lines.append(f" - *Views (14 days) : {total_views}*")
-    lines.append(f" - *Clones (14 days) : {total_clones}*")
+    lines.append(f" - *Views ( 14 days ) : {total_views}*")
+    lines.append(f" - *Clones ( 14 days ) : {total_clones}*")
     return "\n".join(lines)
 
 
@@ -139,9 +139,9 @@ def generate_traffic(
         )
 
     lines.append("- ### *Summary*")
-    lines.append(f" - *Views (14 Days) : {total_views}*")
+    lines.append(f" - *Views ( 14 Days ) : {total_views}*")
+    lines.append(f" - *Clones ( 14 Days ) : {total_clones}*")
     lines.append(f" - *Unique Visitors : {total_unique_views}*")
-    lines.append(f" - *Clones (14 Days) : {total_clones}*")
     lines.append(f" - *Unique Cloners : {total_unique_clones}*")
 
     return "\n".join(lines)
