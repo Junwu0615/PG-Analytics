@@ -77,14 +77,22 @@ def collect_traffic(repo, metrics):
     try:
         views = repo.get_views_traffic()
         clones = repo.get_clones_traffic()
+
+        LOGGER.warning(type(views))
+        LOGGER.warning(type(clones))
+
         metrics["traffic"] = {
             "views": {
-                "count": views["count"],
-                "uniques": views["uniques"],
+                # "count": views["count"],
+                "count": views.count,
+                # "uniques": views["uniques"],
+                "uniques": views.uniques,
             },
             "clones": {
-                "count": clones["count"],
-                "uniques": clones["uniques"],
+                # "count": clones["count"],
+                "count": clones.count,
+                # "uniques": clones["uniques"],
+                "uniques": clones.uniques,
             },
         }
 
