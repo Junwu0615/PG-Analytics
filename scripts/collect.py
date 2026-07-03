@@ -45,33 +45,24 @@ def safe_collect_repo(github, config, name):
         repo = github.get_repo(f"{config['owner']}/{name}")
         metrics = collect_repository(repo)
         collect_traffic(repo, metrics)
-        save_json(
-            LATEST_DIR / f"{name}.json",
-            metrics,
-        )
-        LOGGER.info("Saved %s", name)
+        return metrics
 
     except Exception as e:
         LOGGER.error("Repo failed %s: %s", name, str(e))
-        fallback = LATEST_DIR / f"{name}.json"
-        if not fallback.exists() or fallback.stat().st_size == 0:
-            save_json(
-                fallback,
-                {
-                    "repository": name,
-                    "repository_metrics": {},
-                    "traffic": {},
-                    "error": str(e),
-                    "generated_at": utc_now().isoformat(),
-                },
-            )
+        return {
+            "repository": name,
+            "repository_metrics": {},
+            "traffic": {},
+            "error": str(e),
+            "generated_at": utc_now().isoformat(),
+        }
 
 
 def collect_repository(repo):
     """
     Collect repository metrics.
     """
-    data = {
+    return {
         "repository": repo.name,
         "full_name": repo.full_name,
         "description": repo.description,
@@ -93,8 +84,6 @@ def collect_repository(repo):
         "traffic": {},
         "generated_at": utc_now().isoformat(),
     }
-
-    return data
 
 
 def collect_traffic(repo, metrics):
@@ -142,16 +131,15 @@ def main():
 
         name = repository["name"]
         LOGGER.info("Collecting %s", name)
-        repo = github.get_repo(f'{config["owner"]}/{name}')
 
-        safe_collect_repo(
+        metrics = safe_collect_repo(
             github,
             config,
             repository["name"]
         )
 
         output = LATEST_DIR / f"{name}.json"
-        save_json(output,metrics)
+        save_json(output, metrics)
         LOGGER.info("Saved %s", output.name)
 
     LOGGER.info("Repository Collector Completed")
