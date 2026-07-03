@@ -17,13 +17,14 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 from utils import (
+    utc_now,
+    load_json,
+    write_markdown,
+    initialize_directories,
     LOGGER,
     LATEST_DIR,
     REPORT_DIR,
     HISTORY_DIR,
-    initialize_directories,
-    load_json,
-    write_markdown,
 )
 
 
@@ -73,9 +74,7 @@ def load_repositories() -> list[dict]:
     return repositories
 
 
-def generate_dashboard(
-    repositories: list[dict],
-) -> str:
+def generate_dashboard(repositories: list[dict]) -> str:
     if not repositories:
         return "> _Repository Dashboard : No repositories available_"
 
@@ -114,9 +113,7 @@ def generate_dashboard(
     return "\n".join(lines)
 
 
-def generate_traffic(
-    repositories: list[dict],
-) -> str:
+def generate_traffic(repositories: list[dict]) -> str:
     """
     Generate repository traffic report.
     """
@@ -193,9 +190,7 @@ def generate_summary(repositories: list[dict]) -> dict:
     return summary
 
 
-def generate_growth(
-    repositories: list[dict],
-) -> str:
+def generate_growth(repositories: list[dict]) -> str:
     """
     Generate growth report from history.
     """
@@ -254,6 +249,7 @@ def generate_growth(
     lines.append("")
     lines.append(
         f"> _Monthly History : **{latest.name}**_"
+        f"> _Initial startup time data ( March – June 2026 ) was not captured due to the absence of a record-keeping script._"
     )
     return "\n".join(lines)
 

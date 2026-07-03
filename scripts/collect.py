@@ -19,13 +19,13 @@ import os
 from github import Github
 from github.GithubException import GithubException
 from utils import (
-    LOGGER,
-    LATEST_DIR,
     analytics_config,
     initialize_directories,
     repositories_config,
     save_json,
     utc_now,
+    LOGGER,
+    LATEST_DIR,
 )
 
 
@@ -93,21 +93,13 @@ def collect_traffic(repo, metrics):
     try:
         views = repo.get_views_traffic()
         clones = repo.get_clones_traffic()
-
-        # LOGGER.warning(type(views))
-        # LOGGER.warning(type(clones))
-
         metrics["traffic"] = {
             "views": {
-                # "count": views["count"],
                 "count": views.count,
-                # "uniques": views["uniques"],
                 "uniques": views.uniques,
             },
             "clones": {
-                # "count": clones["count"],
                 "count": clones.count,
-                # "uniques": clones["uniques"],
                 "uniques": clones.uniques,
             },
         }

@@ -124,10 +124,7 @@ def load_json(path: Path) -> dict[str, Any]:
         return json.load(f)
 
 
-def save_json(
-    path: Path,
-    data: dict[str, Any],
-) -> None:
+def save_json(path: Path, data: dict[str, Any]) -> None:
     """
     Save JSON file.
     """
@@ -141,10 +138,7 @@ def save_json(
 # ==============================================================================
 # Markdown
 # ==============================================================================
-def write_markdown(
-    path: Path,
-    content: str,
-) -> None:
+def write_markdown(path: Path, content: str) -> None:
     """
     Save Markdown report.
     """

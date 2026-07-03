@@ -17,13 +17,13 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 from utils import (
+    today,
+    load_json,
+    current_month,
+    initialize_directories,
     LOGGER,
     LATEST_DIR,
     HISTORY_DIR,
-    current_month,
-    today,
-    initialize_directories,
-    load_json,
 )
 
 CSV_HEADER = [
