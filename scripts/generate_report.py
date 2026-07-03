@@ -146,9 +146,9 @@ def generate_traffic(repositories: list[dict]) -> str:
 
     lines.append("- ### *Summary*")
     lines.append(f"  - *👀 Views ( 14 Days ) : {total_views}*")
-    lines.append(f"  - *👀 Unique Visitors : {total_unique_views}*")
+    lines.append(f"  - *👤 Unique Visitors : {total_unique_views}*")
     lines.append(f"  - *📥 Clones ( 14 Days ) : {total_clones}*")
-    lines.append(f"  - *📥 Unique Cloners : {total_unique_clones}*")
+    lines.append(f"  - *👤 Unique Cloners : {total_unique_clones}*")
 
     return "\n".join(lines)
 
