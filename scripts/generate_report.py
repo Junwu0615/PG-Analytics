@@ -29,8 +29,26 @@ from utils import (
 
 def load_repositories() -> list[dict]:
     repositories = []
+    check_list = [f.name for f in LATEST_DIR.glob("*.json")]
+    target_list = [
+        'Platform-Genesis',
+        'PG-Core',
+        'PG-Synapse',
+        'PG-Cortex',
+        'PG-Sentinel',
+        'PG-Analytics',
+        'PG-Infrastructure',
+        'PG-APP-Core',
+        'PG-Shared-Lib',
+        'PG-Edge-Container',
+        'PG-Airflow-DAGs',
+    ]
 
-    for file in sorted(LATEST_DIR.glob("*.json")):
+    for file in target_list:
+        if file not in check_list:
+            LOGGER.warning("Skip missing file: %s", file)
+            continue
+
         if file.stat().st_size == 0:
             LOGGER.warning("Skip empty file: %s", file.name)
             continue
