@@ -72,6 +72,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
     total_views = 0
     total_clones = 0
     total_stars = 0
+    total_forks = 0
 
     for repo in repositories:
         repo_name = repo.get("repository", "unknown")
@@ -87,6 +88,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
         clone_count = clones.get("count", 0)
 
         total_stars += stars
+        total_forks += forks
         total_views += view_count
         total_clones += clone_count
 
@@ -94,9 +96,10 @@ def generate_dashboard(repositories: list[dict]) -> str:
 
     lines.append("- ### *Summary*")
     lines.append(f"  - *Repository : {len(repositories)}*")
-    lines.append(f"  - *Stars : {total_stars}*")
-    lines.append(f"  - *Views ( 14 days ) : {total_views}*")
-    lines.append(f"  - *Clones ( 14 days ) : {total_clones}*")
+    lines.append(f"  - *⭐ Stars : {total_stars}*")
+    lines.append(f"  - *🍴 Forks : {total_forks}*")
+    lines.append(f"  - *👀 Views ( 14 days ) : {total_views}*")
+    lines.append(f"  - *📥 Clones ( 14 days ) : {total_clones}*")
     return "\n".join(lines)
 
 
@@ -142,10 +145,10 @@ def generate_traffic(repositories: list[dict]) -> str:
         )
 
     lines.append("- ### *Summary*")
-    lines.append(f"  - *Views ( 14 Days ) : {total_views}*")
-    lines.append(f"  - *Clones ( 14 Days ) : {total_clones}*")
-    lines.append(f"  - *Unique Visitors : {total_unique_views}*")
-    lines.append(f"  - *Unique Cloners : {total_unique_clones}*")
+    lines.append(f"  - *👀 Views ( 14 Days ) : {total_views}*")
+    lines.append(f"  - *👀 Unique Visitors : {total_unique_views}*")
+    lines.append(f"  - *📥 Clones ( 14 Days ) : {total_clones}*")
+    lines.append(f"  - *📥 Unique Cloners : {total_unique_clones}*")
 
     return "\n".join(lines)
 
@@ -176,8 +179,8 @@ def generate_summary(repositories: list[dict]) -> dict:
 
     # 建立 Markdown 表格結構
     lines = []
-    lines.append("| Metric | Value |")
-    lines.append("|:--|:--|")
+    lines.append("| Metric | 🧮 Value |")
+    lines.append("|:--|--:|")
     lines.append(f"| **Total Repositories** | {summary.get('repository_count', 0)} |")
     lines.append(f"| **Total Stars** | {summary.get('stars', 0)} |")
     lines.append(f"| **Total Forks** | {summary.get('forks', 0)} |")
