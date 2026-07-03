@@ -27,8 +27,28 @@ from utils import (
 
 def load_repositories() -> list[dict]:
     repositories = []
+
     for file in sorted(LATEST_DIR.glob("*.json")):
-        repositories.append(load_json(file))
+        if file.stat().st_size == 0:
+            LOGGER.warning("Skip empty file: %s", file.name)
+            continue
+
+        try:
+            data = load_json(file)
+        except Exception as e:
+            LOGGER.warning("Skip corrupted JSON: %s (%s)", file.name, str(e))
+            continue
+
+        if not isinstance(data, dict):
+            LOGGER.warning("Skip invalid JSON: %s", file.name)
+            continue
+
+        if "repository" not in data:
+            LOGGER.warning("Skip malformed JSON: %s", file.name)
+            continue
+
+        repositories.append(data)
+
     return repositories
 
 
@@ -44,8 +64,9 @@ def generate_dashboard(data: list[dict]) -> str:
     total_stars = 0
 
     for repo in data:
-        metrics = repo["repository_metrics"]
-        traffic = repo.get("traffic", {})
+        metrics = repo.get("repository_metrics", {}) or {}
+        traffic = repo.get("traffic", {}) or {}
+
         views = traffic.get("views", {})
         clones = traffic.get("clones", {})
         stars = metrics["stars"]
