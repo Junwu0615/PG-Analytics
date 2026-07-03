@@ -189,7 +189,7 @@ def generate_summary(repositories: list[dict]) -> dict:
     lines.append(f"| *Unique Clones* | *{summary.get('unique_clones', 0)}* |")
     lines.append(f"> _Note : Metrics are aggregated across all tracked repositories._")
     lines.append(f">")
-    lines.append(f"> _Generated at [UTC+0] : {summary.get('generated_at', 'N/A')}_")
+    lines.append(f"> _Generated at [ UTC+0 ] : {summary.get('generated_at', 'N/A')}_")
 
     return "\n".join(lines)
 
@@ -251,13 +251,10 @@ def generate_growth(repositories: list[dict]) -> str:
             f"*{clone_growth:+d}* |"
         )
 
-    lines.append("")
-    lines.append(
-        f"> _Monthly History : **{latest.name}**_"
-    )
-    lines.append(
-        f"> _Initial startup time data ( March – June 2026 ) was not captured due to the absence of a record-keeping script._"
-    )
+    lines.append(f"> _Monthly History : **{latest.name}**_")
+    lines.append(">")
+    lines.append(f"> _Initial startup time data ( March – June 2026 ) was not captured "
+                 f"due to the absence of a record-keeping script._")
     return "\n".join(lines)
 
 
