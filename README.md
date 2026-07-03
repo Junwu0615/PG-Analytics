@@ -5,7 +5,7 @@
 
 <br>
 
-### *A.　Implement*
+### *📌　Implement*
 
 <details>
 <summary><b><i>　Tree </i></b></summary>
@@ -18,6 +18,7 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ├── LICENSE
 ├── README.md
 ├── config
+│   ├── analytics.yml
 │   └── repositories.yml
 ├── data
 │   ├── latest
@@ -51,3 +52,25 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 </details>
 
 <br>
+
+### *📊　Repository Dashboard*
+
+<!-- dashboard:start -->
+<!-- dashboard:end -->
+
+<br>
+
+### *📈　Traffic Analytics*
+
+<!-- traffic:start -->
+<!-- traffic:end -->
+
+<br>
+
+### *📈　Growth Analytics*
+
+<!-- growth:start -->
+<!-- growth:end -->
+
+
+<br><br><br>
