@@ -268,6 +268,10 @@ def main():
         "summary.md": generate_summary(repositories),
     }
     for filename, content in reports.items():
+        if not isinstance(content, str):
+            LOGGER.warning("Warning: Content for %s is type %s, not str. Converting to str.", filename, type(content))
+            content = str(content)
+
         write_markdown(REPORT_DIR / filename, content)
         LOGGER.info("Updated %s", filename)
 
