@@ -16,6 +16,7 @@ License:
 from __future__ import annotations
 import csv
 from pathlib import Path
+from datetime import datetime
 from utils import (
     utc_now,
     load_json,
@@ -196,53 +197,57 @@ def generate_summary(repositories: list[dict]) -> dict:
 
 def generate_growth(repositories: list[dict]) -> str:
     """
-    Generate growth report from history.
+    Generate growth report from historical CSV snapshots.
     """
+
     history = sorted(HISTORY_DIR.glob("*.csv"))
     if not history:
         return "> _Growth Analytics : No history available._"
 
-    latest = history[-1]
-    repository_rows = {
-        repository: []
-        for repository in SORTED_LIST
+    first_record = {
+        repo: None
+        for repo in SORTED_LIST
+    }
+    last_record = {
+        repo: None
+        for repo in SORTED_LIST
     }
 
-    with latest.open("r",encoding="utf-8", newline="") as fp:
-        reader = csv.DictReader(fp)
-        for row in reader:
-            repository = row.get("repository")
-            if repository not in repository_rows:
-                LOGGER.warning(
-                    "Unknown repository: %s",
-                    repository,
-                )
-                continue
+    # Scan every history csv
+    for csv_file in history:
 
-            repository_rows[repository].append(row)
+        with csv_file.open("r", encoding="utf-8", newline="") as fp:
+            reader = csv.DictReader(fp)
+            for row in reader:
+                repo = row.get("repository")
+                if repo not in SORTED_LIST:
+                    continue
 
+                # first occurrence
+                if first_record[repo] is None:
+                    first_record[repo] = row
+
+                # keep newest
+                last_record[repo] = row
+
+    # Markdown
     lines = []
     lines.append("| *📁 Repository* | *⭐ Stars ↑* | *👀 Views ↑* | *📥 Clones ↑* |")
     lines.append("|:--|--:|--:|--:|")
 
-    for repo, rows in sorted(repository_rows.items()):
-        if len(rows) == 1:
-            star_growth = 0
-            view_growth = 0
-            clone_growth = 0
+    for repo in SORTED_LIST:
+        rows = repository_rows[repository]
+        rows.sort(key=lambda r: datetime.strptime(r["date"], "%Y-%m-%d"))
 
-        else:
-            first = rows[0]
-            last = rows[-1]
-            star_growth = (
-                int(last["stars"]) - int(first["stars"])
-            )
-            view_growth = (
-                int(last["views"]) - int(first["views"])
-            )
-            clone_growth = (
-                int(last["clones"]) - int(first["clones"])
-            )
+        first = first_record[repo]
+        last = last_record[repo]
+        if first is None or last is None:
+            lines.append(f"| *{repo}* | *0* | *0* | *0* |")
+            continue
+
+        star_growth = int(last["stars"]) - int(first["stars"])
+        view_growth = int(last["views"]) - int(first["views"])
+        clone_growth = int(last["clones"]) - int(first["clones"])
 
         lines.append(
             f"| *{repo}* | "
@@ -251,7 +256,7 @@ def generate_growth(repositories: list[dict]) -> str:
             f"*{clone_growth:+d}* |"
         )
 
-    lines.append(f"> _Monthly History : **{latest.name}**_")
+    lines.append(f"> _Monthly History : **{history[0].stem}** → **{history[-1].stem}**_")
     lines.append(">")
     lines.append(f"> _Initial startup time data ( March – June 2026 ) was not captured "
                  f"due to the absence of a record-keeping script._")
