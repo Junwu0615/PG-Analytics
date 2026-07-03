@@ -173,24 +173,21 @@ def generate_summary(repositories: list[dict]) -> dict:
         summary["clones"] += clones.get("count", 0)
         summary["unique_clones"] += clones.get("uniques", 0)
 
-    # 建立 Markdown 表格結構
-    report = f"""# 📊 Repository Summary Report
 
-    | Metric | Value |
-    | :--- | :--- |
-    | **Total Repositories** | {summary.get('repository_count', 0)} |
-    | **Total Stars** | {summary.get('stars', 0)} |
-    | **Total Forks** | {summary.get('forks', 0)} |
-    | **Total Views** | {summary.get('views', 0)} |
-    | **Unique Visitors** | {summary.get('unique_views', 0)} |
-    | **Total Clones** | {summary.get('clones', 0)} |
-    | **Unique Clones** | {summary.get('unique_clones', 0)} |
-    
-    > _Note : Metrics are aggregated across all tracked repositories._
-    >
-    > _Generated at : {summary.get('generated_at', 'N/A')}_
-    """
-    return report
+    # 建立 Markdown 表格結構
+    lines.append("| Metric | Value |")
+    lines.append("|:--|:--|")
+    lines.append(f"| **Total Repositories** | {summary.get('repository_count', 0)} |")
+    lines.append(f"| **Total Stars** | {summary.get('stars', 0)} |")
+    lines.append(f"| **Total Forks** | {summary.get('forks', 0)} |")
+    lines.append(f"| **Total Views** | {summary.get('views', 0)} |")
+    lines.append(f"| **Unique Visitors** | {summary.get('unique_views', 0)} |")
+    lines.append(f"| **Unique Clones** | {summary.get('unique_clones', 0)} |")
+    lines.append(f"> _Note : Metrics are aggregated across all tracked repositories._")
+    lines.append(f">")
+    lines.append(f"> _Generated at : {summary.get('generated_at', 'N/A')}_")
+
+    return "\n".join(lines)
 
 
 def generate_growth(repositories: list[dict]) -> str:
