@@ -263,9 +263,6 @@ def generate_growth(repositories: list[dict]) -> str:
                  f"**{'-'.join(history[0].stem.split('-')[:2])}** → "
                  f"**{'-'.join(history[-1].stem.split('-')[:2])}**_")
     lines.append(">")
-    lines.append(f"> _Initial startup time data ( March – June 2026 ) was not captured "
-                 f"due to the absence of a record-keeping script._")
-    lines.append(f">")
     lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
