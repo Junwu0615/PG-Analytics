@@ -1,4 +1,4 @@
-| *📁 Repository* | *⭐ Growth* | *👀 Views ↑* | *📥 Clones ↑* |
+| *📁 Repository* | *⭐ Stars ↑* | *👀 Views ↑* | *📥 Clones ↑* |
 |:--|--:|--:|--:|
 | *PG-APP-Core* | *+0* | *+4* | *+12* |
 | *PG-Airflow-DAGs* | *+0* | *+3* | *+4* |

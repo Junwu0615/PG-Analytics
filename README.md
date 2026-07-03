@@ -104,7 +104,7 @@ README.md
 | *Unique Clones* | *598* |
 > _Note : Metrics are aggregated across all tracked repositories._
 >
-> _Generated at [ UTC+0 ] : 2026-07-03T21:55:16_
+> _Generated at [ UTC+0 ] : 2026-07-03T22:01:04_
 <!-- summary:end -->
 
 <br>
@@ -163,7 +163,7 @@ README.md
 ### *📈　Growth Analytics*
 
 <!-- growth:start -->
-| *📁 Repository* | *⭐ Growth* | *👀 Views ↑* | *📥 Clones ↑* |
+| *📁 Repository* | *⭐ Stars ↑* | *👀 Views ↑* | *📥 Clones ↑* |
 |:--|--:|--:|--:|
 | *PG-APP-Core* | *+0* | *+4* | *+12* |
 | *PG-Airflow-DAGs* | *+0* | *+3* | *+4* |
