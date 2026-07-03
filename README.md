@@ -21,18 +21,19 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 │   ├── analytics.yml
 │   └── repositories.yml
 ├── data
-│   └── latest
-│       ├── PG-APP-Core.json
-│       ├── PG-Airflow-DAGs.json
-│       ├── PG-Analytics.json
-│       ├── PG-Core.json
-│       ├── PG-Cortex.json
-│       ├── PG-Edge-Container.json
-│       ├── PG-Infrastructure.json
-│       ├── PG-Sentinel.json
-│       ├── PG-Shared-Lib.json
-│       ├── PG-Synapse.json
-│       └── Platform-Genesis.json
+│   ├── latest
+│   │   ├── PG-APP-Core.json
+│   │   ├── PG-Airflow-DAGs.json
+│   │   ├── PG-Analytics.json
+│   │   ├── PG-Core.json
+│   │   ├── PG-Cortex.json
+│   │   ├── PG-Edge-Container.json
+│   │   ├── PG-Infrastructure.json
+│   │   ├── PG-Sentinel.json
+│   │   ├── PG-Shared-Lib.json
+│   │   ├── PG-Synapse.json
+│   │   └── Platform-Genesis.json
+│   └── summary.json
 ├── history
 │   ├── 2026-07.csv
 │   ├── ....
@@ -70,26 +71,27 @@ data/latest/*.json
 # STAGE. 2
 export_history.py
    ↓
-history/YYYY-MM-history.csv  ( Historical Data )
-( 每日快照累積 )
+history/YYYY-MM-history.csv
+( 每日快照累積 / 按月分區 )
 
 
 # STAGE. 3
 generate_report.py
    ↓
-summary.json
+data/summary.json
 ( 所有 Repo 最新統計總覽 )
    ↓
+summary.md
 dashboard.md
 traffic.md
 growth.md
-summary.md
 
 
 # STAGE. 4
 sync_readme.py
    ↓
 README.md
+( 所有 Report 渲染至首頁 )
 ```
 
 </ul>
