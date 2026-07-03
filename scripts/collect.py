@@ -40,34 +40,61 @@ def github_client() -> Github:
     return Github(token)
 
 
-def collect_repository(repo):
-    """
-    Collect repository metrics.
-    """
-    data = {
-        "repository": repo.name,
-        "full_name": repo.full_name,
-        "description": repo.description,
-        "private": repo.private,
-        "repository_metrics": {
-            "stars": repo.stargazers_count,
-            "forks": repo.forks_count,
-            "watchers": repo.subscribers_count,
-            "open_issues": repo.open_issues_count,
-            "default_branch": repo.default_branch,
-            "language": repo.language,
-            "size_kb": repo.size,
-        },
-        "activity": {
-            "created_at": repo.created_at.isoformat(),
-            "updated_at": repo.updated_at.isoformat(),
-            "pushed_at": repo.pushed_at.isoformat(),
-        },
-        "traffic": {},
-        "generated_at": utc_now().isoformat(),
-    }
+def safe_collect_repo(github, config, name):
+    try:
+        repo = github.get_repo(f"{config['owner']}/{name}")
+        metrics = collect_repository(repo)
+        collect_traffic(repo, metrics)
+        save_json(
+            LATEST_DIR / f"{name}.json",
+            metrics,
+        )
+        LOGGER.info("Saved %s", name)
 
-    return data
+    except Exception as e:
+        LOGGER.error("Repo failed %s: %s", name, str(e))
+        fallback = LATEST_DIR / f"{name}.json"
+        if not fallback.exists() or fallback.stat().st_size == 0:
+            save_json(
+                fallback,
+                {
+                    "repository": name,
+                    "repository_metrics": {},
+                    "traffic": {},
+                    "error": str(e),
+                    "generated_at": utc_now().isoformat(),
+                },
+            )
+
+
+# def collect_repository(repo):
+#     """
+#     Collect repository metrics.
+#     """
+#     data = {
+#         "repository": repo.name,
+#         "full_name": repo.full_name,
+#         "description": repo.description,
+#         "private": repo.private,
+#         "repository_metrics": {
+#             "stars": repo.stargazers_count,
+#             "forks": repo.forks_count,
+#             "watchers": repo.subscribers_count,
+#             "open_issues": repo.open_issues_count,
+#             "default_branch": repo.default_branch,
+#             "language": repo.language,
+#             "size_kb": repo.size,
+#         },
+#         "activity": {
+#             "created_at": repo.created_at.isoformat(),
+#             "updated_at": repo.updated_at.isoformat(),
+#             "pushed_at": repo.pushed_at.isoformat(),
+#         },
+#         "traffic": {},
+#         "generated_at": utc_now().isoformat(),
+#     }
+#
+#     return data
 
 
 def collect_traffic(repo, metrics):
@@ -116,7 +143,16 @@ def main():
         name = repository["name"]
         LOGGER.info("Collecting %s", name)
         repo = github.get_repo(f'{config["owner"]}/{name}')
-        metrics = collect_repository(repo)
+
+
+        # metrics = collect_repository(repo)
+        safe_collect_repo(
+            github,
+            config,
+            repository["name"]
+        )
+
+
         collect_traffic(repo, metrics)
         output = LATEST_DIR / f"{name}.json"
         save_json(output,metrics)
