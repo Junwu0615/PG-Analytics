@@ -174,7 +174,6 @@ def generate_summary(repositories: list[dict]) -> dict:
         "unique_clones": 0,
         "generated_at": utc_now().isoformat(),
     }
-
     for repo in repositories:
         metrics = repo.get("repository_metrics", {})
         traffic = repo.get("traffic", {})
@@ -187,7 +186,23 @@ def generate_summary(repositories: list[dict]) -> dict:
         summary["clones"] += clones.get("count", 0)
         summary["unique_clones"] += clones.get("uniques", 0)
 
-    return summary
+    # 建立 Markdown 表格結構
+    report = f"""# 📊 Repository Summary Report
+
+    | Metric | Value |
+    | :--- | :--- |
+    | **Total Repositories** | {summary.get('repository_count', 0)} |
+    | **Total Stars** | {summary.get('stars', 0)} |
+    | **Total Forks** | {summary.get('forks', 0)} |
+    | **Total Views** | {summary.get('views', 0)} |
+    | **Unique Visitors** | {summary.get('unique_views', 0)} |
+    | **Total Clones** | {summary.get('clones', 0)} |
+    | **Unique Clones** | {summary.get('unique_clones', 0)} |
+    
+    > _Note : Metrics are aggregated across all tracked repositories._
+    > _Generated at : {data.get('generated_at', 'N/A')}_
+    """
+    return report
 
 
 def generate_growth(repositories: list[dict]) -> str:
