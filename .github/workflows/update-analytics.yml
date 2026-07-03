@@ -1,0 +1,48 @@
+name: Platform Genesis Universe Analytics
+on:
+  workflow_dispatch:
+  schedule:
+    # Every day 00:10 (UTC+8)
+    - cron: "10 16 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Collect Repository Metrics
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          python scripts/collect.py
+
+      - name: Export History
+        run: |
+          python scripts/export_history.py
+
+      - name: Generate Reports
+        run: |
+          python scripts/generate_report.py
+
+      - name: Commit Analytics
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add .
+          git diff --cached --quiet || git commit -m "chore(analytics): update repository metrics"
+          git push

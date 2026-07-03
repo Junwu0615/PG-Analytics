@@ -1,0 +1,47 @@
+owner: Junwu0615
+
+timezone: Asia/Taipei
+
+history:
+  retention_months: 24
+
+repositories:
+  - name: PG-Core
+    group: Universe
+    enabled: true
+
+  - name: PG-Synapse
+    group: Universe
+    enabled: true
+
+  - name: PG-Cortex
+    group: Universe
+    enabled: true
+
+  - name: PG-Sentinel
+    group: Universe
+    enabled: true
+
+  - name: PG-Analytics
+    group: Universe
+    enabled: true
+
+  - name: PG-Infrastructure
+    group: Components
+    enabled: true
+
+  - name: PG-APP-Core
+    group: Components
+    enabled: true
+
+  - name: PG-Shared-Lib
+    group: Components
+    enabled: true
+
+  - name: PG-Edge-Container
+    group: Components
+    enabled: true
+
+  - name: PG-Airflow-DAGs
+    group: Components
+    enabled: true

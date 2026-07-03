@@ -17,21 +17,34 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 .
 ├── LICENSE
 ├── README.md
+├── config
+│   └── repositories.yml
 ├── data
-│   ├── PG-APP-Core.json
-│   ├── PG-Airflow-DAGs.json
-│   ├── PG-Core.json
-│   ├── PG-Cortex.json
-│   ├── PG-Edge-Container.json
-│   ├── PG-Infrastructure.json
-│   ├── PG-Sentinel.json
-│   ├── PG-Shared-Lib.json
-│   └── PG-Synapse.json
+│   ├── latest
+│   │   ├── PG-APP-Core.json
+│   │   ├── PG-Airflow-DAGs.json
+│   │   ├── PG-Core.json
+│   │   ├── PG-Cortex.json
+│   │   ├── PG-Edge-Container.json
+│   │   ├── PG-Infrastructure.json
+│   │   ├── PG-Sentinel.json
+│   │   ├── PG-Shared-Lib.json
+│   │   └── PG-Synapse.json
+│   └── summary.json
 ├── history
 │   ├── 2026-07.csv
-│   └── 2026-08.csv
+│   ├── ....
+│   └── 20xx-xx.csv
+├── reports
+│   ├── dashboard.md
+│   ├── growth.md
+│   └── traffic.md
+├── requirements.txt
 └── scripts
-    └── collect.py
+    ├── collect.py
+    ├── export_history.py
+    ├── generate_report.py
+    └── utils.py
 ```
 
 </ul>

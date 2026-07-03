@@ -1,0 +1,18 @@
+traffic:
+  views: true
+  visitors: true
+  clones: true
+
+repository:
+  stars: true
+  forks: true
+  issues: true
+  releases: true
+
+history:
+  export_csv: true
+
+report:
+  dashboard: true
+  traffic: true
+  growth: true
