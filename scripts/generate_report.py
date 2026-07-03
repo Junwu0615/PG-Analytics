@@ -66,7 +66,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
         return "> _Repository Dashboard : No repositories available_"
 
     lines = []
-    lines.append(" | Repository | ⭐ Stars | 🍴 Forks | 👀 Views | 📥 Clones |")
+    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *👀 Views* | *📥 Clones* |")
     lines.append(" |:--|--:|--:|--:|--:|")
 
     total_views = 0
@@ -92,10 +92,10 @@ def generate_dashboard(repositories: list[dict]) -> str:
         total_views += view_count
         total_clones += clone_count
 
-        lines.append(f" | {repo_name} | {stars} | {forks} | {view_count} | {clone_count} |")
+        lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{view_count}* | *{clone_count}* |")
 
     lines.append("- ### *Summary*")
-    lines.append(f"  - *Repository : {len(repositories)}*")
+    lines.append(f"  - *📁 Repository : {len(repositories)}*")
     lines.append(f"  - *⭐ Stars : {total_stars}*")
     lines.append(f"  - *🍴 Forks : {total_forks}*")
     lines.append(f"  - *👀 Views ( 14 days ) : {total_views}*")
@@ -111,7 +111,7 @@ def generate_traffic(repositories: list[dict]) -> str:
         return "> _Traffic Analytics : No repositories available._"
 
     lines = []
-    lines.append("| Repository | 👀 Views | 👤 Views Unique | 📥 Clones | 👤 Clones Unique |")
+    lines.append("| *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |")
     lines.append("|:--|--:|--:|--:|--:|")
 
     total_views = 0
@@ -137,11 +137,11 @@ def generate_traffic(repositories: list[dict]) -> str:
         total_unique_clones += unique_clones
 
         lines.append(
-            f"| {repo_name} | "
-            f"{view_count} | "
-            f"{unique_views} | "
-            f"{clone_count} | "
-            f"{unique_clones} |"
+            f"| *{repo_name}* | "
+            f"*{view_count}* | "
+            f"*{unique_views}* | "
+            f"*{clone_count}* | "
+            f"*{unique_clones}* |"
         )
 
     lines.append("- ### *Summary*")
@@ -179,14 +179,14 @@ def generate_summary(repositories: list[dict]) -> dict:
 
     # 建立 Markdown 表格結構
     lines = []
-    lines.append("| Metric | 🧮 Value |")
+    lines.append("| *📐 Metric* | *🧮 Value* |")
     lines.append("|:--|--:|")
-    lines.append(f"| **Total Repositories** | {summary.get('repository_count', 0)} |")
-    lines.append(f"| **Total Stars** | {summary.get('stars', 0)} |")
-    lines.append(f"| **Total Forks** | {summary.get('forks', 0)} |")
-    lines.append(f"| **Total Views** | {summary.get('views', 0)} |")
-    lines.append(f"| **Unique Visitors** | {summary.get('unique_views', 0)} |")
-    lines.append(f"| **Unique Clones** | {summary.get('unique_clones', 0)} |")
+    lines.append(f"| *Total Repositories* | *{summary.get('repository_count', 0)}* |")
+    lines.append(f"| *Total Stars* | *{summary.get('stars', 0)}* |")
+    lines.append(f"| *Total Forks* | *{summary.get('forks', 0)}* |")
+    lines.append(f"| *Total Views* | *{summary.get('views', 0)}* |")
+    lines.append(f"| *Unique Visitors* | *{summary.get('unique_views', 0)}* |")
+    lines.append(f"| *Unique Clones* | *{summary.get('unique_clones', 0)}* |")
     lines.append(f"> _Note : Metrics are aggregated across all tracked repositories._")
     lines.append(f">")
     lines.append(f"> _Generated at [UTC+0] : {summary.get('generated_at', 'N/A')}_")
@@ -222,7 +222,7 @@ def generate_growth(repositories: list[dict]) -> str:
             repository_rows[repository].append(row)
 
     lines = []
-    lines.append("| Repository | ⭐ Growth | 👀 Views ↑ | 📥 Clones ↑ |")
+    lines.append("| *📁 Repository* | *⭐ Growth* | *👀 Views ↑* | *📥 Clones ↑* |")
     lines.append("|:--|--:|--:|--:|")
 
     for repo, rows in sorted(repository_rows.items()):
@@ -245,10 +245,10 @@ def generate_growth(repositories: list[dict]) -> str:
             )
 
         lines.append(
-            f"| {repo} | "
-            f"{star_growth:+d} | "
-            f"{view_growth:+d} | "
-            f"{clone_growth:+d} |"
+            f"| *{repo}* | "
+            f"*{star_growth:+d}* | "
+            f"*{view_growth:+d}* | "
+            f"*{clone_growth:+d}* |"
         )
 
     lines.append("")
