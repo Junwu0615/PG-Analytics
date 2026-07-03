@@ -28,7 +28,7 @@ from utils import (
 
 
 def load_repositories() -> list[dict]:
-    repositories = []
+    repositories = list[dict] = []
     check_list = [f.name for f in LATEST_DIR.glob("*.json")]
     target_list = [
         'Platform-Genesis',
@@ -44,27 +44,29 @@ def load_repositories() -> list[dict]:
         'PG-Airflow-DAGs',
     ]
 
-    for file in target_list:
-        if f'{file}.json' not in check_list:
-            LOGGER.warning("Skip missing file: %s", f'{file}.json')
+    for repository in target_list:
+        json_file = LATEST_DIR / f"{repository}.json"
+
+        if not json_file.exists():
+            LOGGER.warning("Skip missing file: %s", json_file.name)
             continue
 
-        if file.stat().st_size == 0:
-            LOGGER.warning("Skip empty file: %s", file.name)
+        if json_file.stat().st_size == 0:
+            LOGGER.warning("Skip empty file: %s", json_file.name)
             continue
 
         try:
-            data = load_json(file)
+            data = load_json(json_file)
         except Exception as e:
-            LOGGER.warning("Skip corrupted JSON: %s (%s)", file.name, str(e))
+            LOGGER.warning("Skip corrupted JSON: %s (%s)", json_file.name, str(e))
             continue
 
         if not isinstance(data, dict):
-            LOGGER.warning("Skip invalid JSON: %s", file.name)
+            LOGGER.warning("Skip invalid JSON: %s", json_file.name)
             continue
 
         if "repository" not in data:
-            LOGGER.warning("Skip malformed JSON: %s", file.name)
+            LOGGER.warning("Skip malformed JSON: %s", json_file.name)
             continue
 
         repositories.append(data)
