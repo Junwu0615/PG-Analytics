@@ -56,18 +56,15 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ### *📊　Repository Dashboard*
 
 <!-- dashboard:start -->
-# Repository Dashboard
-
-| Repository | ⭐ Stars | 🍴 Forks | 👀 Views | 📥 Clones |
-|:--|--:|--:|--:|--:|
-| Platform-Genesis | 2 | 0 | 269 | 737 |
-
-## Summary
-
-- Repository : 1
-- Stars : 2
-- Views (14 days) : 269
-- Clones (14 days) : 737
+ | Repository | ⭐ Stars | 🍴 Forks | 👀 Views | 📥 Clones |
+ |:--|--:|--:|--:|--:|
+ | Platform-Genesis | 2 | 0 | 269 | 737 |
+<br>
+### *Summary*
+- *Repository : 1*
+- *Stars : 2*
+- *Views (14 days) : 269*
+- *Clones (14 days) : 737*
 <!-- dashboard:end -->
 
 <br>
@@ -75,7 +72,16 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ### *📈　Traffic Analytics*
 
 <!-- traffic:start -->
+| Repository | 👀 Views | 👤 Unique | 📥 Clones | 👤 Unique |
+|:--|--:|--:|--:|--:|
+| Platform-Genesis | 269 | 19 | 737 | 273 |
 
+### *Summary*
+
+- *Views (14 Days) : 269*
+- *Unique Visitors : 19*
+- *Clones (14 Days) : 737*
+- *Unique Cloners : 273*
 <!-- traffic:end -->
 
 <br>
@@ -83,7 +89,10 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ### *📈　Growth Analytics*
 
 <!-- growth:start -->
+| Repository | ⭐ Growth | 👀 Views Δ | 📥 Clones Δ |
+|:--|--:|--:|--:|
 
+> Monthly History : **2026-08.csv**
 <!-- growth:end -->
 
 
