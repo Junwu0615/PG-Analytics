@@ -87,12 +87,11 @@ def generate_dashboard(
 
         lines.append(f" | {repo_name} | {stars} | {forks} | {view_count} | {clone_count} |")
 
-    lines.append("<br>")
-    lines.append("### *Summary*")
-    lines.append(f"- *Repository : {len(repositories)}*")
-    lines.append(f"- *Stars : {total_stars}*")
-    lines.append(f"- *Views (14 days) : {total_views}*")
-    lines.append(f"- *Clones (14 days) : {total_clones}*")
+    lines.append("- ### *Summary*")
+    lines.append(f" - *Repository : {len(repositories)}*")
+    lines.append(f" - *Stars : {total_stars}*")
+    lines.append(f" - *Views (14 days) : {total_views}*")
+    lines.append(f" - *Clones (14 days) : {total_clones}*")
     return "\n".join(lines)
 
 
@@ -115,39 +114,35 @@ def generate_traffic(
     total_unique_clones = 0
 
     for repo in repositories:
+        repo_name = repo.get("repository", "unknown")
 
         traffic = repo.get("traffic", {}) or {}
-
         views = traffic.get("views", {}) or {}
         clones = traffic.get("clones", {}) or {}
 
         view_count = int(views.get("count", 0))
         unique_views = int(views.get("uniques", 0))
-
         clone_count = int(clones.get("count", 0))
         unique_clones = int(clones.get("uniques", 0))
 
         total_views += view_count
         total_unique_views += unique_views
-
         total_clones += clone_count
         total_unique_clones += unique_clones
 
         lines.append(
-            f"| {repo['repository']} | "
+            f"| {repo_name} | "
             f"{view_count} | "
             f"{unique_views} | "
             f"{clone_count} | "
             f"{unique_clones} |"
         )
 
-    lines.append("")
-    lines.append("### *Summary*")
-    lines.append("")
-    lines.append(f"- *Views (14 Days) : {total_views}*")
-    lines.append(f"- *Unique Visitors : {total_unique_views}*")
-    lines.append(f"- *Clones (14 Days) : {total_clones}*")
-    lines.append(f"- *Unique Cloners : {total_unique_clones}*")
+    lines.append("- ### *Summary*")
+    lines.append(f" - *Views (14 Days) : {total_views}*")
+    lines.append(f" - *Unique Visitors : {total_unique_views}*")
+    lines.append(f" - *Clones (14 Days) : {total_clones}*")
+    lines.append(f" - *Unique Cloners : {total_unique_clones}*")
 
     return "\n".join(lines)
 
