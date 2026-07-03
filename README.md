@@ -173,6 +173,7 @@ README.md
 | Platform-Genesis | +0 | +0 | +0 |
 
 > _Monthly History : **2026-07-history.csv**_
+>
 > _Initial startup time data ( March – June 2026 ) was not captured due to the absence of a record-keeping script._
 <!-- growth:end -->
 
