@@ -21,17 +21,18 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 │   ├── analytics.yml
 │   └── repositories.yml
 ├── data
-│   ├── latest
-│   │   ├── PG-APP-Core.json
-│   │   ├── PG-Airflow-DAGs.json
-│   │   ├── PG-Core.json
-│   │   ├── PG-Cortex.json
-│   │   ├── PG-Edge-Container.json
-│   │   ├── PG-Infrastructure.json
-│   │   ├── PG-Sentinel.json
-│   │   ├── PG-Shared-Lib.json
-│   │   └── PG-Synapse.json
-│   └── summary.json
+│   └── latest
+│       ├── PG-APP-Core.json
+│       ├── PG-Airflow-DAGs.json
+│       ├── PG-Analytics.json
+│       ├── PG-Core.json
+│       ├── PG-Cortex.json
+│       ├── PG-Edge-Container.json
+│       ├── PG-Infrastructure.json
+│       ├── PG-Sentinel.json
+│       ├── PG-Shared-Lib.json
+│       ├── PG-Synapse.json
+│       └── Platform-Genesis.json
 ├── history
 │   ├── 2026-07.csv
 │   ├── ....
@@ -39,13 +40,16 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ├── reports
 │   ├── dashboard.md
 │   ├── growth.md
+│   ├── summary.md
 │   └── traffic.md
 ├── requirements.txt
 └── scripts
     ├── collect.py
     ├── export_history.py
     ├── generate_report.py
+    ├── sync_readme.py
     └── utils.py
+
 ```
 
 </ul>
