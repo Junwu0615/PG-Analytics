@@ -51,6 +51,37 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 </ul>
 </details>
 
+<details>
+<summary><b><i>　Workflow </i></b></summary>
+<ul>
+
+```bash
+collect.py
+│
+├── latest/*.json
+└── summary.json
+        │
+        ▼
+export_history.py
+│
+└── history/*.csv
+        │
+        ▼
+generate_report.py
+│
+├── dashboard.md
+├── traffic.md
+└── growth.md
+        │
+        ▼
+inject_readme.py
+│
+└── README.md
+```
+
+</ul>
+</details>
+
 <br>
 
 ### *📊　Repository Dashboard*

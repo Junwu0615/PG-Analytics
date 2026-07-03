@@ -70,19 +70,18 @@ def safe_get(data: dict, path: list, default=None):
     return data or default
 
 
-def append_repository(path: Path, data: dict):
+def build_row(data: dict) -> list:
     """
-    Append one repository row to CSV safely.
+    Build one history row from repository metrics.
     """
-    repo = data.get("repository", "unknown")
     repository = data.get("repository_metrics", {}) or {}
     traffic = data.get("traffic", {}) or {}
     views = traffic.get("views", {}) or {}
     clones = traffic.get("clones", {}) or {}
 
-    row = [
+    return [
         today(),
-        repo,
+        data.get("repository", "unknown"),
         repository.get("stars", 0),
         repository.get("forks", 0),
         repository.get("watchers", 0),
@@ -94,41 +93,104 @@ def append_repository(path: Path, data: dict):
         clones.get("uniques", 0),
     ]
 
-    # atomic append (reduce corruption risk)
-    with path.open("a", newline="", encoding="utf-8") as fp:
-        writer = csv.writer(fp)
-        writer.writerow(row)
+
+def load_history(path: Path) -> dict:
+    """
+    Load history into memory.
+    Key:
+        (date, repository)
+    """
+    records = {}
+    if not path.exists():
+        return records
+
+    with path.open(
+        "r",
+        newline="",
+        encoding="utf-8",
+    ) as fp:
+        reader = csv.DictReader(fp)
+        for row in reader:
+            key = (
+                row["date"],
+                row["repository"],
+            )
+            records[key] = row
+
+    return records
+
+
+def merge_history(records: dict, metrics: dict) -> None:
+    """
+    Merge latest repository metrics.
+
+    Existing records of the same
+    (date, repository)
+    will be replaced.
+    """
+    row = build_row(metrics)
+    key = (row[0], row[1])
+    records[key] = dict(zip(CSV_HEADER, row))
+
+
+def rewrite_history(path: Path, records: dict) -> None:
+    """
+    Rewrite monthly history CSV.
+    """
+    with path.open(
+        "w",
+        newline="",
+        encoding="utf-8",
+    ) as fp:
+        writer = csv.DictWriter(
+            fp,
+            fieldnames=CSV_HEADER,
+        )
+        writer.writeheader()
+        for key in sorted(records):
+            writer.writerow(
+                records[key]
+            )
 
 
 def main():
     initialize_directories()
     history = csv_file()
     write_header(history)
+    records = load_history(history)
     LOGGER.warning("Export History ...")
 
     for json_file in sorted(LATEST_DIR.glob("*.json")):
         LOGGER.info("Processing %s", json_file.name)
 
         if json_file.stat().st_size == 0:
-            LOGGER.warning("Skip empty file: %s", json_file.name)
+            LOGGER.warning(
+                "Skip empty %s",
+                json_file.name,
+            )
             continue
 
         try:
             metrics = load_json(json_file)
-        except ValueError as e:
-            LOGGER.warning("Skip corrupted JSON: %s (%s)", json_file.name, str(e))
+
+        except Exception as e:
+            LOGGER.warning(
+                "Skip %s (%s)",
+                json_file.name,
+                str(e),
+            )
             continue
 
-        if not isinstance(metrics, dict):
-            LOGGER.warning("Skip invalid JSON: %s", json_file.name)
+        if not isinstance(metrics, dict) or "repository" not in metrics:
+            LOGGER.warning(
+                "Malformed %s",
+                json_file.name,
+            )
             continue
 
-        if "repository" not in metrics:
-            LOGGER.warning("Skip malformed JSON: %s", json_file.name)
-            continue
+        merge_history(records, metrics)
 
-        append_repository(history, metrics)
-
+    rewrite_history(history, records)
     LOGGER.warning("History Updated.")
 
 
