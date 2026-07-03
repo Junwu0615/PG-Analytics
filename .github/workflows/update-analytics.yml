@@ -31,7 +31,7 @@ jobs:
 
       - name: Collect Repository Metrics
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          PG_TOKEN: ${{ secrets.PG_TOKEN }}
         run: |
           python scripts/collect.py
 
@@ -45,12 +45,12 @@ jobs:
 
       - name: Commit Analytics
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          PG_TOKEN: ${{ secrets.PG_TOKEN }}
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           
-          git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/${{ github.repository }}.git
+          git remote set-url origin https://x-access-token:${PG_TOKEN}@github.com/${{ github.repository }}.git
           
           git add .
           git diff --cached --quiet || git commit -m "chore(analytics): update repository metrics"
