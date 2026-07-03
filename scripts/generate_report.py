@@ -222,7 +222,7 @@ def generate_growth(repositories: list[dict]) -> str:
             repository_rows[repository].append(row)
 
     lines = []
-    lines.append("| *📁 Repository* | *⭐ Growth* | *👀 Views ↑* | *📥 Clones ↑* |")
+    lines.append("| *📁 Repository* | *⭐ Stars ↑* | *👀 Views ↑* | *📥 Clones ↑* |")
     lines.append("|:--|--:|--:|--:|")
 
     for repo, rows in sorted(repository_rows.items()):
@@ -235,13 +235,13 @@ def generate_growth(repositories: list[dict]) -> str:
             first = rows[0]
             last = rows[-1]
             star_growth = (
-                int(last["stars"])- int(first["stars"])
+                int(last["stars"]) - int(first["stars"])
             )
             view_growth = (
-                int(last["views"])- int(first["views"])
+                int(last["views"]) - int(first["views"])
             )
             clone_growth = (
-                int(last["clones"])- int(first["clones"])
+                int(last["clones"]) - int(first["clones"])
             )
 
         lines.append(
