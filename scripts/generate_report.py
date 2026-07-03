@@ -200,7 +200,7 @@ def generate_summary(repositories: list[dict]) -> dict:
     | **Unique Clones** | {summary.get('unique_clones', 0)} |
     
     > _Note : Metrics are aggregated across all tracked repositories._
-    > _Generated at : {data.get('generated_at', 'N/A')}_
+    > _Generated at : {summary.get('generated_at', 'N/A')}_
     """
     return report
 
