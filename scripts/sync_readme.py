@@ -53,6 +53,9 @@ def main():
     growth = load_section(REPORT_DIR / "growth.md")
     readme = inject_section(readme, "growth", growth)
 
+    summary = load_section(REPORT_DIR / "summary.md")
+    readme = inject_section(readme, "summary", summary)
+
     README.write_text(readme, encoding="utf-8")
 
     LOGGER.warning("Sync README Done.")
