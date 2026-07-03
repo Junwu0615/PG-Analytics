@@ -13,6 +13,7 @@
  | PG-Airflow-DAGs | 1 | 0 | 8 | 29 |
 - ### *Summary*
   - *Repository : 11*
-  - *Stars : 12*
-  - *Views ( 14 days ) : 411*
-  - *Clones ( 14 days ) : 1595*
+  - *⭐ Stars : 12*
+  - *🍴 Forks : 0*
+  - *👀 Views ( 14 days ) : 411*
+  - *📥 Clones ( 14 days ) : 1595*

@@ -90,8 +90,8 @@ README.md
 ### *📋　Repository Summary Report*
 
 <!-- summary:start -->
-| Metric | Value |
-|:--|:--|
+| Metric | 🧮 Value |
+|:--|--:|
 | **Total Repositories** | 11 |
 | **Total Stars** | 12 |
 | **Total Forks** | 0 |
@@ -100,7 +100,7 @@ README.md
 | **Unique Clones** | 598 |
 > _Note : Metrics are aggregated across all tracked repositories._
 >
-> _Generated at : 2026-07-03T21:31:05.369595_
+> _Generated at : 2026-07-03T21:36:20.631232_
 <!-- summary:end -->
 
 <br>
@@ -123,9 +123,10 @@ README.md
  | PG-Airflow-DAGs | 1 | 0 | 8 | 29 |
 - ### *Summary*
   - *Repository : 11*
-  - *Stars : 12*
-  - *Views ( 14 days ) : 411*
-  - *Clones ( 14 days ) : 1595*
+  - *⭐ Stars : 12*
+  - *🍴 Forks : 0*
+  - *👀 Views ( 14 days ) : 411*
+  - *📥 Clones ( 14 days ) : 1595*
 <!-- dashboard:end -->
 
 <br>
@@ -147,10 +148,10 @@ README.md
 | PG-Edge-Container | 5 | 1 | 60 | 27 |
 | PG-Airflow-DAGs | 8 | 3 | 29 | 14 |
 - ### *Summary*
-  - *Views ( 14 Days ) : 411*
-  - *Clones ( 14 Days ) : 1595*
-  - *Unique Visitors : 32*
-  - *Unique Cloners : 598*
+  - *👀 Views ( 14 Days ) : 411*
+  - *👀 Unique Visitors : 32*
+  - *📥 Clones ( 14 Days ) : 1595*
+  - *📥 Unique Cloners : 598*
 <!-- traffic:end -->
 
 <br>

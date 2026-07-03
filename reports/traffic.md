@@ -12,7 +12,7 @@
 | PG-Edge-Container | 5 | 1 | 60 | 27 |
 | PG-Airflow-DAGs | 8 | 3 | 29 | 14 |
 - ### *Summary*
-  - *Views ( 14 Days ) : 411*
-  - *Clones ( 14 Days ) : 1595*
-  - *Unique Visitors : 32*
-  - *Unique Cloners : 598*
+  - *👀 Views ( 14 Days ) : 411*
+  - *👀 Unique Visitors : 32*
+  - *📥 Clones ( 14 Days ) : 1595*
+  - *📥 Unique Cloners : 598*
