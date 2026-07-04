@@ -105,6 +105,8 @@ def generate_dashboard(repositories: list[dict]) -> str:
         return "> _Repository Dashboard :　No repositories available_"
 
     lines = []
+    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
+    lines.append("")
     lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *👀 Views* | *👤 Unique Visitors* | *📥 Clones* | *👤 Unique Cloners* |")
     lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
 
@@ -143,7 +145,6 @@ def generate_dashboard(repositories: list[dict]) -> str:
     lines.append(f"  - *👤 Unique Visitors ( 14 days ) :　{total_unique_views}*")
     lines.append(f"  - *📥 Clones ( 14 days ) :　{total_clones}*")
     lines.append(f"  - *👤 Unique Cloners ( 14 days ) :　{total_unique_clones}*")
-    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
@@ -156,6 +157,10 @@ def generate_traffic(repositories: list[dict]) -> str:
         return "> _Traffic Analytics :　No repositories available._"
 
     lines = []
+    lines.append("> _Traffic in the past 14 days_")
+    lines.append(">")
+    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
+    lines.append("")
     lines.append("| *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |")
     lines.append("|:--|--:|--:|--:|--:|")
 
@@ -193,7 +198,6 @@ def generate_traffic(repositories: list[dict]) -> str:
     lines.append(f"  - *👤 Unique Visitors :　{total_unique_views}*")
     lines.append(f"  - *📥 Clones ( 14 Days ) :　{total_clones}*")
     lines.append(f"  - *👤 Unique Cloners :　{total_unique_clones}*")
-    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
@@ -237,6 +241,10 @@ def generate_summary(summary_dict: dict) -> str:
     Summary 統計 => 建立 Markdown 表格結構
     """
     lines = []
+    lines.append(f"> _Note :　Metrics are aggregated across all tracked repositories._")
+    lines.append(">")
+    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
+    lines.append("")
     lines.append("| *📐 Metric* | *🧮 Value* |")
     lines.append("|:--|--:|")
     lines.append(f"| *📁 Total Repositories* | *{summary_dict['repository_count']}* |")
@@ -246,9 +254,6 @@ def generate_summary(summary_dict: dict) -> str:
     lines.append(f"| *👤 Unique Visitors* | *{summary_dict['unique_views']}* |")
     lines.append(f"| *📥 Total Clones* | *{summary_dict['clones']}* |")
     lines.append(f"| *👤 Unique Cloners* | *{summary_dict['unique_clones']}* |")
-    lines.append(f"> _Note :　Metrics are aggregated across all tracked repositories._")
-    lines.append(f">")
-    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
@@ -288,6 +293,9 @@ def generate_growth() -> str:
 
     # Markdown
     lines = []
+    lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
+    lines.append(">")
+    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("| *📁 Repository* | *⭐ Stars ↕* | *👀 Forks ↕* | *📥 Open Issues ↕* |")
     lines.append("|:--|--:|--:|--:|")
 
@@ -308,13 +316,6 @@ def generate_growth() -> str:
             f"*{fork_growth:+d}* | "
             f"*{open_issues_growth:+d}* |"
         )
-
-    # lines.append(f"> _Statistical Scope :　"
-    #              f"**{'-'.join(history[0].stem.split('-')[:2])}** → "
-    #              f"**{'-'.join(history[-1].stem.split('-')[:2])}**_")
-    lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
-    lines.append(">")
-    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
