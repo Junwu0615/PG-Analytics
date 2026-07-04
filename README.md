@@ -2,6 +2,8 @@
 [![Back to HomePage](https://img.shields.io/badge/%F0%9F%8C%90_Back_to-HomePage-blue?style=flat-square)](https://github.com/Junwu0615/Platform-Genesis)
 
 ## *⭐ Platform Genesis Universe Analytics ⭐*
+> _🧟‍♂️ Initial startup time data ( March – June 2026 ) was not_ 
+> _captured due to the absence of a record-keeping script._
 
 <br>
 
@@ -96,12 +98,6 @@ README.md
 
 </ul>
 </details>
-
-<br>
-
-<br>
-
-> _🧟‍♂️ Initial startup time data ( March – June 2026 ) was not captured due to the absence of a record-keeping script._
 
 <br>
 
