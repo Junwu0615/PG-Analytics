@@ -1,3 +1,7 @@
+> _Note :　Metrics are aggregated across all tracked repositories._
+>
+> _Generated at [ UTC+0 ] :　2026-07-04T07:28:20_
+
 | *📐 Metric* | *🧮 Value* |
 |:--|--:|
 | *📁 Total Repositories* | *11* |
@@ -7,6 +11,3 @@
 | *👤 Unique Visitors* | *34* |
 | *📥 Total Clones* | *1670* |
 | *👤 Unique Cloners* | *641* |
-> _Note :　Metrics are aggregated across all tracked repositories._
->
-> _Generated at [ UTC+0 ] :　2026-07-04T07:21:56_
