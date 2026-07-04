@@ -296,6 +296,7 @@ def generate_growth() -> str:
     lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
     lines.append(">")
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
+    lines.append("")
     lines.append("| *📁 Repository* | *⭐ Stars ↕* | *👀 Forks ↕* | *📥 Open Issues ↕* |")
     lines.append("|:--|--:|--:|--:|")
 
