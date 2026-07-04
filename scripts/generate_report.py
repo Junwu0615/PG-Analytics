@@ -107,7 +107,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
     lines = []
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("")
-    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *👀 Views* | *👤 Unique Visitors* | *📥 Clones* | *👤 Unique Cloners* |")
+    lines.append(" | *📁<br>Repository* | *⭐<br>Stars* | *🍴<br>Forks* | *👀<br>Views* | *👤<br>Unique Visitors* | *📥<br>Clones* | *👤<br>Unique Cloners* |")
     lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
 
     total_views = 0
