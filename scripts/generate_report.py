@@ -15,8 +15,8 @@ License:
 """
 from __future__ import annotations
 import csv
-from pathlib import Path
-from datetime import datetime
+# from pathlib import Path
+# from datetime import datetime
 from utils import (
     utc_now,
     save_json,
@@ -69,13 +69,15 @@ def generate_dashboard(repositories: list[dict]) -> str:
         return "> _Repository Dashboard :　No repositories available_"
 
     lines = []
-    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *👀 Views* | *📥 Clones* |")
-    lines.append(" |:--|--:|--:|--:|--:|")
+    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *👀 Views* | *👤 Unique Visitors* | *📥 Clones* | *👤 Unique Cloners* |")
+    lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
 
     total_views = 0
     total_clones = 0
     total_stars = 0
     total_forks = 0
+    total_unique_views = 0
+    total_unique_clones = 0
 
     for repo in repositories:
         repo_name = repo.get("repository", "unknown")
@@ -89,20 +91,26 @@ def generate_dashboard(repositories: list[dict]) -> str:
         forks = metrics.get("forks", 0)
         view_count = views.get("count", 0)
         clone_count = clones.get("count", 0)
+        unique_views = views.get("uniques", 0)
+        unique_clones = clones.get("uniques", 0)
 
         total_stars += stars
         total_forks += forks
         total_views += view_count
         total_clones += clone_count
+        total_unique_views += unique_views
+        total_unique_clones += unique_clones
 
-        lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{view_count}* | *{clone_count}* |")
+        lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{view_count}* | *{unique_views}* | *{clone_count}* | *{unique_clones}* |")
 
     lines.append("- ### *Summary*")
     lines.append(f"  - *📁 Repository :　{len(repositories)}*")
     lines.append(f"  - *⭐ Stars :　{total_stars}*")
     lines.append(f"  - *🍴 Forks :　{total_forks}*")
     lines.append(f"  - *👀 Views ( 14 days ) :　{total_views}*")
+    lines.append(f"  - *👤 Unique Visitors ( 14 days ) :　{total_unique_views}*")
     lines.append(f"  - *📥 Clones ( 14 days ) :　{total_clones}*")
+    lines.append(f"  - *👤 Unique Cloners ( 14 days ) :　{total_unique_clones}*")
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
@@ -159,7 +167,10 @@ def generate_traffic(repositories: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def generate_summary(repositories: list[dict]) -> dict:
+def build_summary(repositories: list[dict]) -> dict:
+    """
+    Summary 統計 => 儲存 json
+    """
     summary = {
         "repository_count": len(repositories),
         "stars": 0,
@@ -170,30 +181,37 @@ def generate_summary(repositories: list[dict]) -> dict:
         "unique_clones": 0,
     }
     for repo in repositories:
-        metrics = repo.get("repository_metrics", {})
-        traffic = repo.get("traffic", {})
-        views = traffic.get("views", {})
-        clones = traffic.get("clones", {})
+        metrics = repo.get("repository_metrics", {}) or {}
+        traffic = repo.get("traffic", {}) or {}
+        views = traffic.get("views", {}) or {}
+        clones = traffic.get("clones", {}) or {}
+
         summary["stars"] += metrics.get("stars", 0)
         summary["forks"] += metrics.get("forks", 0)
         summary["views"] += views.get("count", 0)
-        summary["unique_views"] += views.get("uniques", 0)
         summary["clones"] += clones.get("count", 0)
+
+        summary["unique_views"] += views.get("uniques", 0)
         summary["unique_clones"] += clones.get("uniques", 0)
 
     save_json(DATA_DIR / "summary.json", summary)
+    return summary
 
-    # 建立 Markdown 表格結構
+
+def generate_summary(summary_dict: dict) -> str:
+    """
+    Summary 統計 => 建立 Markdown 表格結構
+    """
     lines = []
     lines.append("| *📐 Metric* | *🧮 Value* |")
     lines.append("|:--|--:|")
-    lines.append(f"| *📁 Total Repositories* | *{summary.get('repository_count', 0)}* |")
-    lines.append(f"| *⭐ Total Stars* | *{summary.get('stars', 0)}* |")
-    lines.append(f"| *🍴 Total Forks* | *{summary.get('forks', 0)}* |")
-    lines.append(f"| *👀 Total Views* | *{summary.get('views', 0)}* |")
-    lines.append(f"| *📥 Total Clones* | *{summary.get('clones', 0)}* |")
-    lines.append(f"| *👤 Unique Visitors* | *{summary.get('unique_views', 0)}* |")
-    lines.append(f"| *👤 Unique Clones* | *{summary.get('unique_clones', 0)}* |")
+    lines.append(f"| *📁 Total Repositories* | *{summary_dict.get('repository_count', 0)}* |")
+    lines.append(f"| *⭐ Total Stars* | *{summary_dict.get('stars', 0)}* |")
+    lines.append(f"| *🍴 Total Forks* | *{summary_dict.get('forks', 0)}* |")
+    lines.append(f"| *👀 Total Views* | *{summary_dict.get('views', 0)}* |")
+    lines.append(f"| *👤 Unique Visitors* | *{summary_dict.get('unique_views', 0)}* |")
+    lines.append(f"| *📥 Total Clones* | *{summary_dict.get('clones', 0)}* |")
+    lines.append(f"| *👤 Unique Cloners* | *{summary_dict.get('unique_clones', 0)}* |")
     lines.append(f"> _Note :　Metrics are aggregated across all tracked repositories._")
     lines.append(f">")
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
@@ -201,11 +219,10 @@ def generate_summary(repositories: list[dict]) -> dict:
     return "\n".join(lines)
 
 
-def generate_growth(repositories: list[dict]) -> str:
+def generate_growth() -> str:
     """
     Generate growth report from historical CSV snapshots.
     """
-
     history = sorted(HISTORY_DIR.glob("*.csv"))
     if not history:
         return "> _Growth Analytics :　No history available._"
@@ -273,15 +290,17 @@ def main():
     LOGGER.info("Generate Reports ...")
     repositories = load_repositories()
 
+    summary_dict = build_summary(repositories)
     reports = {
         "dashboard.md": generate_dashboard(repositories),
         "traffic.md": generate_traffic(repositories),
-        "growth.md": generate_growth(repositories),
-        "summary.md": generate_summary(repositories),
+        "growth.md": generate_growth(),
+        "summary.md": generate_summary(summary_dict),
     }
     for filename, content in reports.items():
         if not isinstance(content, str):
-            LOGGER.warning("Warning: Content for %s is type %s, not str. Converting to str.", filename, type(content))
+            LOGGER.warning("Warning: Content for %s is type %s, not str. "
+                           "Converting to str.", filename, type(content))
             content = str(content)
 
         write_markdown(REPORT_DIR / filename, content)

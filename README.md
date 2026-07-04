@@ -64,36 +64,35 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 
 ```bash
 # STAGE. 1
-collect.py
-   ↓
-data/latest/*.json
-( 最新快照 )
+ • collect.py
+      ↓
+ • data/latest/*.json
+   ( 最新快照 )
 
 
 # STAGE. 2
-export_history.py
-   ↓
-history/YYYY-MM-history.csv
-( 每日快照累積 / 按月分區 )
+ • export_history.py
+      ↓
+ • history/YYYY-MM-history.csv
+   ( 每日快照累積 / 按月分區 )
 
 
 # STAGE. 3
-generate_report.py
-   ↓
-data/summary.json
-( 所有 Repo 最新統計總覽 )
-   ↓
-summary.md
-dashboard.md
-traffic.md
-growth.md
-
+ • generate_report.py
+      ↓
+ • data/summary.json
+   ( 所有 Repo 最新統計總覽 )
+      ↓
+ • dashboard.md ( 目前快照 )
+ • traffic.md ( 近 14 天流量 )
+ • growth.md ( 本月累積成長 )
+ • summary.md ( 總覽報表 )
 
 # STAGE. 4
-sync_readme.py
-   ↓
-README.md
-( 所有 Report 渲染至首頁 )
+ • sync_readme.py
+      ↓
+ • README.md
+   ( 所有 Report 渲染至首頁 )
 ```
 
 </ul>
