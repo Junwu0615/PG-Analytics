@@ -66,7 +66,7 @@ def load_repositories() -> list[dict]:
 
 def generate_dashboard(repositories: list[dict]) -> str:
     if not repositories:
-        return "> _Repository Dashboard : No repositories available_"
+        return "> _Repository Dashboard :　No repositories available_"
 
     lines = []
     lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *👀 Views* | *📥 Clones* |")
@@ -98,12 +98,12 @@ def generate_dashboard(repositories: list[dict]) -> str:
         lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{view_count}* | *{clone_count}* |")
 
     lines.append("- ### *Summary*")
-    lines.append(f"  - *📁 Repository : {len(repositories)}*")
-    lines.append(f"  - *⭐ Stars : {total_stars}*")
-    lines.append(f"  - *🍴 Forks : {total_forks}*")
-    lines.append(f"  - *👀 Views ( 14 days ) : {total_views}*")
-    lines.append(f"  - *📥 Clones ( 14 days ) : {total_clones}*")
-    lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
+    lines.append(f"  - *📁 Repository :　{len(repositories)}*")
+    lines.append(f"  - *⭐ Stars :　{total_stars}*")
+    lines.append(f"  - *🍴 Forks :　{total_forks}*")
+    lines.append(f"  - *👀 Views ( 14 days ) :　{total_views}*")
+    lines.append(f"  - *📥 Clones ( 14 days ) :　{total_clones}*")
+    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
@@ -113,7 +113,7 @@ def generate_traffic(repositories: list[dict]) -> str:
     Generate repository traffic report.
     """
     if not repositories:
-        return "> _Traffic Analytics : No repositories available._"
+        return "> _Traffic Analytics :　No repositories available._"
 
     lines = []
     lines.append("| *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |")
@@ -150,11 +150,11 @@ def generate_traffic(repositories: list[dict]) -> str:
         )
 
     lines.append("- ### *Summary*")
-    lines.append(f"  - *👀 Views ( 14 Days ) : {total_views}*")
-    lines.append(f"  - *👤 Unique Visitors : {total_unique_views}*")
-    lines.append(f"  - *📥 Clones ( 14 Days ) : {total_clones}*")
-    lines.append(f"  - *👤 Unique Cloners : {total_unique_clones}*")
-    lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
+    lines.append(f"  - *👀 Views ( 14 Days ) :　{total_views}*")
+    lines.append(f"  - *👤 Unique Visitors :　{total_unique_views}*")
+    lines.append(f"  - *📥 Clones ( 14 Days ) :　{total_clones}*")
+    lines.append(f"  - *👤 Unique Cloners :　{total_unique_clones}*")
+    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
@@ -194,9 +194,9 @@ def generate_summary(repositories: list[dict]) -> dict:
     lines.append(f"| *📥 Total Clones* | *{summary.get('clones', 0)}* |")
     lines.append(f"| *👤 Unique Visitors* | *{summary.get('unique_views', 0)}* |")
     lines.append(f"| *👤 Unique Clones* | *{summary.get('unique_clones', 0)}* |")
-    lines.append(f"> _Note : Metrics are aggregated across all tracked repositories._")
+    lines.append(f"> _Note :　Metrics are aggregated across all tracked repositories._")
     lines.append(f">")
-    lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
+    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 
@@ -208,7 +208,7 @@ def generate_growth(repositories: list[dict]) -> str:
 
     history = sorted(HISTORY_DIR.glob("*.csv"))
     if not history:
-        return "> _Growth Analytics : No history available._"
+        return "> _Growth Analytics :　No history available._"
 
     first_record = {
         repo: None
@@ -219,26 +219,25 @@ def generate_growth(repositories: list[dict]) -> str:
         for repo in SORTED_LIST
     }
 
-    # Scan every history csv
-    for csv_file in history:
+    # Scan history csv
+    csv_file = history[-1]
+    with csv_file.open("r", encoding="utf-8", newline="") as fp:
+        reader = csv.DictReader(fp)
+        for row in reader:
+            repo = row.get("repository")
+            if repo not in SORTED_LIST:
+                continue
 
-        with csv_file.open("r", encoding="utf-8", newline="") as fp:
-            reader = csv.DictReader(fp)
-            for row in reader:
-                repo = row.get("repository")
-                if repo not in SORTED_LIST:
-                    continue
+            # first occurrence
+            if first_record[repo] is None:
+                first_record[repo] = row
 
-                # first occurrence
-                if first_record[repo] is None:
-                    first_record[repo] = row
-
-                # keep newest
-                last_record[repo] = row
+            # keep newest
+            last_record[repo] = row
 
     # Markdown
     lines = []
-    lines.append("| *📁 Repository* | *⭐ Stars ↑* | *👀 Views ↑* | *📥 Clones ↑* |")
+    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *👀 Forks ↕* | *📥 Open Issues ↕* |")
     lines.append("|:--|--:|--:|--:|")
 
     for repo in SORTED_LIST:
@@ -249,21 +248,22 @@ def generate_growth(repositories: list[dict]) -> str:
             continue
 
         star_growth = int(last["stars"]) - int(first["stars"])
-        view_growth = int(last["views"]) - int(first["views"])
-        clone_growth = int(last["clones"]) - int(first["clones"])
+        fork_growth = int(last["forks"]) - int(first["forks"])
+        open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
 
         lines.append(
             f"| *{repo}* | "
             f"*{star_growth:+d}* | "
-            f"*{view_growth:+d}* | "
-            f"*{clone_growth:+d}* |"
+            f"*{fork_growth:+d}* | "
+            f"*{open_issues_growth:+d}* |"
         )
 
-    lines.append(f"> _Statistical Scope : "
-                 f"**{'-'.join(history[0].stem.split('-')[:2])}** → "
-                 f"**{'-'.join(history[-1].stem.split('-')[:2])}**_")
+    # lines.append(f"> _Statistical Scope :　"
+    #              f"**{'-'.join(history[0].stem.split('-')[:2])}** → "
+    #              f"**{'-'.join(history[-1].stem.split('-')[:2])}**_")
+    lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
     lines.append(">")
-    lines.append(f"> _Generated at [ UTC+0 ] : {str(utc_now().isoformat())[:19]}_")
+    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
 
     return "\n".join(lines)
 

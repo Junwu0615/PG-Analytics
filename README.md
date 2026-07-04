@@ -173,7 +173,7 @@ README.md
 
 <br>
 
-### *📈　Growth Analytics*
+### *📈　Monthly Growth Analytics*
 
 <!-- growth:start -->
 | *📁 Repository* | *⭐ Stars ↑* | *👀 Views ↑* | *📥 Clones ↑* |
