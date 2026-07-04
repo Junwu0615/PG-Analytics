@@ -64,6 +64,42 @@ def load_repositories() -> list[dict]:
     return repositories
 
 
+def extract_metrics(repo: dict) -> dict:
+    """
+    Extract normalized repository metrics.
+
+    Returns
+    -------
+    {
+        "repository": str,
+        "stars": int,
+        "forks": int,
+        "watchers": int,
+        "open_issues": int,
+        "views": int,
+        "unique_views": int,
+        "clones": int,
+        "unique_clones": int,
+    }
+    """
+    metrics = repo.get("repository_metrics", {}) or {}
+    traffic = repo.get("traffic", {}) or {}
+    views = traffic.get("views", {}) or {}
+    clones = traffic.get("clones", {}) or {}
+
+    return {
+        "repository": repo.get("repository", "unknown") or {},
+        "stars": int(metrics.get("stars", 0)),
+        "forks": int(metrics.get("forks", 0)),
+        "watchers": int(metrics.get("watchers", 0)),
+        "open_issues": int(metrics.get("open_issues", 0)),
+        "views": int(views.get("count", 0)),
+        "unique_views": int(views.get("uniques", 0)),
+        "clones": int(clones.get("count", 0)),
+        "unique_clones": int(clones.get("uniques", 0)),
+    }
+
+
 def generate_dashboard(repositories: list[dict]) -> str:
     if not repositories:
         return "> _Repository Dashboard :　No repositories available_"
@@ -80,28 +116,24 @@ def generate_dashboard(repositories: list[dict]) -> str:
     total_unique_clones = 0
 
     for repo in repositories:
-        repo_name = repo.get("repository", "unknown")
+        metrics = extract_metrics(repo)
 
-        metrics = repo.get("repository_metrics", {}) or {}
-        traffic = repo.get("traffic", {}) or {}
-        views = traffic.get("views", {}) or {}
-        clones = traffic.get("clones", {}) or {}
-
-        stars = metrics.get("stars", 0)
-        forks = metrics.get("forks", 0)
-        view_count = views.get("count", 0)
-        clone_count = clones.get("count", 0)
-        unique_views = views.get("uniques", 0)
-        unique_clones = clones.get("uniques", 0)
+        repo_name = metrics["repository"]
+        stars = metrics["stars"]
+        forks = metrics["forks"]
+        views = metrics["views"]
+        clones = metrics["clones"]
+        unique_views = metrics["unique_views"]
+        unique_clones = metrics["unique_clones"]
 
         total_stars += stars
         total_forks += forks
-        total_views += view_count
-        total_clones += clone_count
+        total_views += views
+        total_clones += clones
         total_unique_views += unique_views
         total_unique_clones += unique_clones
 
-        lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{view_count}* | *{unique_views}* | *{clone_count}* | *{unique_clones}* |")
+        lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{views}* | *{unique_views}* | *{clones}* | *{unique_clones}* |")
 
     lines.append("- ### *Summary*")
     lines.append(f"  - *📁 Repository :　{len(repositories)}*")
@@ -133,27 +165,26 @@ def generate_traffic(repositories: list[dict]) -> str:
     total_unique_clones = 0
 
     for repo in repositories:
-        repo_name = repo.get("repository", "unknown")
+        metrics = extract_metrics(repo)
 
-        traffic = repo.get("traffic", {}) or {}
-        views = traffic.get("views", {}) or {}
-        clones = traffic.get("clones", {}) or {}
+        repo_name = metrics["repository"]
+        # stars = metrics["stars"]
+        # forks = metrics["forks"]
+        views = metrics["views"]
+        clones = metrics["clones"]
+        unique_views = metrics["unique_views"]
+        unique_clones = metrics["unique_clones"]
 
-        view_count = int(views.get("count", 0))
-        unique_views = int(views.get("uniques", 0))
-        clone_count = int(clones.get("count", 0))
-        unique_clones = int(clones.get("uniques", 0))
-
-        total_views += view_count
+        total_views += views
         total_unique_views += unique_views
-        total_clones += clone_count
+        total_clones += clones
         total_unique_clones += unique_clones
 
         lines.append(
             f"| *{repo_name}* | "
-            f"*{view_count}* | "
+            f"*{views}* | "
             f"*{unique_views}* | "
-            f"*{clone_count}* | "
+            f"*{clones}* | "
             f"*{unique_clones}* |"
         )
 
@@ -181,18 +212,21 @@ def build_summary(repositories: list[dict]) -> dict:
         "unique_clones": 0,
     }
     for repo in repositories:
-        metrics = repo.get("repository_metrics", {}) or {}
-        traffic = repo.get("traffic", {}) or {}
-        views = traffic.get("views", {}) or {}
-        clones = traffic.get("clones", {}) or {}
+        metrics = extract_metrics(repo)
 
-        summary["stars"] += metrics.get("stars", 0)
-        summary["forks"] += metrics.get("forks", 0)
-        summary["views"] += views.get("count", 0)
-        summary["clones"] += clones.get("count", 0)
+        stars = metrics["stars"]
+        forks = metrics["forks"]
+        views = metrics["views"]
+        clones = metrics["clones"]
+        unique_views = metrics["unique_views"]
+        unique_clones = metrics["unique_clones"]
 
-        summary["unique_views"] += views.get("uniques", 0)
-        summary["unique_clones"] += clones.get("uniques", 0)
+        summary["stars"] += stars
+        summary["forks"] += forks
+        summary["views"] += views
+        summary["clones"] += clones
+        summary["unique_views"] += unique_views
+        summary["unique_clones"] += unique_clones
 
     save_json(DATA_DIR / "summary.json", summary)
     return summary
@@ -205,13 +239,13 @@ def generate_summary(summary_dict: dict) -> str:
     lines = []
     lines.append("| *📐 Metric* | *🧮 Value* |")
     lines.append("|:--|--:|")
-    lines.append(f"| *📁 Total Repositories* | *{summary_dict.get('repository_count', 0)}* |")
-    lines.append(f"| *⭐ Total Stars* | *{summary_dict.get('stars', 0)}* |")
-    lines.append(f"| *🍴 Total Forks* | *{summary_dict.get('forks', 0)}* |")
-    lines.append(f"| *👀 Total Views* | *{summary_dict.get('views', 0)}* |")
-    lines.append(f"| *👤 Unique Visitors* | *{summary_dict.get('unique_views', 0)}* |")
-    lines.append(f"| *📥 Total Clones* | *{summary_dict.get('clones', 0)}* |")
-    lines.append(f"| *👤 Unique Cloners* | *{summary_dict.get('unique_clones', 0)}* |")
+    lines.append(f"| *📁 Total Repositories* | *{summary_dict['repository_count']}* |")
+    lines.append(f"| *⭐ Total Stars* | *{summary_dict['stars']}* |")
+    lines.append(f"| *🍴 Total Forks* | *{summary_dict['forks']}* |")
+    lines.append(f"| *👀 Total Views* | *{summary_dict['views']}* |")
+    lines.append(f"| *👤 Unique Visitors* | *{summary_dict['unique_views']}* |")
+    lines.append(f"| *📥 Total Clones* | *{summary_dict['clones']}* |")
+    lines.append(f"| *👤 Unique Cloners* | *{summary_dict['unique_clones']}* |")
     lines.append(f"> _Note :　Metrics are aggregated across all tracked repositories._")
     lines.append(f">")
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
