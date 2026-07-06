@@ -1,6 +1,4 @@
 > _Note :　Metrics are aggregated across all tracked repositories._
->
-> _Generated at [ UTC+0 ] :　2026-07-06T13:04:20_
 
 | *📐 Metric* | *🧮 Value* |
 |:--|--:|
