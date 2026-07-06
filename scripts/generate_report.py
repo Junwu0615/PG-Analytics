@@ -313,7 +313,7 @@ def generate_summary(summary_dict: dict) -> str:
     return "\n".join(lines)
 
 
-def generate_update():
+def generate_update_time():
     # Markdown
     lines = []
     lines.append(">")
@@ -333,7 +333,7 @@ def main():
         "traffic.md": generate_traffic(repositories),
         "growth.md": generate_growth(),
         "summary.md": generate_summary(summary_dict),
-        "update.md": generate_update(),
+        "update_time.md": generate_update_time(),
     }
     for filename, content in reports.items():
         if not isinstance(content, str):

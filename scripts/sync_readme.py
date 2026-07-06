@@ -56,6 +56,9 @@ def main():
     summary = load_section(REPORT_DIR / "summary.md")
     readme = inject_section(readme, "summary", summary)
 
+    update_time = load_section(REPORT_DIR / "update_time.md")
+    readme = inject_section(readme, "update_time", update)
+
     README.write_text(readme, encoding="utf-8")
 
     LOGGER.warning("Sync README Done.")
