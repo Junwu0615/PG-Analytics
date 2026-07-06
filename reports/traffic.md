@@ -1,4 +1,4 @@
-> _Traffic in the past 14 days_
+> _Traffic in the past **14 Days**_
 
 | *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |
 |:--|--:|--:|--:|--:|
@@ -14,7 +14,7 @@
 | *PG-Edge-Container* | *13* | *1* | *18* | *14* |
 | *PG-Airflow-DAGs* | *16* | *3* | *8* | *8* |
 - ### *Summary*
-  - *👀 Views ( 14 Days ) :　967*
-  - *👤 Unique Visitors  ( 14 Days ) :　45*
-  - *📥 Clones ( 14 Days ) :　2219*
-  - *👤 Unique Cloners  ( 14 Days ) :　873*
+  - *👀 Views :　967*
+  - *👤 Unique Visitors :　45*
+  - *📥 Clones :　2219*
+  - *👤 Unique Cloners :　873*
