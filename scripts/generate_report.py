@@ -137,14 +137,14 @@ def generate_dashboard(repositories: list[dict]) -> str:
 
         lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{views}* | *{unique_views}* | *{clones}* | *{unique_clones}* |")
 
-    lines.append("- ### *Summary*")
-    lines.append(f"  - *📁 Repository :　{len(repositories)}*")
-    lines.append(f"  - *⭐ Stars :　{total_stars}*")
-    lines.append(f"  - *🍴 Forks :　{total_forks}*")
-    lines.append(f"  - *👀 Views ( 14 days ) :　{total_views}*")
-    lines.append(f"  - *👤 Unique Visitors ( 14 days ) :　{total_unique_views}*")
-    lines.append(f"  - *📥 Clones ( 14 days ) :　{total_clones}*")
-    lines.append(f"  - *👤 Unique Cloners ( 14 days ) :　{total_unique_clones}*")
+    # lines.append("- ### *Summary*")
+    # lines.append(f"  - *📁 Repository :　{len(repositories)}*")
+    # lines.append(f"  - *⭐ Stars :　{total_stars}*")
+    # lines.append(f"  - *🍴 Forks :　{total_forks}*")
+    # lines.append(f"  - *👀 Views ( 14 days ) :　{total_views}*")
+    # lines.append(f"  - *👤 Unique Visitors ( 14 days ) :　{total_unique_views}*")
+    # lines.append(f"  - *📥 Clones ( 14 days ) :　{total_clones}*")
+    # lines.append(f"  - *👤 Unique Cloners ( 14 days ) :　{total_unique_clones}*")
 
     return "\n".join(lines)
 
@@ -195,9 +195,9 @@ def generate_traffic(repositories: list[dict]) -> str:
 
     lines.append("- ### *Summary*")
     lines.append(f"  - *👀 Views ( 14 Days ) :　{total_views}*")
-    lines.append(f"  - *👤 Unique Visitors :　{total_unique_views}*")
+    lines.append(f"  - *👤 Unique Visitors  ( 14 Days ) :　{total_unique_views}*")
     lines.append(f"  - *📥 Clones ( 14 Days ) :　{total_clones}*")
-    lines.append(f"  - *👤 Unique Cloners :　{total_unique_clones}*")
+    lines.append(f"  - *👤 Unique Cloners  ( 14 Days ) :　{total_unique_clones}*")
 
     return "\n".join(lines)
 
@@ -275,7 +275,7 @@ def generate_growth() -> str:
         for repo in SORTED_LIST
     }
 
-    # Scan history csv
+    # TODO Scan history csv ( Get Latest Record.csv )
     csv_file = history[-1]
     with csv_file.open("r", encoding="utf-8", newline="") as fp:
         reader = csv.DictReader(fp)
@@ -297,7 +297,7 @@ def generate_growth() -> str:
     lines.append(">")
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("")
-    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *👀 Forks ↕* | *📥 Open Issues ↕* |")
+    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *👀 Views ↕* | *📥 Clones ↕* | *💡 Open Issues ↕* |")
     lines.append("|:--|--:|--:|--:|")
 
     for repo in SORTED_LIST:
@@ -309,12 +309,23 @@ def generate_growth() -> str:
 
         star_growth = int(last["stars"]) - int(first["stars"])
         fork_growth = int(last["forks"]) - int(first["forks"])
+
+        views_growth = 0
+        views_growth += int(last["views"]) - int(first["views"])
+        views_growth += int(last["unique_views"]) - int(first["unique_views"])
+
+        clones_growth = 0
+        clones_growth += int(last["clones"]) - int(first["clones"])
+        clones_growth += int(last["unique_clones"]) - int(first["unique_clones"])
+
         open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
 
         lines.append(
             f"| *{repo}* | "
             f"*{star_growth:+d}* | "
             f"*{fork_growth:+d}* | "
+            f"*{views_growth:+d}* | "
+            f"*{clones_growth:+d}* | "
             f"*{open_issues_growth:+d}* |"
         )
 
