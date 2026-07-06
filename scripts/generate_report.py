@@ -17,6 +17,7 @@ from __future__ import annotations
 import csv
 # from pathlib import Path
 # from datetime import datetime
+from decimal  import Decimal, ROUND_HALF_UP
 from utils import (
     utc_now,
     save_json,
@@ -99,9 +100,9 @@ def extract_metrics(repo: dict) -> dict:
         "unique_views": int(views.get("uniques", 0)),
         "clones": int(clones.get("count", 0)),
         "unique_clones": int(clones.get("uniques", 0)),
-        "created_at": activity.get("created_at", "")[:19],
-        "updated_at": activity.get("updated_at", "")[:19],
-        "pushed_at": activity.get("pushed_at", "")[:19],
+        "created_at": activity.get("created_at", "")[:10],
+        "updated_at": activity.get("updated_at", "")[:10],
+        "pushed_at": activity.get("pushed_at", "")[:10],
     }
 
 
@@ -110,7 +111,6 @@ def generate_dashboard(repositories: list[dict]) -> str:
         return "> _Repository Dashboard :　No repositories available_"
 
     lines = []
-    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("")
     # lines.append(" | *📁<br>Repository* | *⭐<br>Stars* | *🍴<br>Forks* | *👀<br>Views* | *👤<br>Unique Visitors* | *📥<br>Clones* | *👤<br>Unique Cloners* |")
     # lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
@@ -123,7 +123,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
         repo_name = metrics["repository"]
         stars = metrics["stars"]
         forks = metrics["forks"]
-        size = metrics["size_kb"] / 1024
+        size = Decimal(metrics["size_kb"] / 1024).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
         # views = metrics["views"]
         # clones = metrics["clones"]
         # unique_views = metrics["unique_views"]
@@ -146,8 +146,6 @@ def generate_traffic(repositories: list[dict]) -> str:
 
     lines = []
     lines.append("> _Traffic in the past 14 days_")
-    lines.append(">")
-    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("")
     lines.append("| *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |")
     lines.append("|:--|--:|--:|--:|--:|")
@@ -186,6 +184,78 @@ def generate_traffic(repositories: list[dict]) -> str:
     lines.append(f"  - *👤 Unique Visitors  ( 14 Days ) :　{total_unique_views}*")
     lines.append(f"  - *📥 Clones ( 14 Days ) :　{total_clones}*")
     lines.append(f"  - *👤 Unique Cloners  ( 14 Days ) :　{total_unique_clones}*")
+
+    return "\n".join(lines)
+
+
+def generate_growth() -> str:
+    """
+    Generate growth report from historical CSV snapshots.
+    """
+    history = sorted(HISTORY_DIR.glob("*.csv"))
+    if not history:
+        return "> _Growth Analytics :　No history available._"
+
+    first_record = {
+        repo: None
+        for repo in SORTED_LIST
+    }
+    last_record = {
+        repo: None
+        for repo in SORTED_LIST
+    }
+
+    # TODO Scan history csv ( Get Latest Record.csv )
+    csv_file = history[-1]
+    with csv_file.open("r", encoding="utf-8", newline="") as fp:
+        reader = csv.DictReader(fp)
+        for row in reader:
+            repo = row.get("repository")
+            if repo not in SORTED_LIST:
+                continue
+
+            # first occurrence
+            if first_record[repo] is None:
+                first_record[repo] = row
+
+            # keep newest
+            last_record[repo] = row
+
+    # Markdown
+    lines = []
+    lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
+    lines.append("")
+    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *👀 Views ↕* | *📥 Clones ↕* | *💡 Open Issues ↕* |")
+    lines.append("|:--|--:|--:|--:|--:|--:|")
+
+    for repo in SORTED_LIST:
+        first = first_record[repo]
+        last = last_record[repo]
+        if first is None or last is None:
+            lines.append(f"| *{repo}* | *0* | *0* | *0* |")
+            continue
+
+        star_growth = int(last["stars"]) - int(first["stars"])
+        fork_growth = int(last["forks"]) - int(first["forks"])
+
+        views_growth = 0
+        views_growth += int(last["views"]) - int(first["views"])
+        views_growth += int(last["unique_views"]) - int(first["unique_views"])
+
+        clones_growth = 0
+        clones_growth += int(last["clones"]) - int(first["clones"])
+        clones_growth += int(last["unique_clones"]) - int(first["unique_clones"])
+
+        open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
+
+        lines.append(
+            f"| *{repo}* | "
+            f"*{star_growth:+d}* | "
+            f"*{fork_growth:+d}* | "
+            f"*{views_growth:+d}* | "
+            f"*{clones_growth:+d}* | "
+            f"*{open_issues_growth:+d}* |"
+        )
 
     return "\n".join(lines)
 
@@ -230,8 +300,6 @@ def generate_summary(summary_dict: dict) -> str:
     """
     lines = []
     lines.append(f"> _Note :　Metrics are aggregated across all tracked repositories._")
-    lines.append(">")
-    lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("")
     lines.append("| *📐 Metric* | *🧮 Value* |")
     lines.append("|:--|--:|")
@@ -242,81 +310,15 @@ def generate_summary(summary_dict: dict) -> str:
     lines.append(f"| *👤 Total Unique Visitors* | *{summary_dict['unique_views']}* |")
     lines.append(f"| *📥 Total Clones* | *{summary_dict['clones']}* |")
     lines.append(f"| *👤 Total Unique Cloners* | *{summary_dict['unique_clones']}* |")
-
     return "\n".join(lines)
 
 
-def generate_growth() -> str:
-    """
-    Generate growth report from historical CSV snapshots.
-    """
-    history = sorted(HISTORY_DIR.glob("*.csv"))
-    if not history:
-        return "> _Growth Analytics :　No history available._"
-
-    first_record = {
-        repo: None
-        for repo in SORTED_LIST
-    }
-    last_record = {
-        repo: None
-        for repo in SORTED_LIST
-    }
-
-    # TODO Scan history csv ( Get Latest Record.csv )
-    csv_file = history[-1]
-    with csv_file.open("r", encoding="utf-8", newline="") as fp:
-        reader = csv.DictReader(fp)
-        for row in reader:
-            repo = row.get("repository")
-            if repo not in SORTED_LIST:
-                continue
-
-            # first occurrence
-            if first_record[repo] is None:
-                first_record[repo] = row
-
-            # keep newest
-            last_record[repo] = row
-
+def generate_update():
     # Markdown
     lines = []
-    lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
     lines.append(">")
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("")
-    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *👀 Views ↕* | *📥 Clones ↕* | *💡 Open Issues ↕* |")
-    lines.append("|:--|--:|--:|--:|--:|--:|")
-
-    for repo in SORTED_LIST:
-        first = first_record[repo]
-        last = last_record[repo]
-        if first is None or last is None:
-            lines.append(f"| *{repo}* | *0* | *0* | *0* |")
-            continue
-
-        star_growth = int(last["stars"]) - int(first["stars"])
-        fork_growth = int(last["forks"]) - int(first["forks"])
-
-        views_growth = 0
-        views_growth += int(last["views"]) - int(first["views"])
-        views_growth += int(last["unique_views"]) - int(first["unique_views"])
-
-        clones_growth = 0
-        clones_growth += int(last["clones"]) - int(first["clones"])
-        clones_growth += int(last["unique_clones"]) - int(first["unique_clones"])
-
-        open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
-
-        lines.append(
-            f"| *{repo}* | "
-            f"*{star_growth:+d}* | "
-            f"*{fork_growth:+d}* | "
-            f"*{views_growth:+d}* | "
-            f"*{clones_growth:+d}* | "
-            f"*{open_issues_growth:+d}* |"
-        )
-
     return "\n".join(lines)
 
 
@@ -331,17 +333,17 @@ def main():
         "traffic.md": generate_traffic(repositories),
         "growth.md": generate_growth(),
         "summary.md": generate_summary(summary_dict),
+        "update.md": generate_update(),
     }
     for filename, content in reports.items():
         if not isinstance(content, str):
             LOGGER.warning("Warning: Content for %s is type %s, not str. "
                            "Converting to str.", filename, type(content))
             content = str(content)
-
         write_markdown(REPORT_DIR / filename, content)
         LOGGER.info("Updated %s", filename)
 
-    LOGGER.warning("Reports All Updated [3].")
+    LOGGER.warning(f"Reports All Updated [{len(reports.keys())}].")
 
 
 if __name__ == "__main__":
