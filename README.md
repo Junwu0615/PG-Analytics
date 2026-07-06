@@ -105,7 +105,7 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 <!-- summary:start -->
 > _Note :　Metrics are aggregated across all tracked repositories._
 >
-> _Generated at [ UTC+0 ] :　2026-07-06T12:45:34_
+> _Generated at [ UTC+0 ] :　2026-07-06T13:04:20_
 
 | *📐 Metric* | *🧮 Value* |
 |:--|--:|
@@ -113,9 +113,9 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 | *⭐ Total Stars* | *12* |
 | *🍴 Total Forks* | *0* |
 | *👀 Total Views* | *967* |
-| *👤 Unique Visitors* | *45* |
+| *👤 Total Unique Visitors* | *45* |
 | *📥 Total Clones* | *2219* |
-| *👤 Unique Cloners* | *873* |
+| *👤 Total Unique Cloners* | *873* |
 <!-- summary:end -->
 
 <br>
@@ -123,21 +123,21 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 ### *📊　Repository Dashboard*
 
 <!-- dashboard:start -->
-> _Generated at [ UTC+0 ] :　2026-07-06T12:45:34_
+> _Generated at [ UTC+0 ] :　2026-07-06T13:04:20_
 
- | *📁<br>Repository* | *⭐<br>Stars* | *🍴<br>Forks* | *👀<br>Views* | *👤<br>Unique Visitors* | *📥<br>Clones* | *👤<br>Unique Cloners* |
- |:--|--:|--:|--:|--:|--:|--:|
- | *Platform-Genesis* | *2* | *0* | *352* | *21* | *672* | *257* |
- | *PG-Core* | *1* | *0* | *62* | *1* | *268* | *110* |
- | *PG-Synapse* | *1* | *0* | *25* | *3* | *47* | *30* |
- | *PG-Cortex* | *1* | *0* | *30* | *2* | *40* | *25* |
- | *PG-Sentinel* | *1* | *0* | *24* | *2* | *31* | *24* |
- | *PG-Analytics* | *1* | *0* | *333* | *2* | *886* | *288* |
- | *PG-Infrastructure* | *1* | *0* | *67* | *4* | *172* | *72* |
- | *PG-APP-Core* | *1* | *0* | *26* | *3* | *53* | *30* |
- | *PG-Shared-Lib* | *1* | *0* | *19* | *3* | *24* | *15* |
- | *PG-Edge-Container* | *1* | *0* | *13* | *1* | *18* | *14* |
- | *PG-Airflow-DAGs* | *1* | *0* | *16* | *3* | *8* | *8* |
+ | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📦 Size (MB)* | *📝 Last Updated* | *📅 Creation Date* |
+ |:--|--:|--:|--:|--:|--:|
+ | *Platform-Genesis* | *2* | *0* | *47.244140625* | *2026-07-06T12:28:24* | *2026-03-20T13:27:21* |
+ | *PG-Core* | *1* | *0* | *1.6611328125* | *2026-07-06T12:34:38* | *2026-07-03T16:04:14* |
+ | *PG-Synapse* | *1* | *0* | *0.0048828125* | *2026-07-05T02:30:27* | *2026-07-03T16:04:23* |
+ | *PG-Cortex* | *1* | *0* | *0.005859375* | *2026-07-05T02:30:56* | *2026-07-03T16:04:26* |
+ | *PG-Sentinel* | *1* | *0* | *0.0048828125* | *2026-07-05T02:31:15* | *2026-07-03T16:04:33* |
+ | *PG-Analytics* | *1* | *0* | *0.1455078125* | *2026-07-06T13:03:15* | *2026-07-03T15:42:31* |
+ | *PG-Infrastructure* | *1* | *0* | *5.060546875* | *2026-07-05T15:08:13* | *2026-05-08T12:56:08* |
+ | *PG-APP-Core* | *1* | *0* | *0.1396484375* | *2026-07-05T14:40:34* | *2026-05-08T12:56:29* |
+ | *PG-Shared-Lib* | *1* | *0* | *0.0517578125* | *2026-06-22T06:22:30* | *2026-05-08T12:56:54* |
+ | *PG-Edge-Container* | *1* | *0* | *0.0322265625* | *2026-06-22T06:22:06* | *2026-05-08T12:57:08* |
+ | *PG-Airflow-DAGs* | *1* | *0* | *0.0595703125* | *2026-06-22T06:22:19* | *2026-05-08T12:57:22* |
 <!-- dashboard:end -->
 
 <br>
@@ -147,7 +147,7 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 <!-- traffic:start -->
 > _Traffic in the past 14 days_
 >
-> _Generated at [ UTC+0 ] :　2026-07-06T12:45:34_
+> _Generated at [ UTC+0 ] :　2026-07-06T13:04:20_
 
 | *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |
 |:--|--:|--:|--:|--:|
@@ -176,10 +176,10 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 <!-- growth:start -->
 > _Statistical Scope :　**2026-07**_
 >
-> _Generated at [ UTC+0 ] :　2026-07-06T12:45:34_
+> _Generated at [ UTC+0 ] :　2026-07-06T13:04:20_
 
 | *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *👀 Views ↕* | *📥 Clones ↕* | *💡 Open Issues ↕* |
-|:--|--:|--:|--:|
+|:--|--:|--:|--:|--:|--:|
 | *Platform-Genesis* | *+0* | *+0* | *+85* | *-81* | *+0* |
 | *PG-Core* | *+0* | *+0* | *+63* | *+378* | *+0* |
 | *PG-Synapse* | *+0* | *+0* | *+28* | *+77* | *+0* |
