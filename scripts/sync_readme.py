@@ -57,7 +57,7 @@ def main():
     readme = inject_section(readme, "summary", summary)
 
     update_time = load_section(REPORT_DIR / "update_time.md")
-    readme = inject_section(readme, "update_time", update)
+    readme = inject_section(readme, "update_time", update_time)
 
     README.write_text(readme, encoding="utf-8")
 
