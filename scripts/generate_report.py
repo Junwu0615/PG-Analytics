@@ -83,6 +83,7 @@ def extract_metrics(repo: dict) -> dict:
     }
     """
     metrics = repo.get("repository_metrics", {}) or {}
+    activity = repo.get("activity", {}) or {}
     traffic = repo.get("traffic", {}) or {}
     views = traffic.get("views", {}) or {}
     clones = traffic.get("clones", {}) or {}
@@ -91,12 +92,16 @@ def extract_metrics(repo: dict) -> dict:
         "repository": repo.get("repository", "unknown") or {},
         "stars": int(metrics.get("stars", 0)),
         "forks": int(metrics.get("forks", 0)),
+        "size_kb": int(metrics.get("size_kb", 0)),
         "watchers": int(metrics.get("watchers", 0)),
         "open_issues": int(metrics.get("open_issues", 0)),
         "views": int(views.get("count", 0)),
         "unique_views": int(views.get("uniques", 0)),
         "clones": int(clones.get("count", 0)),
         "unique_clones": int(clones.get("uniques", 0)),
+        "created_at": activity.get("created_at", "")[:19],
+        "updated_at": activity.get("updated_at", "")[:19],
+        "pushed_at": activity.get("pushed_at", "")[:19],
     }
 
 
@@ -107,15 +112,10 @@ def generate_dashboard(repositories: list[dict]) -> str:
     lines = []
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("")
-    lines.append(" | *📁<br>Repository* | *⭐<br>Stars* | *🍴<br>Forks* | *👀<br>Views* | *👤<br>Unique Visitors* | *📥<br>Clones* | *👤<br>Unique Cloners* |")
-    lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
-
-    total_views = 0
-    total_clones = 0
-    total_stars = 0
-    total_forks = 0
-    total_unique_views = 0
-    total_unique_clones = 0
+    # lines.append(" | *📁<br>Repository* | *⭐<br>Stars* | *🍴<br>Forks* | *👀<br>Views* | *👤<br>Unique Visitors* | *📥<br>Clones* | *👤<br>Unique Cloners* |")
+    # lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
+    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📦 Size (MB)* | *📝 Last Updated* | *📅 Creation Date* |")
+    lines.append(" |:--|--:|--:|--:|--:|--:|")
 
     for repo in repositories:
         metrics = extract_metrics(repo)
@@ -123,28 +123,16 @@ def generate_dashboard(repositories: list[dict]) -> str:
         repo_name = metrics["repository"]
         stars = metrics["stars"]
         forks = metrics["forks"]
-        views = metrics["views"]
-        clones = metrics["clones"]
-        unique_views = metrics["unique_views"]
-        unique_clones = metrics["unique_clones"]
+        size = metrics["size_kb"] / 1024
+        # views = metrics["views"]
+        # clones = metrics["clones"]
+        # unique_views = metrics["unique_views"]
+        # unique_clones = metrics["unique_clones"]
+        created_at = metrics["created_at"]
+        pushed_at = metrics["pushed_at"]
 
-        total_stars += stars
-        total_forks += forks
-        total_views += views
-        total_clones += clones
-        total_unique_views += unique_views
-        total_unique_clones += unique_clones
-
-        lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{views}* | *{unique_views}* | *{clones}* | *{unique_clones}* |")
-
-    # lines.append("- ### *Summary*")
-    # lines.append(f"  - *📁 Repository :　{len(repositories)}*")
-    # lines.append(f"  - *⭐ Stars :　{total_stars}*")
-    # lines.append(f"  - *🍴 Forks :　{total_forks}*")
-    # lines.append(f"  - *👀 Views ( 14 days ) :　{total_views}*")
-    # lines.append(f"  - *👤 Unique Visitors ( 14 days ) :　{total_unique_views}*")
-    # lines.append(f"  - *📥 Clones ( 14 days ) :　{total_clones}*")
-    # lines.append(f"  - *👤 Unique Cloners ( 14 days ) :　{total_unique_clones}*")
+        # lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{views}* | *{unique_views}* | *{clones}* | *{unique_clones}* |")
+        lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{size}* | *{pushed_at}* | *{created_at}* |")
 
     return "\n".join(lines)
 
@@ -251,9 +239,9 @@ def generate_summary(summary_dict: dict) -> str:
     lines.append(f"| *⭐ Total Stars* | *{summary_dict['stars']}* |")
     lines.append(f"| *🍴 Total Forks* | *{summary_dict['forks']}* |")
     lines.append(f"| *👀 Total Views* | *{summary_dict['views']}* |")
-    lines.append(f"| *👤 Unique Visitors* | *{summary_dict['unique_views']}* |")
+    lines.append(f"| *👤 Total Unique Visitors* | *{summary_dict['unique_views']}* |")
     lines.append(f"| *📥 Total Clones* | *{summary_dict['clones']}* |")
-    lines.append(f"| *👤 Unique Cloners* | *{summary_dict['unique_clones']}* |")
+    lines.append(f"| *👤 Total Unique Cloners* | *{summary_dict['unique_clones']}* |")
 
     return "\n".join(lines)
 
@@ -298,7 +286,7 @@ def generate_growth() -> str:
     lines.append(f"> _Generated at [ UTC+0 ] :　{str(utc_now().isoformat())[:19]}_")
     lines.append("")
     lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *👀 Views ↕* | *📥 Clones ↕* | *💡 Open Issues ↕* |")
-    lines.append("|:--|--:|--:|--:|")
+    lines.append("|:--|--:|--:|--:|--:|--:|")
 
     for repo in SORTED_LIST:
         first = first_record[repo]
