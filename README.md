@@ -49,7 +49,8 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 │   ├── dashboard.md
 │   ├── growth.md
 │   ├── summary.md
-│   └── traffic.md
+│   ├── traffic.md
+│   └── update_time.md
 ├── requirements.txt
 └── scripts
     ├── collect.py

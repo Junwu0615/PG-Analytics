@@ -145,7 +145,7 @@ def generate_traffic(repositories: list[dict]) -> str:
         return "> _Traffic Analytics :　No repositories available._"
 
     lines = []
-    lines.append("> _Traffic in the past 14 days_")
+    lines.append("> _Traffic in the past **14 Days**_")
     lines.append("")
     lines.append("| *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |")
     lines.append("|:--|--:|--:|--:|--:|")
@@ -180,10 +180,14 @@ def generate_traffic(repositories: list[dict]) -> str:
         )
 
     lines.append("- ### *Summary*")
-    lines.append(f"  - *👀 Views ( 14 Days ) :　{total_views}*")
-    lines.append(f"  - *👤 Unique Visitors  ( 14 Days ) :　{total_unique_views}*")
-    lines.append(f"  - *📥 Clones ( 14 Days ) :　{total_clones}*")
-    lines.append(f"  - *👤 Unique Cloners  ( 14 Days ) :　{total_unique_clones}*")
+    # lines.append(f"  - *👀 Views ( 14 Days ) :　{total_views}*")
+    # lines.append(f"  - *👤 Unique Visitors  ( 14 Days ) :　{total_unique_views}*")
+    # lines.append(f"  - *📥 Clones ( 14 Days ) :　{total_clones}*")
+    # lines.append(f"  - *👤 Unique Cloners  ( 14 Days ) :　{total_unique_clones}*")
+    lines.append(f"  - *👀 Views :　{total_views}*")
+    lines.append(f"  - *👤 Unique Visitors :　{total_unique_views}*")
+    lines.append(f"  - *📥 Clones :　{total_clones}*")
+    lines.append(f"  - *👤 Unique Cloners :　{total_unique_clones}*")
 
     return "\n".join(lines)
 
@@ -225,7 +229,7 @@ def generate_growth() -> str:
     lines = []
     lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
     lines.append("")
-    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *👀 Views ↕* | *📥 Clones ↕* | *💡 Open Issues ↕* |")
+    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *💡 Open Issues ↕* | *👀 Views ↕<br>( 14 Days )* | *📥 Clones ↕<br>( 14 Days )* |")
     lines.append("|:--|--:|--:|--:|--:|--:|")
 
     for repo in SORTED_LIST:
@@ -252,9 +256,9 @@ def generate_growth() -> str:
             f"| *{repo}* | "
             f"*{star_growth:+d}* | "
             f"*{fork_growth:+d}* | "
+            f"*{open_issues_growth:+d}* |"
             f"*{views_growth:+d}* | "
             f"*{clones_growth:+d}* | "
-            f"*{open_issues_growth:+d}* |"
         )
 
     return "\n".join(lines)
@@ -272,6 +276,7 @@ def build_summary(repositories: list[dict]) -> dict:
         "unique_views": 0,
         "clones": 0,
         "unique_clones": 0,
+        "size": 0,
     }
     for repo in repositories:
         metrics = extract_metrics(repo)
@@ -282,6 +287,7 @@ def build_summary(repositories: list[dict]) -> dict:
         clones = metrics["clones"]
         unique_views = metrics["unique_views"]
         unique_clones = metrics["unique_clones"]
+        size = Decimal(metrics["size_kb"] / 1024).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
         summary["stars"] += stars
         summary["forks"] += forks
@@ -289,6 +295,7 @@ def build_summary(repositories: list[dict]) -> dict:
         summary["clones"] += clones
         summary["unique_views"] += unique_views
         summary["unique_clones"] += unique_clones
+        summary["size"] += size
 
     save_json(DATA_DIR / "summary.json", summary)
     return summary
@@ -306,6 +313,7 @@ def generate_summary(summary_dict: dict) -> str:
     lines.append(f"| *📁 Total Repositories* | *{summary_dict['repository_count']}* |")
     lines.append(f"| *⭐ Total Stars* | *{summary_dict['stars']}* |")
     lines.append(f"| *🍴 Total Forks* | *{summary_dict['forks']}* |")
+    lines.append(f"| *📦 Size (MB)* | *{summary_dict['size']}* |")
     lines.append(f"| *👀 Total Views* | *{summary_dict['views']}* |")
     lines.append(f"| *👤 Total Unique Visitors* | *{summary_dict['unique_views']}* |")
     lines.append(f"| *📥 Total Clones* | *{summary_dict['clones']}* |")
