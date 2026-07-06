@@ -297,6 +297,7 @@ def build_summary(repositories: list[dict]) -> dict:
         summary["unique_clones"] += unique_clones
         summary["size"] += size
 
+    summary["size"] = str(summary["size"])
     save_json(DATA_DIR / "summary.json", summary)
     return summary
 
