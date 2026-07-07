@@ -2,19 +2,19 @@
 
 | *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |
 |:--|--:|--:|--:|--:|
-| *Platform-Genesis* | *352* | *21* | *672* | *257* |
-| *PG-Core* | *62* | *1* | *268* | *110* |
+| *Platform-Genesis* | *306* | *19* | *592* | *219* |
+| *PG-Core* | *75* | *2* | *294* | *120* |
 | *PG-Synapse* | *25* | *3* | *47* | *30* |
 | *PG-Cortex* | *30* | *2* | *40* | *25* |
 | *PG-Sentinel* | *24* | *2* | *31* | *24* |
-| *PG-Analytics* | *333* | *2* | *886* | *288* |
-| *PG-Infrastructure* | *67* | *4* | *172* | *72* |
-| *PG-APP-Core* | *26* | *3* | *53* | *30* |
-| *PG-Shared-Lib* | *19* | *3* | *24* | *15* |
-| *PG-Edge-Container* | *13* | *1* | *18* | *14* |
-| *PG-Airflow-DAGs* | *16* | *3* | *8* | *8* |
+| *PG-Analytics* | *342* | *3* | *964* | *312* |
+| *PG-Infrastructure* | *57* | *3* | *137* | *67* |
+| *PG-APP-Core* | *21* | *3* | *44* | *26* |
+| *PG-Shared-Lib* | *15* | *3* | *12* | *9* |
+| *PG-Edge-Container* | *9* | *1* | *7* | *7* |
+| *PG-Airflow-DAGs* | *12* | *3* | *5* | *5* |
 - ### *Summary*
-  - *👀 Views :　967*
-  - *👤 Unique Visitors :　45*
-  - *📥 Clones :　2219*
-  - *👤 Unique Cloners :　873*
+  - *👀 Views :　916*
+  - *👤 Unique Visitors :　44*
+  - *📥 Clones :　2173*
+  - *👤 Unique Cloners :　844*
