@@ -76,3 +76,14 @@ date,repository,stars,forks,watchers,open_issues,language,views,unique_views,clo
 2026-07-09,PG-Shared-Lib,1,0,0,0,Python,14,2,9,6
 2026-07-09,PG-Synapse,1,0,0,0,,26,3,49,32
 2026-07-09,Platform-Genesis,2,0,0,0,Makefile,321,15,501,195
+2026-07-10,PG-APP-Core,1,0,0,0,Python,21,2,55,31
+2026-07-10,PG-Airflow-DAGs,1,0,0,0,Python,13,3,3,3
+2026-07-10,PG-Analytics,1,0,0,0,Python,344,3,975,316
+2026-07-10,PG-Core,1,0,0,0,,82,2,302,125
+2026-07-10,PG-Cortex,1,0,0,0,,30,2,43,28
+2026-07-10,PG-Edge-Container,1,0,0,0,Makefile,9,1,2,2
+2026-07-10,PG-Infrastructure,1,0,0,0,Makefile,72,3,169,70
+2026-07-10,PG-Sentinel,1,0,0,0,,24,2,35,28
+2026-07-10,PG-Shared-Lib,1,0,0,0,Python,15,3,7,4
+2026-07-10,PG-Synapse,1,0,0,0,,26,3,50,33
+2026-07-10,Platform-Genesis,2,0,0,0,Makefile,324,14,436,177
