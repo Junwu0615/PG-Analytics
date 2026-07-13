@@ -19,13 +19,13 @@
     },
     "traffic": {
         "views": {
-            "count": 15,
+            "count": 14,
             "uniques": 3
         },
         "clones": {
-            "count": 6,
-            "uniques": 3
+            "count": 7,
+            "uniques": 4
         }
     },
-    "generated_at": "2026-07-12T17:13:33.660710"
+    "generated_at": "2026-07-13T18:04:55.237576"
 }
