@@ -6,7 +6,7 @@
 | *⭐ Total Stars* | *12* |
 | *🍴 Total Forks* | *0* |
 | *📦 Size (MB)* | *57.29* |
-| *👀 Total Views* | *905* |
-| *👤 Total Unique Visitors* | *32* |
-| *📥 Total Clones* | *2238* |
-| *👤 Total Unique Cloners* | *878* |
+| *👀 Total Views* | *429* |
+| *👤 Total Unique Visitors* | *31* |
+| *📥 Total Clones* | *1165* |
+| *👤 Total Unique Cloners* | *527* |
