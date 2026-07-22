@@ -91,6 +91,7 @@ def extract_metrics(repo: dict) -> dict:
 
     return {
         "repository": repo.get("repository", "unknown") or {},
+        "full_name": repo.get("full_name", "unknown") or {},
         "stars": int(metrics.get("stars", 0)),
         "forks": int(metrics.get("forks", 0)),
         "size_kb": int(metrics.get("size_kb", 0)),
@@ -121,6 +122,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
         metrics = extract_metrics(repo)
 
         repo_name = metrics["repository"]
+        full_name = metrics["full_name"]
         stars = metrics["stars"]
         forks = metrics["forks"]
         size = Decimal(metrics["size_kb"] / 1024).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
@@ -132,7 +134,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
         pushed_at = metrics["pushed_at"]
 
         # lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{views}* | *{unique_views}* | *{clones}* | *{unique_clones}* |")
-        lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{size}* | *{pushed_at}* | *{created_at}* |")
+        lines.append(f" | *[{repo_name}](https://github.com/{full_name})* | *{stars}* | *{forks}* | *{size}* | *{pushed_at}* | *{created_at}* |")
 
     return "\n".join(lines)
 
@@ -159,6 +161,7 @@ def generate_traffic(repositories: list[dict]) -> str:
         metrics = extract_metrics(repo)
 
         repo_name = metrics["repository"]
+        full_name = metrics["full_name"]
         # stars = metrics["stars"]
         # forks = metrics["forks"]
         views = metrics["views"]
@@ -172,7 +175,7 @@ def generate_traffic(repositories: list[dict]) -> str:
         total_unique_clones += unique_clones
 
         lines.append(
-            f"| *{repo_name}* | "
+            f"| *[{repo_name}](https://github.com/{full_name})* | "
             f"*{views}* | "
             f"*{unique_views}* | "
             f"*{clones}* | "
@@ -192,7 +195,7 @@ def generate_traffic(repositories: list[dict]) -> str:
     return "\n".join(lines)
 
 
-def generate_growth() -> str:
+def generate_growth(user_name="Junwu0615") -> str:
     """
     Generate growth report from historical CSV snapshots.
     """
@@ -236,7 +239,7 @@ def generate_growth() -> str:
         first = first_record[repo]
         last = last_record[repo]
         if first is None or last is None:
-            lines.append(f"| *{repo}* | *0* | *0* | *0* |")
+            lines.append(f"| *[{repo}](https://github.com/{user_name}/{repo})* | *0* | *0* | *0* |")
             continue
 
         star_growth = int(last["stars"]) - int(first["stars"])
@@ -253,7 +256,7 @@ def generate_growth() -> str:
         open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
 
         lines.append(
-            f"| *{repo}* | "
+            f"| *[{repo}](https://github.com/Junwu0615/{repo})* | "
             f"*{star_growth:+d}* | "
             f"*{fork_growth:+d}* | "
             f"*{open_issues_growth:+d}* |"
@@ -266,7 +269,7 @@ def generate_growth() -> str:
 
 def build_summary(repositories: list[dict]) -> dict:
     """
-    Summary 統計 => 儲存 json
+    Summary 統計 → 儲存 json
     """
     summary = {
         "repository_count": len(repositories),
@@ -281,6 +284,7 @@ def build_summary(repositories: list[dict]) -> dict:
     for repo in repositories:
         metrics = extract_metrics(repo)
 
+        # full_name = metrics["full_name"]
         stars = metrics["stars"]
         forks = metrics["forks"]
         views = metrics["views"]
@@ -304,7 +308,7 @@ def build_summary(repositories: list[dict]) -> dict:
 
 def generate_summary(summary_dict: dict) -> str:
     """
-    Summary 統計 => 建立 Markdown 表格結構
+    Summary 統計 → 建立 Markdown 表格結構
     """
     lines = []
     lines.append(f"> _Note :　Metrics are aggregated across all tracked repositories._")
