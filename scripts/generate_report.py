@@ -328,7 +328,7 @@ def generate_summary(summary_dict: dict) -> str:
     lines.append(f"| *⭐ Total Stars* | *{summary_dict['stars']}* |")
     lines.append(f"| *🍴 Total Forks* | *{summary_dict['forks']}* |")
     lines.append(f"| *📩 Total Commit* | *{summary_dict['commits_count']}* |")
-    lines.append(f"| *📦 Size (MB)* | *{summary_dict['size']}* |")
+    lines.append(f"| *📦 Size ( MB )* | *{summary_dict['size']}* |")
     lines.append(f"| *👀 Total Views* | *{summary_dict['views']}* |")
     lines.append(f"| *👤 Total Unique Visitors* | *{summary_dict['unique_views']}* |")
     lines.append(f"| *📥 Total Clones* | *{summary_dict['clones']}* |")
