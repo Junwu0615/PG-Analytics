@@ -2,7 +2,7 @@
  | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📦 Size (MB)* | *📝 Last Updated* | *📅 Creation Date* |
  |:--|--:|--:|--:|--:|--:|
  | *[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)* | *3* | *0* | *55.46* | *2026-07-23* | *2026-03-20* |
- | *[PG-Core](https://github.com/Junwu0615/PG-Core)* | *1* | *0* | *4.59* | *2026-07-23* | *2026-07-03* |
+ | *[PG-Core](https://github.com/Junwu0615/PG-Core)* | *1* | *0* | *6.60* | *2026-07-23* | *2026-07-03* |
  | *[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)* | *1* | *0* | *0.00* | *2026-07-05* | *2026-07-03* |
  | *[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)* | *1* | *0* | *0.01* | *2026-07-05* | *2026-07-03* |
  | *[PG-Sentinel](https://github.com/Junwu0615/PG-Sentinel)* | *1* | *0* | *0.00* | *2026-07-05* | *2026-07-03* |
