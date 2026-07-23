@@ -116,7 +116,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
 
     lines = []
     lines.append("")
-    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📩 Commit* | *📦 Size<br>(MB)* | *📝 Updated* | *📅 Created* |")
+    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📩 Commit* | *📦 Size<br>( MB )* | *📝 Updated* | *📅 Created* |")
     lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
 
     for repo in repositories:
@@ -223,6 +223,8 @@ def generate_growth(user_name="Junwu0615") -> str:
                 last_record[repo] = row
             else:
                 for k,v in row.items():
+                    if last_record[repo][k] is None:
+                        continue
                     last_record[repo][k] = int(last_record[repo][k])
                     last_record[repo][k] += int(v)
 
@@ -230,7 +232,7 @@ def generate_growth(user_name="Junwu0615") -> str:
     lines = []
     lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
     lines.append("")
-    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *💡 Open Issues ↕* | *👀 Views ↕<br>( 14 Days )* | *📥 Clones ↕<br>( 14 Days )* |")
+    lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *💡 Open Issues ↕* | *👀 Views ↕* | *📥 Clones ↕* |")
     lines.append("|:--|--:|--:|--:|--:|--:|")
 
     for repo in SORTED_LIST:
