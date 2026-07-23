@@ -218,8 +218,13 @@ def generate_growth(user_name="Junwu0615") -> str:
             if first_record[repo] is None:
                 first_record[repo] = row
 
-            # keep newest
-            last_record[repo] = row
+            # TODO keep add newest
+            if repo not in last_record:
+                last_record[repo] = row
+            else:
+                for k,v in row.items():
+                    last_record[repo][k] = int(last_record[repo][k])
+                    last_record[repo][k] += int(v)
 
     # Markdown
     lines = []
