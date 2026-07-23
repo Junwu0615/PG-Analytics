@@ -211,6 +211,7 @@ def generate_growth(user_name="Junwu0615") -> str:
         reader = csv.DictReader(fp)
         for row in reader:
             repo = row.get("repository")
+
             if repo not in SORTED_LIST:
                 continue
 
@@ -223,11 +224,14 @@ def generate_growth(user_name="Junwu0615") -> str:
                 last_record[repo] = row
             else:
                 for k,v in row.items():
-                    if k not in ["stars", "forks", "open_issues", "views", "unique_views", "clones", "unique_clones"]:
-                        continue
+                    # if k not in ["stars", "forks", "open_issues", "views", "unique_views", "clones", "unique_clones"]:
+                    #     continue
 
-                    last_record[repo][k] = int(last_record[repo][k])
-                    last_record[repo][k] += int(v)
+                    if k in ["stars", "forks", "open_issues"]:
+                        last_record[repo][k] = int(v)
+
+                    elif k in ["views", "unique_views", "clones", "unique_clones"]:
+                        last_record[repo][k] = int(last_record[repo][k]) + int(v)
 
     # Markdown
     lines = []
