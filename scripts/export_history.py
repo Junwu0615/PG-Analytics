@@ -155,7 +155,7 @@ def merge_14_history(records: dict, metrics: dict) -> None:
     # TODO 補救機制 : 一次性
     row_list = build_14_days(metrics)
     for row in row_list:
-        print(row)
+        LOGGER.warning(f"row: {row}")
         key = (row[0], row[1])
         record = dict(zip(CSV_HEADER, row))
         records[key] = record
