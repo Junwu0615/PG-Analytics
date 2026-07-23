@@ -136,7 +136,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
         pushed_at = metrics["pushed_at"]
 
         # lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{views}* | *{unique_views}* | *{clones}* | *{unique_clones}* |")
-        lines.append(f" | *[{repo_name}](https://github.com/{full_name})* | *{stars}* | *{forks}* | *{size}* | *{pushed_at}* | *{created_at}* |")
+        lines.append(f" | _**[{repo_name}](https://github.com/{full_name})**_ | *{stars}* | *{forks}* | *{size}* | *{pushed_at}* | *{created_at}* |")
 
     return "\n".join(lines)
 
@@ -177,7 +177,7 @@ def generate_traffic(repositories: list[dict]) -> str:
         total_unique_clones += unique_clones
 
         lines.append(
-            f"| *[{repo_name}](https://github.com/{full_name})* | "
+            f"| _**[{repo_name}](https://github.com/{full_name})**_ | "
             f"*{views}* | "
             f"*{unique_views}* | "
             f"*{clones}* | "
@@ -241,7 +241,7 @@ def generate_growth(user_name="Junwu0615") -> str:
         first = first_record[repo]
         last = last_record[repo]
         if first is None or last is None:
-            lines.append(f"| *[{repo}](https://github.com/{user_name}/{repo})* | *0* | *0* | *0* |")
+            lines.append(f"| _**[{repo}](https://github.com/{user_name}/{repo})**_ | *0* | *0* | *0* |")
             continue
 
         star_growth = int(last["stars"]) - int(first["stars"])
@@ -258,7 +258,7 @@ def generate_growth(user_name="Junwu0615") -> str:
         open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
 
         lines.append(
-            f"| *[{repo}](https://github.com/Junwu0615/{repo})* | "
+            f"| _**[{repo}](https://github.com/Junwu0615/{repo})**_ | "
             f"*{star_growth:+d}* | "
             f"*{fork_growth:+d}* | "
             f"*{open_issues_growth:+d}* |"

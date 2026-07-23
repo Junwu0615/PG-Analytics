@@ -234,10 +234,10 @@ def main():
             LOGGER.warning("Malformed %s", json_file.name)
             continue
 
-        # merge_history(records, metrics)
+        merge_history(records, metrics)
 
         # TODO 補救機制 : 一次性
-        merge_14_history(records, metrics)
+        # merge_14_history(records, metrics)
 
     rewrite_history(history, records)
     LOGGER.warning("History Updated.")
