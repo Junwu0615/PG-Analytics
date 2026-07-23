@@ -44,7 +44,6 @@ def safe_collect_repo(github, config, name):
     try:
         repo = github.get_repo(f"{config['owner']}/{name}")
         metrics = collect_repository(repo)
-        collect_traffic(repo, metrics)
         return metrics
 
     except Exception as e:
@@ -62,6 +61,50 @@ def collect_repository(repo):
     """
     Collect repository metrics.
     """
+    # 預設 Traffic 結構初始化
+    daily_views = {}
+    views_count = 0
+    views_uniques = 0
+
+    daily_clones = {}
+    clones_count = 0
+    clones_uniques = 0
+
+    try:
+        # 取得含每日明細的 traffic 物件
+        views = repo.get_views_traffic(per="day")
+        views_count = views.get("count", 0) if hasattr(views, "get") else getattr(views, "count", 0)
+        views_uniques = views.get("uniques", 0) if hasattr(views, "get") else getattr(views, "uniques", 0)
+
+        # PyGithub 通常將每日明細存在 .views 屬性中
+        if hasattr(views, "views"):
+            daily_views = {
+                v.timestamp.strftime("%Y-%m-%d"): {
+                    "count": v.count,
+                    "uniques": v.uniques
+                }
+                for v in views.views
+            }
+    except Exception as e:
+        pass
+
+    try:
+        clones = repo.get_clones_traffic(per="day")
+        clones_count = clones.get("count", 0) if hasattr(clones, "get") else getattr(clones, "count", 0)
+        clones_uniques = clones.get("uniques", 0) if hasattr(clones, "get") else getattr(clones, "uniques", 0)
+
+        # PyGithub 通常將每日明細存在 .clones 屬性中
+        if hasattr(clones, "clones"):
+            daily_clones = {
+                c.timestamp.strftime("%Y-%m-%d"): {
+                    "count": c.count,
+                    "uniques": c.uniques
+                }
+                for c in clones.clones
+            }
+    except Exception as e:
+        pass
+
     return {
         "repository": repo.name,
         "full_name": repo.full_name,
@@ -81,34 +124,20 @@ def collect_repository(repo):
             "updated_at": repo.updated_at.isoformat(),
             "pushed_at": repo.pushed_at.isoformat(),
         },
-        "traffic": {},
-        "generated_at": utc_now().isoformat(),
-    }
-
-
-def collect_traffic(repo, metrics):
-    """
-    Collect traffic statistics.
-    """
-    try:
-        views = repo.get_views_traffic()
-        clones = repo.get_clones_traffic()
-        metrics["traffic"] = {
+        "traffic": {
             "views": {
-                "count": views.count,
-                "uniques": views.uniques,
+                "count": views_count,
+                "uniques": views_uniques,
+                "daily": daily_views  # 取得精準的單日鍵值對
             },
             "clones": {
-                "count": clones.count,
-                "uniques": clones.uniques,
+                "count": clones_count,
+                "uniques": clones_uniques,
+                "daily": daily_clones  # 取得精準的單日鍵值對
             },
-        }
-
-    except GithubException:
-        LOGGER.warning(
-            "Traffic API unavailable : %s",
-            repo.name,
-        )
+        },
+        "generated_at": utc_now().isoformat(),
+    }
 
 
 def main():

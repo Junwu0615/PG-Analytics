@@ -58,7 +58,6 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
     ├── generate_report.py
     ├── sync_readme.py
     └── utils.py
-
 ```
 
 </ul>
