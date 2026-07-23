@@ -67,6 +67,11 @@ def build_row(data: dict) -> list:
     views = traffic.get("views", {}) or {}
     clones = traffic.get("clones", {}) or {}
 
+    daily_views = views.get("daily", {})
+    daily_clones = clones.get("daily", {})
+    daily_views_key = sorted(daily_views.keys())[-1]
+    daily_clones_key = sorted(daily_clones.keys())[-1]
+
     return [
         today(),
         data.get("repository", "unknown"),
@@ -75,10 +80,16 @@ def build_row(data: dict) -> list:
         repository.get("watchers", 0),
         repository.get("open_issues", 0),
         repository.get("language", "unknown"),
-        views.get("count", 0),
-        views.get("uniques", 0),
-        clones.get("count", 0),
-        clones.get("uniques", 0),
+
+        # views.get("count", 0),
+        # views.get("uniques", 0),
+        daily_views[daily_views_key]["count"],
+        daily_views[daily_views_key]["uniques"],
+
+        # clones.get("count", 0),
+        # clones.get("uniques", 0),
+        daily_clones[daily_clones_key]["count"],
+        daily_clones[daily_clones_key]["uniques"],
     ]
 
 
