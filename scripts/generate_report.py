@@ -226,7 +226,9 @@ def generate_growth(user_name="Junwu0615") -> str:
                     if k not in ["stars", "forks", "open_issues", "views", "unique_views", "clones", "unique_clones"]:
                         continue
 
+                    LOGGER.warning(f"k {k} | v {v}")
                     LOGGER.warning(f"Repo {repo} | row {row}")
+                    LOGGER.warning(f"last_record {last_record}")
 
                     last_record[repo][k] = int(last_record[repo][k])
                     last_record[repo][k] += int(v)
