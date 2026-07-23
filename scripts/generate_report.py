@@ -33,6 +33,15 @@ from utils import (
 )
 
 
+def truncate_name(name: str, max_length: int = 22) -> str:
+    """
+    限制字串長度，超過則進行截斷並加上 ...
+    """
+    if len(name) > max_length:
+        return name[:max_length - 3] + "..."
+    return name
+
+
 def load_repositories() -> list[dict]:
     repositories = []
     for repository in SORTED_LIST:
@@ -122,7 +131,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
     for repo in repositories:
         metrics = extract_metrics(repo)
 
-        repo_name = metrics["repository"]
+        repo_name = truncate_name(metrics["repository"])
         full_name = metrics["full_name"]
         stars = metrics["stars"]
         forks = metrics["forks"]
@@ -157,7 +166,7 @@ def generate_traffic(repositories: list[dict]) -> str:
     for repo in repositories:
         metrics = extract_metrics(repo)
 
-        repo_name = metrics["repository"]
+        repo_name = truncate_name(metrics["repository"])
         full_name = metrics["full_name"]
         # stars = metrics["stars"]
         # forks = metrics["forks"]
@@ -240,7 +249,7 @@ def generate_growth(user_name="Junwu0615") -> str:
         first = first_record[repo]
         last = last_record[repo]
         if first is None or last is None:
-            lines.append(f"| _**[{repo}](https://github.com/{user_name}/{repo})**_ | *0* | *0* | *0* | *0* | *0* |")
+            lines.append(f"| _**[{truncate_name(repo)}](https://github.com/{user_name}/{repo})**_ | *0* | *0* | *0* | *0* | *0* |")
             continue
 
         # 狀態指標：採頭尾 diff (最後一天總量 - 第一天總量)
@@ -253,7 +262,7 @@ def generate_growth(user_name="Junwu0615") -> str:
         clones_growth = total_traffic[repo]["clones"]
 
         lines.append(
-            f"| _**[{repo}](https://github.com/Junwu0615/{repo})**_ | "
+            f"| _**[{truncate_name(repo)}](https://github.com/Junwu0615/{repo})**_ | "
             f"*{star_growth:+d}* | "
             f"*{fork_growth:+d}* | "
             f"*{open_issues_growth:+d}* | "
