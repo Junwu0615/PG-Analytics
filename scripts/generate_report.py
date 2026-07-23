@@ -90,8 +90,8 @@ def extract_metrics(repo: dict) -> dict:
     clones = traffic.get("clones", {}) or {}
 
     return {
-        "repository": repo.get("repository", "unknown") or {},
-        "full_name": repo.get("full_name", "unknown") or {},
+        "repository": repo.get("repository", "unknown") or "unknown",
+        "full_name": repo.get("full_name", "unknown") or "unknown",
         "stars": int(metrics.get("stars", 0)),
         "forks": int(metrics.get("forks", 0)),
         "size_kb": int(metrics.get("size_kb", 0)),
@@ -249,8 +249,8 @@ def generate_growth(user_name="Junwu0615") -> str:
         open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
 
         # 事件流量指標：直接取該區間的累加總和
-        views_growth = total_traffic[repo]["views"] + total_traffic[repo]["unique_views"]
-        clones_growth = total_traffic[repo]["clones"] + total_traffic[repo]["unique_clones"]
+        views_growth = total_traffic[repo]["views"]
+        clones_growth = total_traffic[repo]["clones"]
 
         lines.append(
             f"| _**[{repo}](https://github.com/Junwu0615/{repo})**_ | "
