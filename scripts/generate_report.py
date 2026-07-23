@@ -194,50 +194,44 @@ def generate_growth(user_name="Junwu0615") -> str:
     """
     history = sorted(HISTORY_DIR.glob("*.csv"))
     if not history:
-        return "> _Growth Analytics :　No history available._"
+        return "> _Growth Analytics : No history available._"
 
-    first_record = {
-        repo: None
+    first_record = {repo: None for repo in SORTED_LIST}
+    last_record = {repo: None for repo in SORTED_LIST}
+
+    # 獨立用字典累加每日流量，避免搞混變數
+    total_traffic = {
+        repo: {
+            "views": 0, "unique_views": 0,
+            "clones": 0, "unique_clones": 0
+        }
         for repo in SORTED_LIST
     }
-    last_record = {
-        repo: None
-        for repo in SORTED_LIST
-    }
 
-    # TODO Scan history csv ( Get Latest Record.csv )
     csv_file = history[-1]
     with csv_file.open("r", encoding="utf-8", newline="") as fp:
         reader = csv.DictReader(fp)
         for row in reader:
             repo = row.get("repository")
-
             if repo not in SORTED_LIST:
                 continue
 
-            # first occurrence
+            # 1. 抓取最早的一筆（第一行）作為基準點
             if first_record[repo] is None:
                 first_record[repo] = row
-                LOGGER.warning(f"Repo {repo} => first_record init ...")
 
-            # TODO keep add newest
-            if last_record[repo] is None:
-                last_record[repo] = row
-                LOGGER.warning(f"Repo {repo} => last_record init ...")
-            else:
-                for k,v in row.items():
-                    # if k not in ["stars", "forks", "open_issues", "views", "unique_views", "clones", "unique_clones"]:
-                    #     continue
+            # 2. 持續覆蓋，讓迴圈結束時停在最後一筆（最新總量）
+            last_record[repo] = row
 
-                    if k in ["stars", "forks", "open_issues"]:
-                        last_record[repo][k] = int(v)
-
-                    elif k in ["views", "unique_views", "clones", "unique_clones"]:
-                        last_record[repo][k] = int(last_record[repo][k]) + int(v)
+            # 3. 流量類指標：把每一行的日流量進行區間累加 (Sum)
+            total_traffic[repo]["views"] += int(row.get("views", 0) or 0)
+            total_traffic[repo]["unique_views"] += int(row.get("unique_views", 0) or 0)
+            total_traffic[repo]["clones"] += int(row.get("clones", 0) or 0)
+            total_traffic[repo]["unique_clones"] += int(row.get("unique_clones", 0) or 0)
 
     # Markdown
     lines = []
-    lines.append(f"> _Statistical Scope :　**{'-'.join(history[-1].stem.split('-')[:2])}**_")
+    lines.append(f"> _Statistical Scope : **{'-'.join(history[-1].stem.split('-')[:2])}**_")
     lines.append("")
     lines.append("| *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *💡 Open Issues ↕* | *👀 Views ↕* | *📥 Clones ↕* |")
     lines.append("|:--|--:|--:|--:|--:|--:|")
@@ -246,36 +240,25 @@ def generate_growth(user_name="Junwu0615") -> str:
         first = first_record[repo]
         last = last_record[repo]
         if first is None or last is None:
-            lines.append(f"| _**[{repo}](https://github.com/{user_name}/{repo})**_ | *0* | *0* | *0* |")
+            lines.append(f"| _**[{repo}](https://github.com/{user_name}/{repo})**_ | *0* | *0* | *0* | *0* | *0* |")
             continue
 
+        # 狀態指標：採頭尾 diff (最後一天總量 - 第一天總量)
         star_growth = int(last["stars"]) - int(first["stars"])
         fork_growth = int(last["forks"]) - int(first["forks"])
         open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
 
-
-        views_growth = 0
-        views_growth += int(last["views"]) - int(first["views"])
-        views_growth += int(last["unique_views"]) - int(first["unique_views"])
-
-        LOGGER.warning(f'{repo} | last["views"]: {last["views"]} | first["views"]: {first["views"]}')
-        LOGGER.warning(f'{repo} | last["unique_views"]: {last["unique_views"]} | first["unique_views"]: {first["unique_views"]}')
-
-        clones_growth = 0
-        clones_growth += int(last["clones"]) - int(first["clones"])
-        clones_growth += int(last["unique_clones"]) - int(first["unique_clones"])
-
-        LOGGER.warning(f'{repo} | last["clones"]: {last["clones"]} | first["clones"]: {first["clones"]}')
-        LOGGER.warning(f'{repo} | last["unique_clones"]: {last["unique_clones"]} | first["unique_clones"]: {first["unique_clones"]}')
-
+        # 事件流量指標：直接取該區間的累加總和
+        views_growth = total_traffic[repo]["views"] + total_traffic[repo]["unique_views"]
+        clones_growth = total_traffic[repo]["clones"] + total_traffic[repo]["unique_clones"]
 
         lines.append(
             f"| _**[{repo}](https://github.com/Junwu0615/{repo})**_ | "
             f"*{star_growth:+d}* | "
             f"*{fork_growth:+d}* | "
-            f"*{open_issues_growth:+d}* |"
-            f"*{views_growth:+d}* | "
-            f"*{clones_growth:+d}* | "
+            f"*{open_issues_growth:+d}* | "
+            f"*{views_growth}* | "
+            f"*{clones_growth}* | "
         )
 
     return "\n".join(lines)
