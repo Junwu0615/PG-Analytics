@@ -218,10 +218,12 @@ def generate_growth(user_name="Junwu0615") -> str:
             # first occurrence
             if first_record[repo] is None:
                 first_record[repo] = row
+                LOGGER.warning(f"Repo {repo} => first_record init ...")
 
             # TODO keep add newest
             if last_record[repo] is None:
                 last_record[repo] = row
+                LOGGER.warning(f"Repo {repo} => last_record init ...")
             else:
                 for k,v in row.items():
                     # if k not in ["stars", "forks", "open_issues", "views", "unique_views", "clones", "unique_clones"]:
