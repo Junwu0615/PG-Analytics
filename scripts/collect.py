@@ -115,6 +115,7 @@ def collect_repository(repo):
             "forks": repo.forks_count,
             "watchers": repo.subscribers_count,
             "open_issues": repo.open_issues_count,
+            "commits_count": repo.get_commits().totalCount,
             "default_branch": repo.default_branch,
             "language": repo.language,
             "size_kb": repo.size,

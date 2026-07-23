@@ -97,6 +97,7 @@ def extract_metrics(repo: dict) -> dict:
         "size_kb": int(metrics.get("size_kb", 0)),
         "watchers": int(metrics.get("watchers", 0)),
         "open_issues": int(metrics.get("open_issues", 0)),
+        "commits_count": int(metrics.get("commits_count", 0)),
         "views": int(views.get("count", 0)),
         "unique_views": int(views.get("uniques", 0)),
         "daily_views": views.get("daily", {}),
@@ -115,10 +116,8 @@ def generate_dashboard(repositories: list[dict]) -> str:
 
     lines = []
     lines.append("")
-    # lines.append(" | *📁<br>Repository* | *⭐<br>Stars* | *🍴<br>Forks* | *👀<br>Views* | *👤<br>Unique Visitors* | *📥<br>Clones* | *👤<br>Unique Cloners* |")
-    # lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
-    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📦 Size (MB)* | *📝 Last Updated* | *📅 Creation Date* |")
-    lines.append(" |:--|--:|--:|--:|--:|--:|")
+    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📩 Commit* | *📦 Size<br>(MB)* | *📝 Last Updated* | *📅 Creation Date* |")
+    lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
 
     for repo in repositories:
         metrics = extract_metrics(repo)
@@ -127,16 +126,12 @@ def generate_dashboard(repositories: list[dict]) -> str:
         full_name = metrics["full_name"]
         stars = metrics["stars"]
         forks = metrics["forks"]
+        commits_count = metrics["commits_count"]
         size = Decimal(metrics["size_kb"] / 1024).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-        # views = metrics["views"]
-        # clones = metrics["clones"]
-        # unique_views = metrics["unique_views"]
-        # unique_clones = metrics["unique_clones"]
         created_at = metrics["created_at"]
         pushed_at = metrics["pushed_at"]
 
-        # lines.append(f" | *{repo_name}* | *{stars}* | *{forks}* | *{views}* | *{unique_views}* | *{clones}* | *{unique_clones}* |")
-        lines.append(f" | _**[{repo_name}](https://github.com/{full_name})**_ | *{stars}* | *{forks}* | *{size}* | *{pushed_at}* | *{created_at}* |")
+        lines.append(f" | _**[{repo_name}](https://github.com/{full_name})**_ | *{stars}* | *{forks}* | *{commits_count}* | *{size}* | *{pushed_at}* | *{created_at}* |")
 
     return "\n".join(lines)
 
@@ -185,10 +180,6 @@ def generate_traffic(repositories: list[dict]) -> str:
         )
 
     lines.append("- ### *Summary*")
-    # lines.append(f"  - *👀 Views ( 14 Days ) :　{total_views}*")
-    # lines.append(f"  - *👤 Unique Visitors  ( 14 Days ) :　{total_unique_views}*")
-    # lines.append(f"  - *📥 Clones ( 14 Days ) :　{total_clones}*")
-    # lines.append(f"  - *👤 Unique Cloners  ( 14 Days ) :　{total_unique_clones}*")
     lines.append(f"  - *👀 Views :　{total_views}*")
     lines.append(f"  - *👤 Unique Visitors :　{total_unique_views}*")
     lines.append(f"  - *📥 Clones :　{total_clones}*")
