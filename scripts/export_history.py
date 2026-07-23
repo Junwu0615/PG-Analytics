@@ -73,7 +73,7 @@ def build_14_days(data: dict) -> list:
     daily_clones = clones.get("daily", {})
 
     for daily in sorted(daily_views.keys()):
-        row_list += [
+        row_list += [[
             daily,
             data.get("repository", "unknown"),
             repository.get("stars", 0),
@@ -85,7 +85,7 @@ def build_14_days(data: dict) -> list:
             daily_views[daily]["uniques"],
             daily_clones[daily]["count"],
             daily_clones[daily]["uniques"],
-        ]
+        ]]
     return row_list
 
 
