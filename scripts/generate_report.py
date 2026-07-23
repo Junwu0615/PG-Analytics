@@ -226,11 +226,9 @@ def generate_growth(user_name="Junwu0615") -> str:
                     if k not in ["stars", "forks", "open_issues", "views", "unique_views", "clones", "unique_clones"]:
                         continue
 
-                    LOGGER.warning(f"k {k} | v {v}")
-                    LOGGER.warning(f"Repo {repo} | row {row}")
-                    LOGGER.warning(f"last_record {last_record}")
+                    if not isinstance(last_record[repo][k], int):
+                        raise ValueError("if not isinstance(last_record[repo][k], int)")
 
-                    last_record[repo][k] = int(last_record[repo][k])
                     last_record[repo][k] += int(v)
 
     # Markdown
@@ -249,16 +247,23 @@ def generate_growth(user_name="Junwu0615") -> str:
 
         star_growth = int(last["stars"]) - int(first["stars"])
         fork_growth = int(last["forks"]) - int(first["forks"])
+        open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
+
 
         views_growth = 0
         views_growth += int(last["views"]) - int(first["views"])
         views_growth += int(last["unique_views"]) - int(first["unique_views"])
 
+        LOGGER.warning(f'{repo} | last["views"]: {last["views"]} | first["views"]: {first["views"]}')
+        LOGGER.warning(f'{repo} | last["unique_views"]: {last["unique_views"]} | first["unique_views"]: {first["unique_views"]}')
+
         clones_growth = 0
         clones_growth += int(last["clones"]) - int(first["clones"])
         clones_growth += int(last["unique_clones"]) - int(first["unique_clones"])
 
-        open_issues_growth = int(last["open_issues"]) - int(first["open_issues"])
+        LOGGER.warning(f'{repo} | last["clones"]: {last["clones"]} | first["clones"]: {first["clones"]}')
+        LOGGER.warning(f'{repo} | last["unique_clones"]: {last["unique_clones"]} | first["unique_clones"]: {first["unique_clones"]}')
+
 
         lines.append(
             f"| _**[{repo}](https://github.com/Junwu0615/{repo})**_ | "
