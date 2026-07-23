@@ -116,7 +116,7 @@ def generate_dashboard(repositories: list[dict]) -> str:
 
     lines = []
     lines.append("")
-    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📩 Commit* | *📦 Size<br>(MB)* | *📝 Last Updated* | *📅 Creation Date* |")
+    lines.append(" | *📁 Repository* | *⭐ Stars* | *🍴 Forks* | *📩 Commit* | *📦 Size<br>(MB)* | *📝 Updated* | *📅 Created* |")
     lines.append(" |:--|--:|--:|--:|--:|--:|--:|")
 
     for repo in repositories:
@@ -268,6 +268,7 @@ def build_summary(repositories: list[dict]) -> dict:
         "repository_count": len(repositories),
         "stars": 0,
         "forks": 0,
+        "commits_count": 0,
         "views": 0,
         "unique_views": 0,
         "clones": 0,
@@ -280,6 +281,7 @@ def build_summary(repositories: list[dict]) -> dict:
         # full_name = metrics["full_name"]
         stars = metrics["stars"]
         forks = metrics["forks"]
+        commits_count = metrics["commits_count"]
         views = metrics["views"]
         clones = metrics["clones"]
         unique_views = metrics["unique_views"]
@@ -288,6 +290,7 @@ def build_summary(repositories: list[dict]) -> dict:
 
         summary["stars"] += stars
         summary["forks"] += forks
+        summary["commits_count"] += commits_count
         summary["views"] += views
         summary["clones"] += clones
         summary["unique_views"] += unique_views
