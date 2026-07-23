@@ -223,8 +223,11 @@ def generate_growth(user_name="Junwu0615") -> str:
                 last_record[repo] = row
             else:
                 for k,v in row.items():
-                    if last_record[repo][k] is None:
+                    if k not in ["stars", "forks", "open_issues", "views", "unique_views", "clones", "unique_clones"]:
                         continue
+
+                    LOGGER.warning(f"Repo {repo} | row {row}")
+
                     last_record[repo][k] = int(last_record[repo][k])
                     last_record[repo][k] += int(v)
 
