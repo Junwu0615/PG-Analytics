@@ -58,6 +58,37 @@ def write_header(path: Path) -> None:
             writer.writerow(CSV_HEADER)
 
 
+def build_14_days(data: dict) -> list:
+    """
+    Create 14 historical records based on the repository metrics.
+    """
+    row_list = []
+
+    repository = data.get("repository_metrics", {}) or {}
+    traffic = data.get("traffic", {}) or {}
+    views = traffic.get("views", {}) or {}
+    clones = traffic.get("clones", {}) or {}
+
+    daily_views = views.get("daily", {})
+    daily_clones = clones.get("daily", {})
+
+    for daily in sorted(daily_views.keys()):
+        row_list += [
+            daily,
+            data.get("repository", "unknown"),
+            repository.get("stars", 0),
+            repository.get("forks", 0),
+            repository.get("watchers", 0),
+            repository.get("open_issues", 0),
+            repository.get("language", "unknown"),
+            daily_views[daily]["count"],
+            daily_views[daily]["uniques"],
+            daily_clones[daily]["count"],
+            daily_clones[daily]["uniques"],
+        ]
+    return row_list
+
+
 def build_row(data: dict) -> list:
     """
     Build one history row from repository metrics.
@@ -72,22 +103,21 @@ def build_row(data: dict) -> list:
     daily_views_key = sorted(daily_views.keys())[-1]
     daily_clones_key = sorted(daily_clones.keys())[-1]
 
+    if daily_views_key != daily_clones_key:
+        raise ValueError("if daily_views_key != daily_clones_key")
+
     return [
-        today(),
+        # today(),
+        daily_views_key,
+
         data.get("repository", "unknown"),
         repository.get("stars", 0),
         repository.get("forks", 0),
         repository.get("watchers", 0),
         repository.get("open_issues", 0),
         repository.get("language", "unknown"),
-
-        # views.get("count", 0),
-        # views.get("uniques", 0),
         daily_views[daily_views_key]["count"],
         daily_views[daily_views_key]["uniques"],
-
-        # clones.get("count", 0),
-        # clones.get("uniques", 0),
         daily_clones[daily_clones_key]["count"],
         daily_clones[daily_clones_key]["uniques"],
     ]
@@ -119,6 +149,15 @@ def load_history(path: Path) -> dict:
             records[(date, repo)] = row
 
     return records
+
+
+def merge_14_history(records: dict, metrics: dict) -> None:
+    # TODO 補救機制 : 一次性
+    row_list = build_14_days(metrics)
+    for row in row_list:
+        key = (row[0], row[1])
+        record = dict(zip(CSV_HEADER, row))
+        records[key] = record
 
 
 def merge_history(records: dict, metrics: dict) -> None:
@@ -194,7 +233,10 @@ def main():
             LOGGER.warning("Malformed %s", json_file.name)
             continue
 
-        merge_history(records, metrics)
+        # merge_history(records, metrics)
+
+        # TODO 補救機制 : 一次性
+        merge_14_history(records, metrics)
 
     rewrite_history(history, records)
     LOGGER.warning("History Updated.")
