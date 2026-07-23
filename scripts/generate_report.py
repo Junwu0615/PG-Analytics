@@ -219,7 +219,7 @@ def generate_growth(user_name="Junwu0615") -> str:
                 first_record[repo] = row
 
             # TODO keep add newest
-            if repo not in last_record:
+            if last_record[repo] is None:
                 last_record[repo] = row
             else:
                 for k,v in row.items():
