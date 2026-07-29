@@ -6,7 +6,7 @@ Module:
     Historical Metrics Exporter
 
 Description:
-    Export repository metrics into monthly history CSV files.
+    Export repository metrics into monthly history CSV files (supports cross-month data).
 
 Author:
     Junwu
@@ -16,8 +16,8 @@ License:
 from __future__ import annotations
 import csv
 from pathlib import Path
+from collections import defaultdict
 from utils import (
-    today,
     load_json,
     current_month,
     initialize_directories,
@@ -41,17 +41,22 @@ CSV_HEADER = [
 ]
 
 
-def csv_file() -> Path:
+def get_csv_file_by_date(date_str: str) -> Path:
     """
-    Current monthly history file.
+    Get the monthly history file path based on a specific date (YYYY-MM-DD -> YYYY-MM).
     """
-    return HISTORY_DIR / f"{current_month()}-history.csv"
+    try:
+        year_month = date_str[:7]  # 取出 YYYY-MM
+    except Exception:
+        year_month = current_month()
+    return HISTORY_DIR / f"{year_month}-history.csv"
 
 
 def write_header(path: Path) -> None:
     """
     Ensure CSV header exists and is valid.
     """
+    path.parent.mkdir(parents=True, exist_ok=True)
     if not path.exists() or path.stat().st_size == 0:
         with path.open("w", newline="", encoding="utf-8") as fp:
             writer = csv.writer(fp)
@@ -72,8 +77,14 @@ def build_14_days(data: dict) -> list:
     daily_views = views.get("daily", {})
     daily_clones = clones.get("daily", {})
 
-    for daily in sorted(daily_views.keys()):
-        row_list += [[
+    # 聯集所有日期的 key，避免某一邊缺少日期導致 KeyError
+    all_dates = sorted(set(daily_views.keys()) | set(daily_clones.keys()))
+
+    for daily in all_dates:
+        view_data = daily_views.get(daily, {"count": 0, "uniques": 0})
+        clone_data = daily_clones.get(daily, {"count": 0, "uniques": 0})
+
+        row_list.append([
             daily,
             data.get("repository", "unknown"),
             repository.get("stars", 0),
@@ -81,46 +92,12 @@ def build_14_days(data: dict) -> list:
             repository.get("watchers", 0),
             repository.get("open_issues", 0),
             repository.get("language", "unknown"),
-            daily_views[daily]["count"],
-            daily_views[daily]["uniques"],
-            daily_clones[daily]["count"],
-            daily_clones[daily]["uniques"],
-        ]]
+            view_data.get("count", 0),
+            view_data.get("uniques", 0),
+            clone_data.get("count", 0),
+            clone_data.get("uniques", 0),
+        ])
     return row_list
-
-
-def build_row(data: dict) -> list:
-    """
-    Build one history row from repository metrics.
-    """
-    repository = data.get("repository_metrics", {}) or {}
-    traffic = data.get("traffic", {}) or {}
-    views = traffic.get("views", {}) or {}
-    clones = traffic.get("clones", {}) or {}
-
-    daily_views = views.get("daily", {})
-    daily_clones = clones.get("daily", {})
-    daily_views_key = sorted(daily_views.keys())[-1]
-    daily_clones_key = sorted(daily_clones.keys())[-1]
-
-    if daily_views_key != daily_clones_key:
-        raise ValueError("if daily_views_key != daily_clones_key")
-
-    return [
-        # today(),
-        daily_views_key,
-
-        data.get("repository", "unknown"),
-        repository.get("stars", 0),
-        repository.get("forks", 0),
-        repository.get("watchers", 0),
-        repository.get("open_issues", 0),
-        repository.get("language", "unknown"),
-        daily_views[daily_views_key]["count"],
-        daily_views[daily_views_key]["uniques"],
-        daily_clones[daily_clones_key]["count"],
-        daily_clones[daily_clones_key]["uniques"],
-    ]
 
 
 def load_history(path: Path) -> dict:
@@ -133,11 +110,7 @@ def load_history(path: Path) -> dict:
     if not path.exists():
         return records
 
-    with path.open(
-        "r",
-        newline="",
-        encoding="utf-8",
-    ) as fp:
+    with path.open("r", newline="", encoding="utf-8") as fp:
         reader = csv.DictReader(fp)
         for row in reader:
             date = row.get("date")
@@ -151,30 +124,6 @@ def load_history(path: Path) -> dict:
     return records
 
 
-def merge_14_history(records: dict, metrics: dict) -> None:
-    # TODO 補救機制 : 一次性
-    row_list = build_14_days(metrics)
-    for row in row_list:
-        LOGGER.warning(f"row: {row}")
-        key = (row[0], row[1])
-        record = dict(zip(CSV_HEADER, row))
-        records[key] = record
-
-
-def merge_history(records: dict, metrics: dict) -> None:
-    """
-    Merge latest repository metrics.
-
-    Existing records of the same
-    (date, repository)
-    will be replaced.
-    """
-    row = build_row(metrics)
-    key = (row[0], row[1])
-    record = dict(zip(CSV_HEADER, row))
-    records[key] = record
-
-
 def rewrite_history(path: Path, records: dict) -> None:
     """
     Rewrite monthly history CSV atomically.
@@ -182,7 +131,9 @@ def rewrite_history(path: Path, records: dict) -> None:
     Validation:
         - Record count must not decrease unexpectedly.
     """
-    # Existing record count
+    write_header(path)
+
+    # 重新精確計算該檔案實際已存在的記錄數（避免跨檔案干擾）
     previous_count = 0
     if path.exists():
         with path.open("r", newline="", encoding="utf-8") as fp:
@@ -201,21 +152,21 @@ def rewrite_history(path: Path, records: dict) -> None:
     current_count = len(records)
     if current_count < previous_count:
         raise RuntimeError(
-            f"History corruption detected "
+            f"History corruption detected for {path.name} "
             f"(before={previous_count}, after={current_count})"
         )
 
     # Atomic replace
     tmp_path.replace(path)
-    LOGGER.warning("History Updated (%d records)", current_count)
+    LOGGER.warning("History Updated for %s (%d records)", path.name, current_count)
 
 
 def main():
     initialize_directories()
-    history = csv_file()
-    write_header(history)
-    records = load_history(history)
     LOGGER.warning("Export History ...")
+
+    # 結構: { Path(file_path): { (date, repository): row_dict } }
+    grouped_records = defaultdict(dict)
 
     for json_file in sorted(LATEST_DIR.glob("*.json")):
         LOGGER.info("Processing %s", json_file.name)
@@ -234,13 +185,29 @@ def main():
             LOGGER.warning("Malformed %s", json_file.name)
             continue
 
-        merge_history(records, metrics)
+        # 取得 14 天的歷史資料並依照日期分組載入對應月份的記錄
+        row_list = build_14_days(metrics)
+        for row in row_list:
+            date_str = row[0]
+            repo_name = row[1]
 
-        # TODO 補救機制 : 一次性
-        # merge_14_history(records, metrics)
+            target_file = get_csv_file_by_date(date_str)
 
-    rewrite_history(history, records)
-    LOGGER.warning("History Updated.")
+            # 若該月份尚未載入記憶體，進行初始化並讀取舊檔
+            if target_file not in grouped_records:
+                write_header(target_file)
+                grouped_records[target_file] = load_history(target_file)
+
+            # 更新或加入記錄
+            key = (date_str, repo_name)
+            grouped_records[target_file][key] = dict(zip(CSV_HEADER, row))
+
+
+    # 逐一將各個月份的檔案安全寫回
+    for path, records in grouped_records.items():
+        rewrite_history(path, records)
+
+    LOGGER.warning("All History Updated.")
 
 
 if __name__ == "__main__":
