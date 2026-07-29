@@ -15,9 +15,7 @@ License:
 """
 from __future__ import annotations
 import csv
-# from pathlib import Path
-# from datetime import datetime
-from decimal  import Decimal, ROUND_HALF_UP
+from decimal import Decimal, ROUND_HALF_UP
 from utils import (
     utc_now,
     save_json,
@@ -75,23 +73,6 @@ def load_repositories() -> list[dict]:
 
 
 def extract_metrics(repo: dict) -> dict:
-    """
-    Extract normalized repository metrics.
-
-    Returns
-    -------
-    {
-        "repository": str,
-        "stars": int,
-        "forks": int,
-        "watchers": int,
-        "open_issues": int,
-        "views": int,
-        "unique_views": int,
-        "clones": int,
-        "unique_clones": int,
-    }
-    """
     metrics = repo.get("repository_metrics", {}) or {}
     activity = repo.get("activity", {}) or {}
     traffic = repo.get("traffic", {}) or {}
@@ -217,6 +198,7 @@ def generate_growth(user_name="Junwu0615") -> str:
         for repo in SORTED_LIST
     }
 
+    # 取最新的當月歷史檔進行統計
     csv_file = history[-1]
     with csv_file.open("r", encoding="utf-8", newline="") as fp:
         reader = csv.DictReader(fp)
@@ -275,8 +257,11 @@ def generate_growth(user_name="Junwu0615") -> str:
 
 def build_summary(repositories: list[dict]) -> dict:
     """
-    Summary 統計 → 儲存 json
+    Summary 統計 → 具備冷啟動支援、嚴格增量更新、對齊按月分區 CSV與冪等性的實作
     """
+    summary_file = DATA_DIR / "summary.json"
+
+    # 1. 狀態類指標：直接由當前最新 repositories (latest/*.json) 累加
     summary = {
         "repository_count": len(repositories),
         "stars": 0,
@@ -286,32 +271,88 @@ def build_summary(repositories: list[dict]) -> dict:
         "unique_views": 0,
         "clones": 0,
         "unique_clones": 0,
-        "size": 0,
+        "size": Decimal("0.00"),
+        "last_processed_date": "",  # 記錄最後處理的日期 (YYYY-MM-DD)，用於增量與冪等防護
     }
+
     for repo in repositories:
         metrics = extract_metrics(repo)
-
-        # full_name = metrics["full_name"]
-        stars = metrics["stars"]
-        forks = metrics["forks"]
-        commits_count = metrics["commits_count"]
-        views = metrics["views"]
-        clones = metrics["clones"]
-        unique_views = metrics["unique_views"]
-        unique_clones = metrics["unique_clones"]
-        size = Decimal(metrics["size_kb"] / 1024).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
-
-        summary["stars"] += stars
-        summary["forks"] += forks
-        summary["commits_count"] += commits_count
-        summary["views"] += views
-        summary["clones"] += clones
-        summary["unique_views"] += unique_views
-        summary["unique_clones"] += unique_clones
-        summary["size"] += size
+        summary["stars"] += metrics["stars"]
+        summary["forks"] += metrics["forks"]
+        summary["commits_count"] += metrics["commits_count"]
+        summary["size"] += Decimal(metrics["size_kb"] / 1024).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
 
     summary["size"] = str(summary["size"])
-    save_json(DATA_DIR / "summary.json", summary)
+
+    # 2. 處理流量類指標（增量更新 + 冷啟動 + 冪等防護）
+    existing_summary = load_json(summary_file) if summary_file.exists() else {}
+    last_processed_date = existing_summary.get("last_processed_date", "")
+
+    # 判斷是否為冷啟動
+    is_cold_start = not existing_summary or not last_processed_date
+
+    # 冷啟動處理：如果 summary.json 不存在或沒有紀錄上次處理日期，則以現有舊流量為 0 開始
+    if not existing_summary:
+        LOGGER.warning("Summary.json not found. Performing cold start initialization.")
+        summary["views"] = 0
+        summary["unique_views"] = 0
+        summary["clones"] = 0
+        summary["unique_clones"] = 0
+    else:
+        # 繼承先前的總流量作為基底
+        summary["views"] = int(existing_summary.get("views", 0))
+        summary["unique_views"] = int(existing_summary.get("unique_views", 0))
+        summary["clones"] = int(existing_summary.get("clones", 0))
+        summary["unique_clones"] = int(existing_summary.get("unique_clones", 0))
+
+    history = sorted(HISTORY_DIR.glob("*.csv"))
+    if history:
+        delta_views = 0
+        delta_unique_views = 0
+        delta_clones = 0
+        delta_unique_clones = 0
+        max_date_in_csv = last_processed_date
+
+        # - 若是冷啟動，遍歷所有歷史 CSV 建立完整基底
+        # - 若是日常增量，只抓取最後 2 份 CSV ([-2:])，完美涵蓋當月與跨月的上月底邊界
+        target_history = history if is_cold_start else history[-2:]
+
+        for csv_path in target_history:
+            if not csv_path.exists():
+                continue
+
+            with csv_path.open("r", encoding="utf-8", newline="") as fp:
+                reader = csv.DictReader(fp)
+                for row in reader:
+                    repo_name = row.get("repository")
+                    row_date = row.get("date")
+
+                    if repo_name not in SORTED_LIST or not row_date:
+                        continue
+
+                    # 冪等與增量防護：大於上次已處理日期的才計入 Delta
+                    if last_processed_date and row_date <= last_processed_date:
+                        continue
+
+                    delta_views += int(row.get("views", 0) or 0)
+                    delta_unique_views += int(row.get("unique_views", 0) or 0)
+                    delta_clones += int(row.get("clones", 0) or 0)
+                    delta_unique_clones += int(row.get("unique_clones", 0) or 0)
+
+                    if row_date > max_date_in_csv:
+                        max_date_in_csv = row_date
+
+        # 將 Delta 增量安全地疊加到總數上
+        summary["views"] += delta_views
+        summary["unique_views"] += delta_unique_views
+        summary["clones"] += delta_clones
+        summary["unique_clones"] += delta_unique_clones
+        summary["last_processed_date"] = max_date_in_csv
+
+        mode_str = "Cold Start" if is_cold_start else "Incremental (Last 2 CSVs)"
+        LOGGER.info(f"Summary Updated [{mode_str}]: Processed up to date {max_date_in_csv}")
+
+    save_json(summary_file, summary)
     return summary
 
 
