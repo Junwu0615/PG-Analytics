@@ -96,6 +96,7 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
  • growth.md    ( 本月累積成長 )
  • summary.md   ( 總覽報表 )
 
+
 # STAGE. 4
  • sync_readme.py
       ↓
