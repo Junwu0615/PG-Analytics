@@ -2,7 +2,7 @@
 
 | *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *💡 Open Issues ↕* | *👀 Views ↕* | *📥 Clones ↕* |
 |:--|--:|--:|--:|--:|--:|
-| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *0* | *0* | *0* | *0* | *0* |
+| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *+0* | *+0* | *+0* | *18* | *28* | 
 | _**[PG-Core](https://github.com/Junwu0615/PG-Core)**_ | *0* | *0* | *0* | *0* | *0* |
 | _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *0* | *0* | *0* | *0* | *0* |
 | _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *+0* | *+0* | *+0* | *0* | *1* | 

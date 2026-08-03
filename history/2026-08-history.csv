@@ -4,3 +4,5 @@ date,repository,stars,forks,watchers,open_issues,language,views,unique_views,clo
 2026-08-01,PG-Cortex,1,0,0,0,,0,0,1,1
 2026-08-01,PG-Sentinel,1,0,0,0,,0,0,0,0
 2026-08-01,PG-Shared-Lib,1,0,0,0,Python,0,0,0,0
+2026-08-01,Platform-Genesis,3,0,0,0,Makefile,13,3,28,7
+2026-08-02,Platform-Genesis,3,0,0,0,Makefile,5,3,0,0
