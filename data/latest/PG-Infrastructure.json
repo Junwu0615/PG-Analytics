@@ -20,21 +20,9 @@
     },
     "traffic": {
         "views": {
-            "count": 41,
-            "uniques": 3,
+            "count": 49,
+            "uniques": 5,
             "daily": {
-                "2026-07-18": {
-                    "count": 0,
-                    "uniques": 0
-                },
-                "2026-07-19": {
-                    "count": 0,
-                    "uniques": 0
-                },
-                "2026-07-20": {
-                    "count": 5,
-                    "uniques": 1
-                },
                 "2026-07-21": {
                     "count": 14,
                     "uniques": 1
@@ -78,25 +66,25 @@
                 "2026-07-31": {
                     "count": 0,
                     "uniques": 0
+                },
+                "2026-08-01": {
+                    "count": 1,
+                    "uniques": 1
+                },
+                "2026-08-02": {
+                    "count": 0,
+                    "uniques": 0
+                },
+                "2026-08-03": {
+                    "count": 12,
+                    "uniques": 1
                 }
             }
         },
         "clones": {
-            "count": 53,
-            "uniques": 39,
+            "count": 32,
+            "uniques": 25,
             "daily": {
-                "2026-07-18": {
-                    "count": 3,
-                    "uniques": 3
-                },
-                "2026-07-19": {
-                    "count": 0,
-                    "uniques": 0
-                },
-                "2026-07-20": {
-                    "count": 19,
-                    "uniques": 12
-                },
                 "2026-07-21": {
                     "count": 1,
                     "uniques": 1
@@ -140,9 +128,21 @@
                 "2026-07-31": {
                     "count": 1,
                     "uniques": 1
+                },
+                "2026-08-01": {
+                    "count": 0,
+                    "uniques": 0
+                },
+                "2026-08-02": {
+                    "count": 1,
+                    "uniques": 1
+                },
+                "2026-08-03": {
+                    "count": 0,
+                    "uniques": 0
                 }
             }
         }
     },
-    "generated_at": "2026-08-03T18:02:23.660910"
+    "generated_at": "2026-08-04T18:01:31.511612"
 }
