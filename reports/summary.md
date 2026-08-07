@@ -5,7 +5,7 @@
 | *📁 Total Repositories* | *11* |
 | *⭐ Total Stars* | *13* |
 | *🍴 Total Forks* | *0* |
-| *📩 Total Commit* | *1383* |
+| *📩 Total Commit* | *1384* |
 | *📦 Size ( MB )* | *72.58* |
 | *👀 Total Views* | *860* |
 | *👤 Total Unique Visitors* | *176* |
