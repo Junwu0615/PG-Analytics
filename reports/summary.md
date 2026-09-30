@@ -5,9 +5,9 @@
 | *📁 Total Repositories* | *11* |
 | *⭐ Total Stars* | *13* |
 | *🍴 Total Forks* | *0* |
-| *📩 Total Commit* | *1438* |
-| *📦 Size ( MB )* | *72.73* |
-| *👀 Total Views* | *1081* |
-| *👤 Total Unique Visitors* | *307* |
-| *📥 Total Clones* | *1868* |
-| *👤 Total Unique Cloners* | *1289* |
+| *📩 Total Commit* | *1439* |
+| *📦 Size ( MB )* | *72.74* |
+| *👀 Total Views* | *1082* |
+| *👤 Total Unique Visitors* | *308* |
+| *📥 Total Clones* | *1903* |
+| *👤 Total Unique Cloners* | *1313* |
