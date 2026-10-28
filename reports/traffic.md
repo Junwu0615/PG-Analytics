@@ -2,19 +2,19 @@
 
 | *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |
 |:--|--:|--:|--:|--:|
-| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *3* | *3* | *9* | *9* |
-| _**[PG-Core](https://github.com/Junwu0615/PG-Core)**_ | *1* | *1* | *7* | *7* |
-| _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *0* | *0* | *6* | *6* |
-| _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *0* | *0* | *5* | *5* |
+| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *3* | *3* | *8* | *8* |
+| _**[PG-Core](https://github.com/Junwu0615/PG-Core)**_ | *0* | *0* | *8* | *8* |
+| _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *0* | *0* | *7* | *7* |
+| _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *0* | *0* | *6* | *6* |
 | _**[PG-Sentinel](https://github.com/Junwu0615/PG-Sentinel)**_ | *0* | *0* | *7* | *7* |
-| _**[PG-Analytics](https://github.com/Junwu0615/PG-Analytics)**_ | *0* | *0* | *216* | *79* |
-| _**[PG-Infrastructure](https://github.com/Junwu0615/PG-Infrastructure)**_ | *0* | *0* | *10* | *10* |
-| _**[PG-APP-Core](https://github.com/Junwu0615/PG-APP-Core)**_ | *0* | *0* | *8* | *6* |
-| _**[PG-Shared-Lib](https://github.com/Junwu0615/PG-Shared-Lib)**_ | *0* | *0* | *6* | *6* |
-| _**[PG-Edge-Container](https://github.com/Junwu0615/PG-Edge-Container)**_ | *0* | *0* | *6* | *6* |
+| _**[PG-Analytics](https://github.com/Junwu0615/PG-Analytics)**_ | *0* | *0* | *227* | *84* |
+| _**[PG-Infrastructure](https://github.com/Junwu0615/PG-Infrastructure)**_ | *0* | *0* | *9* | *9* |
+| _**[PG-APP-Core](https://github.com/Junwu0615/PG-APP-Core)**_ | *0* | *0* | *5* | *5* |
+| _**[PG-Shared-Lib](https://github.com/Junwu0615/PG-Shared-Lib)**_ | *0* | *0* | *5* | *5* |
+| _**[PG-Edge-Container](https://github.com/Junwu0615/PG-Edge-Container)**_ | *0* | *0* | *5* | *5* |
 | _**[PG-Airflow-DAGs](https://github.com/Junwu0615/PG-Airflow-DAGs)**_ | *0* | *0* | *7* | *7* |
 - ### *Summary*
-  - *👀 Views :　4*
-  - *👤 Unique Visitors :　4*
-  - *📥 Clones :　287*
-  - *👤 Unique Cloners :　148*
+  - *👀 Views :　3*
+  - *👤 Unique Visitors :　3*
+  - *📥 Clones :　294*
+  - *👤 Unique Cloners :　151*
