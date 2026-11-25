@@ -2,7 +2,7 @@
 
 | *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |
 |:--|--:|--:|--:|--:|
-| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *10* | *5* | *15* | *13* |
+| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *10* | *5* | *14* | *12* |
 | _**[PG-Core](https://github.com/Junwu0615/PG-Core)**_ | *3* | *1* | *8* | *7* |
 | _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *0* | *0* | *6* | *6* |
 | _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *0* | *0* | *4* | *4* |
@@ -16,5 +16,5 @@
 - ### *Summary*
   - *👀 Views :　14*
   - *👤 Unique Visitors :　7*
-  - *📥 Clones :　241*
-  - *👤 Unique Cloners :　138*
+  - *📥 Clones :　240*
+  - *👤 Unique Cloners :　137*
