@@ -9,7 +9,7 @@
 
 <!-- update_time:start -->
 >
-> _Generated at [ UTC+0 ] :　2026-11-26T00:15:17_
+> _Generated at [ UTC+0 ] :　2026-11-27T00:32:25_
 
 <!-- update_time:end -->
 
@@ -119,12 +119,12 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 | *📁 Total Repositories* | *11* |
 | *⭐ Total Stars* | *13* |
 | *🍴 Total Forks* | *0* |
-| *📩 Total Commit* | *1495* |
-| *📦 Size ( MB )* | *72.89* |
-| *👀 Total Views* | *1161* |
-| *👤 Total Unique Visitors* | *355* |
-| *📥 Total Clones* | *2837* |
-| *👤 Total Unique Cloners* | *1903* |
+| *📩 Total Commit* | *1496* |
+| *📦 Size ( MB )* | *72.90* |
+| *👀 Total Views* | *1181* |
+| *👤 Total Unique Visitors* | *372* |
+| *📥 Total Clones* | *2879* |
+| *👤 Total Unique Cloners* | *1935* |
 <!-- summary:end -->
 
 <br>
@@ -140,7 +140,7 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
  | _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *1* | *0* | *4* | *0.01* | *2026-07-23* | *2026-07-03* |
  | _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *1* | *0* | *6* | *0.01* | *2026-07-23* | *2026-07-03* |
  | _**[PG-Sentinel](https://github.com/Junwu0615/PG-Sentinel)**_ | *1* | *0* | *3* | *0.00* | *2026-07-23* | *2026-07-03* |
- | _**[PG-Analytics](https://github.com/Junwu0615/PG-Analytics)**_ | *1* | *0* | *319* | *0.60* | *2026-11-25* | *2026-07-03* |
+ | _**[PG-Analytics](https://github.com/Junwu0615/PG-Analytics)**_ | *1* | *0* | *320* | *0.61* | *2026-11-26* | *2026-07-03* |
  | _**[PG-Infrastructure](https://github.com/Junwu0615/PG-Infrastructure)**_ | *1* | *0* | *364* | *4.98* | *2026-08-09* | *2026-05-08* |
  | _**[PG-APP-Core](https://github.com/Junwu0615/PG-APP-Core)**_ | *1* | *0* | *63* | *0.12* | *2026-07-23* | *2026-05-08* |
  | _**[PG-Shared-Lib](https://github.com/Junwu0615/PG-Shared-Lib)**_ | *1* | *0* | *21* | *0.05* | *2026-07-23* | *2026-05-08* |
@@ -157,22 +157,22 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 
 | *📁 Repository* | *👀 Views* | *👤 Views Unique* | *📥 Clones* | *👤 Clones Unique* |
 |:--|--:|--:|--:|--:|
-| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *11* | *5* | *16* | *13* |
-| _**[PG-Core](https://github.com/Junwu0615/PG-Core)**_ | *3* | *1* | *6* | *5* |
-| _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *0* | *0* | *3* | *3* |
-| _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *0* | *0* | *3* | *3* |
-| _**[PG-Sentinel](https://github.com/Junwu0615/PG-Sentinel)**_ | *0* | *0* | *3* | *3* |
-| _**[PG-Analytics](https://github.com/Junwu0615/PG-Analytics)**_ | *1* | *1* | *177* | *84* |
-| _**[PG-Infrastructure](https://github.com/Junwu0615/PG-Infrastructure)**_ | *0* | *0* | *7* | *5* |
-| _**[PG-APP-Core](https://github.com/Junwu0615/PG-APP-Core)**_ | *0* | *0* | *6* | *5* |
-| _**[PG-Shared-Lib](https://github.com/Junwu0615/PG-Shared-Lib)**_ | *0* | *0* | *2* | *2* |
-| _**[PG-Edge-Container](https://github.com/Junwu0615/PG-Edge-Container)**_ | *0* | *0* | *4* | *3* |
-| _**[PG-Airflow-DAGs](https://github.com/Junwu0615/PG-Airflow-DAGs)**_ | *0* | *0* | *5* | *4* |
+| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *12* | *5* | *21* | *17* |
+| _**[PG-Core](https://github.com/Junwu0615/PG-Core)**_ | *5* | *3* | *7* | *6* |
+| _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *3* | *2* | *4* | *4* |
+| _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *3* | *2* | *3* | *3* |
+| _**[PG-Sentinel](https://github.com/Junwu0615/PG-Sentinel)**_ | *2* | *2* | *4* | *4* |
+| _**[PG-Analytics](https://github.com/Junwu0615/PG-Analytics)**_ | *4* | *3* | *192* | *91* |
+| _**[PG-Infrastructure](https://github.com/Junwu0615/PG-Infrastructure)**_ | *2* | *2* | *10* | *8* |
+| _**[PG-APP-Core](https://github.com/Junwu0615/PG-APP-Core)**_ | *0* | *0* | *9* | *8* |
+| _**[PG-Shared-Lib](https://github.com/Junwu0615/PG-Shared-Lib)**_ | *2* | *2* | *6* | *5* |
+| _**[PG-Edge-Container](https://github.com/Junwu0615/PG-Edge-Container)**_ | *1* | *1* | *6* | *5* |
+| _**[PG-Airflow-DAGs](https://github.com/Junwu0615/PG-Airflow-DAGs)**_ | *1* | *1* | *7* | *6* |
 - ### *Summary*
-  - *👀 Views :　15*
-  - *👤 Unique Visitors :　7*
-  - *📥 Clones :　232*
-  - *👤 Unique Cloners :　130*
+  - *👀 Views :　35*
+  - *👤 Unique Visitors :　23*
+  - *📥 Clones :　269*
+  - *👤 Unique Cloners :　157*
 <!-- traffic:end -->
 
 <br>
@@ -184,17 +184,17 @@ tree -I 'venv|.git|__pycache__|docs|logs|assets|kafka_data|charts'
 
 | *📁 Repository* | *⭐ Stars ↕* | *🍴 Forks ↕* | *💡 Open Issues ↕* | *👀 Views ↕* | *📥 Clones ↕* |
 |:--|--:|--:|--:|--:|--:|
-| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *+0* | *+0* | *+0* | *12* | *25* | 
-| _**[PG-Core](https://github.com/Junwu0615/PG-Core)**_ | *+0* | *+0* | *+0* | *4* | *13* | 
-| _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *+0* | *+0* | *+0* | *0* | *8* | 
-| _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *+0* | *+0* | *+0* | *0* | *6* | 
-| _**[PG-Sentinel](https://github.com/Junwu0615/PG-Sentinel)**_ | *+0* | *+0* | *+0* | *0* | *8* | 
-| _**[PG-Analytics](https://github.com/Junwu0615/PG-Analytics)**_ | *+0* | *+0* | *+0* | *3* | *281* | 
-| _**[PG-Infrastructure](https://github.com/Junwu0615/PG-Infrastructure)**_ | *+0* | *+0* | *+0* | *0* | *12* | 
-| _**[PG-APP-Core](https://github.com/Junwu0615/PG-APP-Core)**_ | *+0* | *+0* | *+0* | *0* | *10* | 
-| _**[PG-Shared-Lib](https://github.com/Junwu0615/PG-Shared-Lib)**_ | *+0* | *+0* | *+0* | *0* | *7* | 
-| _**[PG-Edge-Container](https://github.com/Junwu0615/PG-Edge-Container)**_ | *+0* | *+0* | *+0* | *0* | *9* | 
-| _**[PG-Airflow-DAGs](https://github.com/Junwu0615/PG-Airflow-DAGs)**_ | *+0* | *+0* | *+0* | *0* | *9* | 
+| _**[Platform-Genesis](https://github.com/Junwu0615/Platform-Genesis)**_ | *+0* | *+0* | *+0* | *13* | *31* | 
+| _**[PG-Core](https://github.com/Junwu0615/PG-Core)**_ | *+0* | *+0* | *+0* | *6* | *14* | 
+| _**[PG-Synapse](https://github.com/Junwu0615/PG-Synapse)**_ | *+0* | *+0* | *+0* | *3* | *9* | 
+| _**[PG-Cortex](https://github.com/Junwu0615/PG-Cortex)**_ | *+0* | *+0* | *+0* | *3* | *6* | 
+| _**[PG-Sentinel](https://github.com/Junwu0615/PG-Sentinel)**_ | *+0* | *+0* | *+0* | *2* | *9* | 
+| _**[PG-Analytics](https://github.com/Junwu0615/PG-Analytics)**_ | *+0* | *+0* | *+0* | *6* | *300* | 
+| _**[PG-Infrastructure](https://github.com/Junwu0615/PG-Infrastructure)**_ | *+0* | *+0* | *+0* | *2* | *15* | 
+| _**[PG-APP-Core](https://github.com/Junwu0615/PG-APP-Core)**_ | *+0* | *+0* | *+0* | *0* | *13* | 
+| _**[PG-Shared-Lib](https://github.com/Junwu0615/PG-Shared-Lib)**_ | *+0* | *+0* | *+0* | *2* | *11* | 
+| _**[PG-Edge-Container](https://github.com/Junwu0615/PG-Edge-Container)**_ | *+0* | *+0* | *+0* | *1* | *11* | 
+| _**[PG-Airflow-DAGs](https://github.com/Junwu0615/PG-Airflow-DAGs)**_ | *+0* | *+0* | *+0* | *1* | *11* | 
 <!-- growth:end -->
 
 
